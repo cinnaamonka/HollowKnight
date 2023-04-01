@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Platform.h"
 #include "iostream"
+
 Platform::Platform(const Point2f& bottomLeft)
 {
 	m_pTexture = new Texture{ "platform.png" };
@@ -9,21 +10,21 @@ Platform::Platform(const Point2f& bottomLeft)
 	m_Shape.bottom = bottomLeft.y;
 	m_Shape.width = m_pTexture->GetWidth();
 	m_Shape.height = m_pTexture->GetHeight();
-
-
 }
+
 void Platform::Draw()const
 {
 	m_pTexture->Draw(m_Shape);
-	
 }
+
 void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)const
 {
-	if ( IsOnGround(actorShape,actorVelocity) && actorVelocity.y < 0 )
+	if (IsOnGround(actorShape, actorVelocity) && actorVelocity.y < 0)
 	{
 		actorVelocity.y = 0.0f;
 	}
 }
+
 bool Platform::IsOnGround(const Rectf& actorShape, const Vector2f& actorVelocity)const
 {
 	bool isNotCollide
@@ -35,5 +36,4 @@ bool Platform::IsOnGround(const Rectf& actorShape, const Vector2f& actorVelocity
 	};
 
 	return (actorVelocity.y < 0 && !isNotCollide);
-
 }

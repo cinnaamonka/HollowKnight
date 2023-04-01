@@ -19,7 +19,7 @@ private:
 		moving,
 		transforming,
 		jumping,
-		
+		begin
 	};
 
 	Rectf m_Shape;
@@ -43,7 +43,7 @@ private:
 	void CheckState(Level& level);
 	void MoveAvatar(float elapsedSec);
 	void UpdateFrame(float elapsedSec);
-	void ChangePosition();
+	void ChangePosition(Level& level);
 	float m_PreviousPositionX;
 	
 };

@@ -8,14 +8,9 @@ PowerUp::PowerUp(const Point2f& center, PowerUp::Type type) :
 {
 	m_pTexture = new Texture{ "PowerUp.png" };
 	m_TextClip.left = 0.0f;
-	if (m_Type == Type::green)
-	{
-		m_TextClip.bottom = m_pTexture->GetHeight() / 2;
-	}
-	else
-	{
-		m_TextClip.bottom = m_pTexture->GetHeight();
-	}
+
+	m_TextClip.bottom = m_Type == Type::green ? m_TextClip.bottom = m_pTexture->GetHeight() / 2 : m_TextClip.bottom = m_pTexture->GetHeight();
+
 	m_TextClip.width = m_pTexture->GetWidth();
 	m_TextClip.height = m_pTexture->GetHeight() / 2;
 
@@ -26,35 +21,45 @@ PowerUp::PowerUp(const Point2f& center, PowerUp::Type type) :
 PowerUp::~PowerUp()
 {
 	delete m_pTexture;
-	m_pTexture = nullptr;
 }
+
 void PowerUp::Update(float elapsedSec)
 {
-
 	m_Angle += m_RotSpeed * elapsedSec;
 }
+
 void PowerUp::Draw() const
 {
 	glPushMatrix();
 
-	glTranslatef(m_Shape.center.x, m_Shape.center.y,0);
+	glTranslatef(m_Shape.center.x, m_Shape.center.y, 0);
 
 	glRotatef(m_Angle, 0, 0, 1);
 
 	glTranslatef(-m_Shape.radius, -m_Shape.radius, 0);
 
-	m_pTexture->Draw(Point2f(0.0f,0.0f),m_TextClip);
+	m_pTexture->Draw(Point2f(0.0f, 0.0f), m_TextClip);
 
 	glPopMatrix();
 }
+
 bool PowerUp::IsOverlapping(const Rectf& rect) const
 {
-	if (rect.left + rect.width > m_Shape.center.x - m_Shape.radius &&
-		rect.bottom + rect.height > m_Shape.center.y - m_Shape.radius)return true;
-	if(rect.left > m_Shape.center.x + m_Shape.radius &&
-		rect.bottom + rect.height > m_Shape.center.y - m_Shape.radius)return true;
-	if (rect.left > m_Shape.center.x - m_Shape.radius && rect.left + rect.width < m_Shape.center.x + m_Shape.radius &&
-		rect.bottom + rect.height > m_Shape.center.y - m_Shape.radius)return true;
-	return false;
+	const float left = rect.left;
+	const float right = rect.left + rect.width;
+	const float bottom = rect.bottom;
+	const float top = rect.bottom + rect.height;
+	const float radius = m_Shape.radius;
+
+
+	const Point2f center = m_Shape.center;
+
+	const bool isRightOfLeftEdge = right > center.x - radius;
+	const bool isLeftOfRightEdge = left < center.x + radius;
+	const bool isAboveBottomEdge = top > center.y - radius;
+	const bool isBelowTopEdge = bottom < center.y + radius;
+
+	return isRightOfLeftEdge && isLeftOfRightEdge && isAboveBottomEdge && isBelowTopEdge;
 }
+
 

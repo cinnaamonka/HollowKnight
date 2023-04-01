@@ -12,11 +12,12 @@ int SDL_main(int argv, char** args)
 
 	StartHeapControl();
 
-	Game* pGame{ new Game{ Window{ "Project name - Name, first name - 1DAEXX", 846.f , 600.f } } };
-	pGame->Run();
-	delete pGame;
+	Game game{ Window{ "Project name - Name, first name - 1DAEXX", 846.0f, 600.0f } };
+
+	game.Run(); 
 
 	DumpMemoryLeaks();
+
 	return 0;
 }
 

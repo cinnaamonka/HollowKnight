@@ -36,12 +36,12 @@ private:
 	Texture* m_EndSignTexture;
 	Rectf m_EndSignShape;
 	Texture* m_pBackground;
-	
+	Texture* Test;
 	
 	
 	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 
-	bool isCollidingGround(std::vector<Point2f>& ver, Point2f& p1, const Point2f& p2, utils::HitInfo& hitInfo);
+	bool isCollidingGround(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
 	void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 };
 

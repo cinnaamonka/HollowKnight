@@ -15,7 +15,7 @@ void Hud::Draw()
 
 	for (int i = 0; i < m_TotalPowerUps; ++i)
 	{
-		Rectf destionationRect
+		Rectf destRect
 		{
 			m_BottomLeft.x + m_pLeftTexture->GetWidth() + i * m_pPowerUpTexture->GetWidth() / 2,
 			m_BottomLeft.y,
@@ -30,13 +30,13 @@ void Hud::Draw()
 			m_pPowerUpTexture->GetHeight()
 		};
 
-		m_pPowerUpTexture->Draw(destionationRect, sourceRect);
+		m_pPowerUpTexture->Draw(destRect, sourceRect);
 
 	}
 
 	for (int i = 0; i < m_HitPowerUps; ++i)
 	{
-		Rectf destionationRect
+		Rectf destRect
 		{
 			m_BottomLeft.x + m_pLeftTexture->GetWidth() + i * m_pPowerUpTexture->GetWidth() / 2,
 			m_BottomLeft.y,
@@ -50,12 +50,12 @@ void Hud::Draw()
 			m_pPowerUpTexture->GetWidth() / 2,
 			m_pPowerUpTexture->GetHeight()
 		};
-		m_pPowerUpTexture->Draw(destionationRect, sourceRect);
+		m_pPowerUpTexture->Draw(destRect, sourceRect);
 	}
 
 
 
-	Rectf destionationRect
+	Rectf destRect
 	{
 		m_BottomLeft.x + m_pLeftTexture->GetWidth() + 3 * m_pPowerUpTexture->GetWidth() / 2,
 		m_BottomLeft.y,
@@ -63,8 +63,9 @@ void Hud::Draw()
 		m_pRightTexture->GetHeight()
 	};
 
-	m_pRightTexture->Draw(destionationRect);
+	m_pRightTexture->Draw(destRect);
 }
+
 void Hud::PowerUpHit()
 {
 	m_HitPowerUps += 1;
