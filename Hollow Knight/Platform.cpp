@@ -11,44 +11,62 @@ Platform::Platform(const Point2f& bottomLeft)
 	m_Shape.bottom = bottomLeft.y;
 	m_Shape.width = m_pTexture->GetWidth();
 	m_Shape.height = m_pTexture->GetHeight();
-	
+
 }
 
 void Platform::Draw()const
 {
 	m_pTexture->Draw(m_Shape);
-    utils::DrawRect(m_Shape);
+	utils::DrawRect(m_Shape);
 }
 
 void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)const
 {
 
-	if (IsUnderPlatform(actorShape, actorVelocity) && actorVelocity.y > 0)
-	{
-		actorVelocity.y = 0.0f;
-		actorShape.bottom = m_Shape.bottom - actorShape.height;
-		std::cout << "IsUnderPlatform" << std::endl;
-		return;
-	}
-	if (IsOnPlatform(actorShape, actorVelocity) )
+	if (IsOnPlatform(actorShape, actorVelocity))
 	{
 		actorVelocity.y = 0.0f;
 		actorShape.bottom = m_Shape.bottom + m_Shape.height;
+
 		std::cout << "IsOnPlatform" << std::endl;
+
 		return;
 	}
+
+	if (IsUnderPlatform(actorShape, actorVelocity) && actorVelocity.y > 0)
+	{
+		const float delta = 2.f;
+
+		actorVelocity.y = 0.0f;
+		actorShape.bottom = m_Shape.bottom - actorShape.height - delta;
+
+		std::cout << "IsUnderPlatform" << std::endl;
+
+		return;
+	}
+
 	if (isCollidingRight(actorShape, actorVelocity))
 	{
-		actorVelocity.y = 0.0f;
+		const float delta = 2.f;
+
+		actorVelocity.x = 0;
+
+		actorShape.left = m_Shape.left + m_Shape.width + delta;
+
 		std::cout << "isCollidingRight" << std::endl;
-		actorShape.left = m_Shape.left + m_Shape.width;
+
 		return;
 	}
 	if (isCollidingLeft(actorShape, actorVelocity))
 	{
-		actorVelocity.y = 0.0f;
+		const float delta = 2.f;
+
+		actorVelocity.x = 0;
+
+		actorShape.left = m_Shape.left - actorShape.width - delta;
+
 		std::cout << "isCollidingLeft" << std::endl;
-		actorShape.left = m_Shape.left - actorShape.width;
+
 		return;
 	}
 }
@@ -56,48 +74,56 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)const
 bool Platform::IsOnPlatform(const Rectf& actorShape, const Vector2f& actorVelocity)const
 {
 
-	bool isOnPlatform
+	const float delta = 2.f;
+
+	const bool isOnPlatform
 	{
-		m_Shape.bottom + m_Shape.height <= actorShape.bottom &&
-		m_Shape.left <= actorShape.left + actorShape.width &&
-		m_Shape.left + m_Shape.width >= actorShape.left
+		actorShape.left + actorShape.width >= m_Shape.left &&
+		actorShape.left <= m_Shape.left + m_Shape.width &&
+		actorShape.bottom - m_Shape.bottom - m_Shape.height <= delta &&
+		actorShape.bottom - m_Shape.bottom - m_Shape.height >= -delta
 	};
 
-	return (actorVelocity.y <= 0.0f && isOnPlatform);
+	return isOnPlatform;
 }
 bool Platform::IsUnderPlatform(const Rectf& actorShape, const Vector2f& actorVelocity)const
 {
-	
-	bool isUnderPlatform
+	const float delta = 2.f;
+
+	const bool isUnderPlatform
 	{
-		m_Shape.bottom >= actorShape.bottom + actorShape.height &&
-		m_Shape.left <= actorShape.left	+ actorShape.width &&
-        m_Shape.left + m_Shape.width >= actorShape.left
+		actorShape.left + actorShape.width >= m_Shape.left &&
+		actorShape.left <= m_Shape.left + m_Shape.width &&
+		m_Shape.bottom - actorShape.bottom - actorShape.height >= -delta &&
+		m_Shape.bottom - actorShape.bottom - actorShape.height <= delta
 	};
 
-	return (actorVelocity.y >= 0.0f && isUnderPlatform);
+	return isUnderPlatform;
 }
 bool Platform::isCollidingRight(const Rectf& actorShape, const Vector2f& actorVelocity)const
 {
-	
-	bool isCollidingRight
+	const float delta = 2.f;
+
+	const bool isCollidingRight
 	{
-		m_Shape.left + m_Shape.width >= actorShape.left &&
-		m_Shape.bottom + m_Shape.height <= actorShape.bottom &&
-		m_Shape.bottom  >= actorShape.bottom +  actorShape.height
+		actorShape.bottom <= m_Shape.bottom + m_Shape.height &&
+		actorShape.bottom + actorShape.height >= m_Shape.bottom &&
+		m_Shape.left + m_Shape.width - actorShape.left <= delta &&
+		m_Shape.left + m_Shape.width - actorShape.left >= -delta
 	};
 
-	return (isCollidingRight);
+	return isCollidingRight;
 }
 bool Platform::isCollidingLeft(const Rectf& actorShape, const Vector2f& actorVelocity)const
 {
-	//rect1.left <= rect2.right && rect1.top <= rect2.bottom && rect1.bottom >= rect2.top
+	const float delta = 2.f;
 
-	bool isCollidingLeft
+	const bool isCollidingLeft
 	{
-		actorShape.left  <= m_Shape.left + m_Shape.width &&
-		actorShape.bottom + actorShape.height <= m_Shape.bottom &&
-		actorShape.bottom >= m_Shape.bottom + m_Shape.height
+		actorShape.bottom <= m_Shape.bottom + m_Shape.height &&
+		actorShape.bottom + actorShape.height >= m_Shape.bottom &&
+		m_Shape.left - actorShape.width - actorShape.left <= delta &&
+		m_Shape.left - actorShape.width - actorShape.left >= -delta
 	};
 
 	return (isCollidingLeft);
