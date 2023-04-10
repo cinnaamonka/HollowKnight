@@ -12,6 +12,9 @@ public:
 	Platform(const Point2f& bottomLeft);
 	void Draw()const;
 	void HandleCollision(Rectf& actorShape,Vector2f& actorVelocity)const;
-	bool IsOnGround(const Rectf& actorShape,const Vector2f& actorVelocity)const;
+	bool IsOnPlatform(const Rectf& actorShape,const Vector2f& actorVelocity)const;
+	bool IsUnderPlatform(const Rectf& actorShape, const Vector2f& actorVelocity)const;
+	bool isCollidingRight(const Rectf& actorShape, const Vector2f& actorVelocity)const;
+	bool isCollidingLeft(const Rectf& actorShape, const Vector2f& actorVelocity)const;
 };
 

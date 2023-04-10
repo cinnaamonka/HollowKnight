@@ -46,4 +46,5 @@ private:
 	void ChangePosition(Level& level);
 	float m_PreviousPositionX;
 	
+	bool isMovingRight;
 };

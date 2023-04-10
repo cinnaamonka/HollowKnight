@@ -9,9 +9,9 @@ class Texture;
 Avatar::Avatar() :
 	m_ClipHeight{},
 	m_ClipWidth{},
-	m_Shape{2162, 5500, 0,0 },
+	m_Shape{ 2162, 5500, 0,0 },
 	m_HorSpeed{ 800 },
-	m_JumpSpeed{ 600.0f },
+	m_JumpSpeed{ 650.0f },
 	m_Velocity{ 0.0f, 0.0f },
 	m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin },
@@ -22,7 +22,9 @@ Avatar::Avatar() :
 	m_NrOfFrames{ 12 },
 	m_NrFramesPerSec{ 1 },
 	m_AnimTime{ 0 },
-	m_AnimFrame{ 0 }
+	m_AnimFrame{ 0 },
+	isMovingRight{ true }
+	
 
 {
 	m_pSpritesTexture = new Texture{ "Knight.png" };
@@ -37,6 +39,7 @@ Avatar::Avatar() :
 
 void Avatar::Update(float elapsedSec, Level& level)
 {
+
 	level.HandleCollision(m_Shape, m_Velocity);
 
 	CheckState(level);
@@ -44,8 +47,8 @@ void Avatar::Update(float elapsedSec, Level& level)
 	UpdateFrame(elapsedSec);
 
 	ChangePosition(level);
-
-	if (ActionState::transforming != m_ActionState && !level.IsOnGround(m_Shape, m_Velocity)) {
+	
+	if (!level.IsOnGround(m_Shape, m_Velocity) && ActionState::transforming != m_ActionState){
 		MoveAvatar(elapsedSec);
 
 		return;
@@ -83,7 +86,7 @@ void Avatar::Update(float elapsedSec, Level& level)
 void Avatar::Draw() const
 {
 	//to make the character flip during running to the left
-	if (m_Velocity.x < 0)
+	if (!isMovingRight)
 	{
 		glPushMatrix();
 
@@ -94,9 +97,21 @@ void Avatar::Draw() const
 		m_pSpritesTexture->Draw(Point2f(0, 0), m_SourceRect);
 
 		glPopMatrix();
-
+		utils::DrawRect(m_Shape);
 		return;
 	}
+	float borderDist{ 5.f };
+
+	const Point2f ray1{ m_Shape.left + borderDist, m_Shape.bottom + m_Shape.height / 2 };
+	const Point2f ray2{ m_Shape.left + borderDist, m_Shape.bottom + m_Shape.height };
+	const Point2f ray3{ m_Shape.left + m_Shape.width - borderDist, m_Shape.bottom + m_Shape.height / 2 };
+	const Point2f ray4{ m_Shape.left + m_Shape.width - borderDist, m_Shape.bottom + m_Shape.height };
+	const Point2f ray5{ m_Shape.left, m_Shape.bottom + m_Shape.height - borderDist };
+	const Point2f ray6{ m_Shape.left + m_Shape.width,m_Shape.bottom + m_Shape.height - borderDist };
+	utils::DrawLine(ray1, ray2);
+	utils::DrawLine(ray3, ray4);
+	utils::DrawLine(ray5, ray6);
+	utils::DrawRect(m_Shape);
 	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
 }
 
@@ -121,14 +136,14 @@ void Avatar::CheckState(Level& level)
 	if (pStates[SDL_SCANCODE_RIGHT])
 	{
 		m_ActionState = ActionState::moving;
-
+		isMovingRight = true;
 		m_Velocity.x = m_HorSpeed;
 	}
 
 	if (pStates[SDL_SCANCODE_LEFT])
 	{
 		m_ActionState = ActionState::moving;
-
+		isMovingRight = false;
 		m_Velocity.x = -m_HorSpeed;
 	}
 

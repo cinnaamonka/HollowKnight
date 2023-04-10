@@ -42,6 +42,9 @@ private:
 	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 
 	bool isCollidingGround(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
+	bool isCollidingTop(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
+	
 	void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
+	void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 };
 
