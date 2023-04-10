@@ -8,7 +8,7 @@
 
 Level::Level()
 {
-	m_pPlatform = new Platform{ Point2f(200.0f,300.0f) };
+	m_pPlatform = new Platform{ Point2f(8076.0f,2070.0f) };
 	m_pBackground = new Texture{ "Background Variation3.png" };
 	m_pLevel = new Texture{ "HollowKnightLevel2.png" };
 	m_pForeground = new Texture{ "HollowKnight LevelForeground.png" };
@@ -44,8 +44,9 @@ void Level::DrawForeground()const
 
 	m_pForeground->Draw();
 	m_EndSignTexture->Draw(m_EndSignShape);
+	
 	m_pPlatform->Draw();
-	Test->Draw();
+
 }
 void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 {
@@ -78,7 +79,6 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 }
 
 
-
 bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 {
 	if (m_pPlatform->IsOnGround(actorShape, actorVelocity))
@@ -88,7 +88,6 @@ bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 		return true;
 	}
 
-	//ю б вел опхйнк?
 	utils::HitInfo hitInfo{};
 
 	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom - 1.0f);
@@ -102,10 +101,10 @@ Rectf Level::GetBoundaries()const
 	return m_Boundaries;
 }
 
-//врн щрн??????????????????????
+
 bool Level::HasReachedEnd(const Rectf& actorShape)
 {
-	//щрн????????
+
 	return false;
 }
 
@@ -143,8 +142,11 @@ bool Level::isCollidingGround(std::vector<Point2f>& ver, Rectf& actorShape, util
 
 void Level::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
+
 	const float verticalOffset{ 2.0f };
 
+	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset) return;
+	std::cout << actorShape.bottom << " " << hitInfo.intersectPoint.y << std::endl;
 	actorShape.bottom = hitInfo.intersectPoint.y - verticalOffset;
 	actorVelocity.y = 0.0f;
 }

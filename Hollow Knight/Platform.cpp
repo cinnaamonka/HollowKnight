@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Platform.h"
 #include "iostream"
+#include "utils.h"
 
 Platform::Platform(const Point2f& bottomLeft)
 {
@@ -15,6 +16,7 @@ Platform::Platform(const Point2f& bottomLeft)
 void Platform::Draw()const
 {
 	m_pTexture->Draw(m_Shape);
+	
 }
 
 void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)const

@@ -9,8 +9,8 @@ class Texture;
 Avatar::Avatar() :
 	m_ClipHeight{},
 	m_ClipWidth{},
-	m_Shape{ 2162, 5500, 0,0 },
-	m_HorSpeed{ 300 },
+	m_Shape{2162, 5500, 0,0 },
+	m_HorSpeed{ 800 },
 	m_JumpSpeed{ 600.0f },
 	m_Velocity{ 0.0f, 0.0f },
 	m_Acceleration{ 0, -981.0f },
@@ -82,11 +82,9 @@ void Avatar::Update(float elapsedSec, Level& level)
 
 void Avatar::Draw() const
 {
-	utils::DrawRect(m_Shape);
-	//to make the character flip during running to th left
+	//to make the character flip during running to the left
 	if (m_Velocity.x < 0)
 	{
-
 		glPushMatrix();
 
 		glTranslatef(m_Shape.left, m_Shape.bottom, 0);
@@ -98,7 +96,6 @@ void Avatar::Draw() const
 		glPopMatrix();
 
 		return;
-
 	}
 	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
 }
