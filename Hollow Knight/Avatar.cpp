@@ -48,7 +48,8 @@ void Avatar::Update(float elapsedSec, Level& level)
 
 	ChangePosition(level);
 	
-	if (!level.IsOnGround(m_Shape, m_Velocity) && ActionState::transforming != m_ActionState){
+	if (!level.IsOnGround(m_Shape, m_Velocity) && ActionState::transforming != m_ActionState)
+	{
 		MoveAvatar(elapsedSec);
 
 		return;
@@ -73,6 +74,7 @@ void Avatar::Update(float elapsedSec, Level& level)
 
 	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) || (m_Shape.left + m_Shape.width >= level.GetBoundaries().left + level.GetBoundaries().width && m_Velocity.x > 0))
 	{
+		
 		m_ActionState = ActionState::waiting;
 
 		return;
@@ -80,6 +82,7 @@ void Avatar::Update(float elapsedSec, Level& level)
 
 	MoveAvatar(elapsedSec);
 
+	std::cout << int(m_ActionState) << std::endl;
 	m_ActionState = ActionState::waiting;
 }
 

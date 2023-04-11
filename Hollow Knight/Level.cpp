@@ -15,6 +15,7 @@ Level::Level()
 	m_FenceBottomLeftl = Point2f(200, 190);
 	m_Boundaries = Rectf(0, 0, m_pLevel->GetWidth(), m_pLevel->GetHeight());
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
+
 	m_EndSignTexture = new Texture{ "EndSign.png" };
 	m_EndSignShape.left = 730.0f;
 	m_EndSignShape.bottom = 224.0f;
@@ -92,11 +93,13 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 {
-	if (m_pPlatform->IsOnPlatform(actorShape, actorVelocity) || m_pPlatform->IsUnderPlatform(actorShape, actorVelocity) || m_pPlatform->isCollidingLeft(actorShape, actorVelocity) || m_pPlatform->isCollidingRight(actorShape, actorVelocity))
+	std::cout << m_pPlatform->isColliding << std::endl;
+	if (m_pPlatform->isColliding)
 	{
+		m_pPlatform->HandleCollision(actorShape, actorVelocity);
 		return true;
 	}
-
+	
 	utils::HitInfo hitInfo{};
 
 	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom - 1.0f);

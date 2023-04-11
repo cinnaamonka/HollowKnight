@@ -28,6 +28,7 @@ public:
 	/*static isColliding m_IsColliding;*/
 private:
 	std::vector<std::vector<Point2f>> m_Vertices;
+
 	Texture* m_pLevel;
 	Texture* m_pForeground;
 	Point2f m_FenceBottomLeftl;
