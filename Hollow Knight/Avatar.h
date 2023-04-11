@@ -47,4 +47,6 @@ private:
 	float m_PreviousPositionX;
 	
 	bool m_IsMovingRight;
+	bool m_CanDoubleJump;
+	bool m_HasDoubleJumped;
 };

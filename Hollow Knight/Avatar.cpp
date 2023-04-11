@@ -3,6 +3,8 @@
 #include "utils.h"
 #include "iostream"
 #include "Texture.h"
+#include "chrono"
+#include "thread"
 
 class Texture;
 
@@ -10,8 +12,8 @@ Avatar::Avatar() :
 	m_ClipHeight{},
 	m_ClipWidth{},
 	m_Shape{ 2162, 5500, 0,0 },
-	m_HorSpeed{ 600 },
-	m_JumpSpeed{ 600.0f },
+	m_HorSpeed{ 500 },
+	m_JumpSpeed{ 500.0f },
 	m_Velocity{ 0.0f, 0.0f },
 	m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin },
@@ -23,8 +25,10 @@ Avatar::Avatar() :
 	m_NrFramesPerSec{ 1 },
 	m_AnimTime{ 0 },
 	m_AnimFrame{ 0 },
-	m_IsMovingRight{ true }
-	
+	m_IsMovingRight{ true },
+	m_CanDoubleJump{ false },
+	m_HasDoubleJumped{ false }
+
 
 {
 	m_pSpritesTexture = new Texture{ "Knight.png" };
@@ -39,7 +43,7 @@ Avatar::Avatar() :
 
 void Avatar::Update(float elapsedSec, Level& level)
 {
-	
+
 	level.HandleCollision(m_Shape, m_Velocity);
 
 	CheckState(level);
@@ -47,7 +51,7 @@ void Avatar::Update(float elapsedSec, Level& level)
 	UpdateFrame(elapsedSec);
 
 	ChangePosition(level);
-	
+
 	if (!level.IsOnGround(m_Shape, m_Velocity) && ActionState::transforming != m_ActionState)
 	{
 		MoveAvatar(elapsedSec);
@@ -74,7 +78,7 @@ void Avatar::Update(float elapsedSec, Level& level)
 
 	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) || (m_Shape.left + m_Shape.width >= level.GetBoundaries().left + level.GetBoundaries().width && m_Velocity.x > 0))
 	{
-		
+
 		m_ActionState = ActionState::waiting;
 
 		return;
@@ -82,6 +86,8 @@ void Avatar::Update(float elapsedSec, Level& level)
 
 	MoveAvatar(elapsedSec);
 
+	m_CanDoubleJump = false;
+	m_HasDoubleJumped = false;
 
 	m_ActionState = ActionState::waiting;
 }
@@ -105,7 +111,7 @@ void Avatar::Draw() const
 	}
 	float borderDist{ 5.f };
 
-	
+
 	utils::DrawRect(m_Shape);
 	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
 }
@@ -124,7 +130,7 @@ Rectf Avatar::GetShape()const
 
 void Avatar::CheckState(Level& level)
 {
-	
+
 	if (m_ActionState == ActionState::begin) return;
 
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
@@ -143,12 +149,33 @@ void Avatar::CheckState(Level& level)
 		m_Velocity.x = -m_HorSpeed;
 	}
 
-	if (pStates[SDL_SCANCODE_UP] && level.IsOnGround(m_Shape, m_Velocity))
-	{
-		
-		m_ActionState = ActionState::jumping;
 
+	// handle single jump
+	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && level.IsOnGround(m_Shape, m_Velocity)) {
+
+		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
+
+		std::thread timer([&]() {
+			std::this_thread::sleep_for(std::chrono::milliseconds(300));
+			m_CanDoubleJump = true;
+			});
+
+		timer.detach();
+
+		return;
+	}
+
+	// handle double jump
+	if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped) {
+
+		m_ActionState = ActionState::jumping;
+		m_Velocity.y = m_JumpSpeed;
+
+		m_HasDoubleJumped = true;
+		m_CanDoubleJump = false;
+
+		return;
 	}
 }
 
@@ -158,7 +185,7 @@ void Avatar::MoveAvatar(float elapsedSec)
 
 	if (m_ActionState == ActionState::moving)
 	{
-		
+
 		m_PreviousPositionX = m_Shape.left;
 		m_Shape.left += m_Velocity.x * elapsedSec;
 	}
