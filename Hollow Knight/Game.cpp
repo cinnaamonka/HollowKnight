@@ -85,6 +85,7 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 {
+
 }
 
 void Game::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
@@ -97,6 +98,7 @@ void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 
 void Game::ProcessMouseUpEvent(const SDL_MouseButtonEvent& e)
 {
+
 }
 
 void Game::ClearBackground() const

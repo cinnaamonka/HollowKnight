@@ -23,7 +23,7 @@ Avatar::Avatar() :
 	m_NrFramesPerSec{ 1 },
 	m_AnimTime{ 0 },
 	m_AnimFrame{ 0 },
-	isMovingRight{ true }
+	m_IsMovingRight{ true }
 	
 
 {
@@ -39,7 +39,7 @@ Avatar::Avatar() :
 
 void Avatar::Update(float elapsedSec, Level& level)
 {
-
+	
 	level.HandleCollision(m_Shape, m_Velocity);
 
 	CheckState(level);
@@ -89,7 +89,7 @@ void Avatar::Update(float elapsedSec, Level& level)
 void Avatar::Draw() const
 {
 	//to make the character flip during running to the left
-	if (!isMovingRight)
+	if (!m_IsMovingRight)
 	{
 		glPushMatrix();
 
@@ -106,14 +106,6 @@ void Avatar::Draw() const
 	float borderDist{ 5.f };
 
 	
-	const Point2f ray1{ m_Shape.left + borderDist, m_Shape.bottom };
-	const Point2f ray2{ m_Shape.left + borderDist, m_Shape.bottom + m_Shape.height };
-
-	const Point2f ray3{ m_Shape.left + m_Shape.width - borderDist, m_Shape.bottom };
-	const Point2f ray4{ m_Shape.left + m_Shape.width - borderDist, m_Shape.bottom + m_Shape.height };
-
-	utils::DrawLine(ray1, ray2);
-	utils::DrawLine(ray3, ray4);
 	utils::DrawRect(m_Shape);
 	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
 }
@@ -132,6 +124,7 @@ Rectf Avatar::GetShape()const
 
 void Avatar::CheckState(Level& level)
 {
+	
 	if (m_ActionState == ActionState::begin) return;
 
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
@@ -139,19 +132,20 @@ void Avatar::CheckState(Level& level)
 	if (pStates[SDL_SCANCODE_RIGHT])
 	{
 		m_ActionState = ActionState::moving;
-		isMovingRight = true;
+		m_IsMovingRight = true;
 		m_Velocity.x = m_HorSpeed;
 	}
 
 	if (pStates[SDL_SCANCODE_LEFT])
 	{
 		m_ActionState = ActionState::moving;
-		isMovingRight = false;
+		m_IsMovingRight = false;
 		m_Velocity.x = -m_HorSpeed;
 	}
 
 	if (pStates[SDL_SCANCODE_UP] && level.IsOnGround(m_Shape, m_Velocity))
 	{
+		
 		m_ActionState = ActionState::jumping;
 
 		m_Velocity.y = m_JumpSpeed;
