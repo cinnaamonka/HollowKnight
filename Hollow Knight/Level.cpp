@@ -73,7 +73,7 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 		if (isCollidingTop(ver, actorShape, hitInfo))
 		{
-
+			std::cout << "isColliding" << std::endl;
 			ResetTopPosition(actorVelocity, actorShape, hitInfo);
 
 			return;
@@ -93,10 +93,9 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 {
-	std::cout << m_pPlatform->isColliding << std::endl;
+  
 	if (m_pPlatform->isColliding)
 	{
-		m_pPlatform->HandleCollision(actorShape, actorVelocity);
 		return true;
 	}
 	

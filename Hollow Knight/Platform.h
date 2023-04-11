@@ -18,12 +18,12 @@ public:
 	void HandleCollision(Rectf& actorShape,Vector2f& actorVelocity);
 	bool IsOnPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
 	bool IsUnderPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
-	bool isCollidingRight(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
-	bool isCollidingLeft(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
+	bool isCollidingWalls(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
+
 	
 	void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-
+	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	bool isColliding;
 };
 

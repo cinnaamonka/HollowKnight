@@ -82,7 +82,7 @@ void Avatar::Update(float elapsedSec, Level& level)
 
 	MoveAvatar(elapsedSec);
 
-	std::cout << int(m_ActionState) << std::endl;
+
 	m_ActionState = ActionState::waiting;
 }
 
@@ -105,15 +105,15 @@ void Avatar::Draw() const
 	}
 	float borderDist{ 5.f };
 
-	const Point2f ray1{ m_Shape.left + borderDist, m_Shape.bottom + m_Shape.height / 2 };
+	
+	const Point2f ray1{ m_Shape.left + borderDist, m_Shape.bottom };
 	const Point2f ray2{ m_Shape.left + borderDist, m_Shape.bottom + m_Shape.height };
-	const Point2f ray3{ m_Shape.left + m_Shape.width - borderDist, m_Shape.bottom + m_Shape.height / 2 };
+
+	const Point2f ray3{ m_Shape.left + m_Shape.width - borderDist, m_Shape.bottom };
 	const Point2f ray4{ m_Shape.left + m_Shape.width - borderDist, m_Shape.bottom + m_Shape.height };
-	const Point2f ray5{ m_Shape.left, m_Shape.bottom + m_Shape.height - borderDist };
-	const Point2f ray6{ m_Shape.left + m_Shape.width,m_Shape.bottom + m_Shape.height - borderDist };
+
 	utils::DrawLine(ray1, ray2);
 	utils::DrawLine(ray3, ray4);
-	utils::DrawLine(ray5, ray6);
 	utils::DrawRect(m_Shape);
 	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
 }
@@ -164,6 +164,7 @@ void Avatar::MoveAvatar(float elapsedSec)
 
 	if (m_ActionState == ActionState::moving)
 	{
+		
 		m_PreviousPositionX = m_Shape.left;
 		m_Shape.left += m_Velocity.x * elapsedSec;
 	}

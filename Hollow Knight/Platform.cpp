@@ -37,10 +37,32 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 	for (std::vector<Point2f>& ver : m_PlatformVertices)
 	{
-	
-		if (IsOnPlatform(ver, actorShape, hitInfo))
+		std::cout << m_PlatformVertices[0].
+		if (isCollidingWalls(ver, actorShape, hitInfo))
 		{
-			
+			std::cout << "isCollidingWall" << std::endl;
+			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
+			isColliding = true;
+
+			if (IsOnPlatform(ver, actorShape, hitInfo)) ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
+
+			return;
+		}
+
+		if (IsUnderPlatform(ver, actorShape, hitInfo) && actorVelocity.y > 0)
+		{
+			std::cout << "IsUnderPlatform" << std::endl;
+			ResetTopPosition(actorVelocity, actorShape, hitInfo);
+
+			isColliding = true;
+
+
+			return;
+		}
+
+		if (IsOnPlatform(ver, actorShape, hitInfo) && actorVelocity.y < 0)
+		{
+			std::cout << "IsOnPlatform" << std::endl;
 			ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
 			
 			isColliding = true;
@@ -48,44 +70,9 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 			return;
 		}
 
-		if (IsUnderPlatform(ver, actorShape, hitInfo))
-		{
-			std::cout << "isunder" << std::endl;
-			ResetTopPosition(actorVelocity, actorShape, hitInfo);
-			isColliding = true;
-			
-
-			return;
-		}
-
-		if (isCollidingRight(ver, actorShape, hitInfo))
-		{
-			const float delta = 2.f;
-
-			actorVelocity.x = 0;
-
-			actorShape.left = m_Shape.left + m_Shape.width + delta;
-
 		
-
-			isColliding = true;
-
-			return;
-		}
-		if (isCollidingLeft(ver, actorShape, hitInfo))
-		{
-			const float delta = 2.f;
-
-			actorVelocity.x = 0;
-
-			actorShape.left = m_Shape.left - actorShape.width - delta;
-
-			
-
-			isColliding = true;
-
-			return;
-		}
+		
+		
 	
 	}
 	isColliding = false;
@@ -111,43 +98,22 @@ bool Platform::IsUnderPlatform(std::vector<Point2f>& ver, Rectf& actorShape, uti
 	const Point2f ray3{ actorShape.left + actorShape.width - borderDist, actorShape.bottom };
 	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
 
-
-	const Point2f ray5{ actorShape.left, actorShape.bottom + actorShape.height - borderDist };
-	const Point2f ray6{ actorShape.left + actorShape.width,actorShape.bottom + actorShape.height - borderDist };
-
-	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo) || utils::Raycast(ver, ray5, ray6, hitInfo);
+	return utils::Raycast(ver, ray2, ray1, hitInfo) || utils::Raycast(ver, ray4, ray3, hitInfo);
 }
-bool Platform::isCollidingRight(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Platform::isCollidingWalls(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-	const float delta = 2.f;
 
-	const float offset = 5.0f;
+	float borderDist{ 5.f };
+	const Point2f ray1{ actorShape.left, actorShape.bottom + borderDist };
+	const Point2f ray2{ actorShape.left + actorShape.width, actorShape.bottom + borderDist };
 
-	const bool isCollidingRight
-	{
-		actorShape.bottom <= m_Shape.bottom + m_Shape.height &&
-		actorShape.bottom + actorShape.height >= m_Shape.bottom &&
-		m_Shape.left + m_Shape.width - actorShape.left <= delta &&
-		m_Shape.left + m_Shape.width - actorShape.left >= -delta
-	};
+	const Point2f ray3{ actorShape.left , actorShape.bottom + actorShape.height - borderDist };
+	const Point2f ray4{ actorShape.left + actorShape.width, actorShape.bottom + actorShape.height - borderDist };
 
-	return isCollidingRight;
+	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
 }
 
-bool Platform::isCollidingLeft(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const
-{
-	const float delta = 2.f;
 
-	const bool isCollidingLeft
-	{
-		actorShape.bottom <= m_Shape.bottom + m_Shape.height &&
-		actorShape.bottom + actorShape.height >= m_Shape.bottom &&
-		m_Shape.left - actorShape.width - actorShape.left <= delta &&
-		m_Shape.left - actorShape.width - actorShape.left >= -delta
-	};
-
-	return (isCollidingLeft);
-}
 void Platform::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 
@@ -159,13 +125,27 @@ void Platform::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape,
 }
 void Platform::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-	std::cout << "kjikluh" << std::endl;
+	std::cout << actorShape.bottom + actorShape.height << ", " << hitInfo.intersectPoint.y << std::endl;
 	const float verticalOffset{ 2.0f };
 
 	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height + verticalOffset) return;
 	actorShape.bottom = hitInfo.intersectPoint.y - actorShape.height - verticalOffset;
 	actorVelocity.y = 0.0f;
-	actorVelocity.x = 0.0f;
+	
+}
+void Platform::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+{
+	if (actorVelocity.x >= 0)
+	{
+
+		std::cout << "Logs: collision with a right wall" << std::endl;
+		actorShape.left = hitInfo.intersectPoint.x - actorShape.width;
+	}
+	else {
+		std::cout << "Logs: collision with a left wall" << std::endl;
+		actorShape.left = hitInfo.intersectPoint.x;
+	}
+
 }
 
 
