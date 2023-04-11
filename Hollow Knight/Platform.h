@@ -24,6 +24,7 @@ public:
 	void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-	bool isColliding;
+	bool isOnPlatform;
+	bool isCollidingPlatform;
 };
 

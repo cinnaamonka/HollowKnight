@@ -1,7 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" id="svg590" width="10000" height="7000" viewBox="0 0 10000 7000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <g id="g596">
-    <image width="10000" height="7000" preserveAspectRatio="none" id="image598" xlink:href="HollowKnight%20Level2.png"/>
-    <path style="fill:#000000" d="M 8088.548 4891.467 L 8088.007 4846.425 L 8339.409 4846.604 L 8339.409 4892.7 L 8088.548 4891.467 Z" id="path608"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg444"
+   width="10000"
+   height="7000"
+   viewBox="0 0 10000 7000"
+   sodipodi:docname="platform.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs448" />
+  <sodipodi:namedview
+     id="namedview446"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="5.3097291"
+     inkscape:cx="8191.19"
+     inkscape:cy="4826.7999"
+     inkscape:window-width="2560"
+     inkscape:window-height="1494"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g450" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g450">
+    <image
+       width="10000"
+       height="7000"
+       preserveAspectRatio="none"
+       xlink:href="HollowKnight%20Level2.png"
+       id="image452" />
+    <path
+       style="fill:#000000"
+       d="m 8086.4766,4890.8333 -1e-4,-60.0783 251.237,-0.5651 v 58.9484 z"
+       id="path454"
+       sodipodi:nodetypes="ccccc" />
   </g>
 </svg>

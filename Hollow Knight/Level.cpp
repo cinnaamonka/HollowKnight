@@ -52,6 +52,9 @@ void Level::DrawForeground()const
 void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 {
 	m_pPlatform->HandleCollision(actorShape, actorVelocity);
+	
+	if (m_pPlatform->isCollidingPlatform && IsOnGround(actorShape, actorVelocity)) return;
+	
 
 	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom);
 	Point2f ray2(actorShape.left + actorShape.width / 2, actorShape.bottom + actorShape.height);
@@ -64,6 +67,7 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 	{
 		if (isCollidingWalls(ver, ray3, ray4, hitInfo))
 		{
+			
 			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
 
 			if (isCollidingGround(ver, actorShape, hitInfo)) ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
@@ -94,7 +98,7 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 {
     //std::cout << m_pPlatform->isColliding << std::endl;
-	if (m_pPlatform->isColliding)
+	if (m_pPlatform->isOnPlatform)
 	{
 		return true;
 	}
@@ -121,6 +125,7 @@ bool Level::HasReachedEnd(const Rectf& actorShape)
 
 bool Level::isCollidingWalls(std::vector<Point2f>& ver, Point2f& p1, const Point2f& p2, utils::HitInfo& hitInfo)
 {
+    std::cout << "Level walls" << std::endl;
 	return utils::Raycast(ver, p1, p2, hitInfo);
 }
 
