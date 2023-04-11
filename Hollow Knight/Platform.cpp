@@ -9,20 +9,19 @@ Platform::Platform(const Point2f& bottomLeft) :
 {
 	m_pTexture = new Texture{ "platform.png" };
 	SVGParser::GetVerticesFromSvgFile("platform.svg", m_PlatformVertices);
-	m_Shape.left = m_PlatformVertices[0][0].x;
-	m_Shape.bottom = m_PlatformVertices[0][0].y;
-	m_Shape.width = 251.24f;
-	m_Shape.height = 60.64f;
+	m_Shape.left = bottomLeft.x - 10.0f;
+	m_Shape.bottom = bottomLeft.y + m_pTexture->GetHeight()/4;
+	m_Shape.width = m_pTexture->GetWidth() + 20;
+	m_Shape.height = m_pTexture->GetHeight();
 
 }
 
 void Platform::Draw()const
 {
 	m_pTexture->Draw(m_Shape);
-	/*utils::SetColor(Color4f(1.0f, 0.0f, 0.0f, 1.0f));
-	utils::DrawRect(m_Shape);*/
+	
 	utils::SetColor(Color4f(1.0f, 1.0f, 1.0f, 1.0f));
-	utils::DrawRect(m_PlatformVertices[0][0], 251.24f, 60.64f);
+	
 }
 
 void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)

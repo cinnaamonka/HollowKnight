@@ -106,25 +106,11 @@ void Avatar::Draw() const
 		m_pSpritesTexture->Draw(Point2f(0, 0), m_SourceRect);
 
 		glPopMatrix();
-		utils::DrawRect(m_Shape);
+		
 		return;
 	}
-	float borderDist{ 5.f };
-	const Point2f ray1{ m_Shape.left, m_Shape.bottom + borderDist };
-	const Point2f ray2{ m_Shape.left + m_Shape.width, m_Shape.bottom + borderDist };
 
-	const Point2f ray3{ m_Shape.left , m_Shape.bottom + m_Shape.height - borderDist };
-	const Point2f ray4{ m_Shape.left + m_Shape.width, m_Shape.bottom + m_Shape.height - borderDist };
-
-	const Point2f ray5{ m_Shape.left , m_Shape.bottom + m_Shape.height / 2 };
-	const Point2f ray6{ m_Shape.left + m_Shape.width, m_Shape.bottom + m_Shape.height / 2 };
-
-
-	utils::DrawLine(ray1, ray2);
-	utils::DrawLine(ray3, ray4);
-	utils::DrawLine(ray5, ray6);
-
-	utils::DrawRect(m_Shape);
+	//utils::DrawRect(m_Shape);
 	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
 }
 
