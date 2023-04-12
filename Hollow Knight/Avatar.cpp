@@ -104,13 +104,13 @@ void Avatar::Draw() const
 		glScalef(-1, 1, 1);
 		glTranslatef(-m_Shape.width, 0, 0);
 		m_pSpritesTexture->Draw(Point2f(0, 0), m_SourceRect);
-
+	
 		glPopMatrix();
-		
+		utils::DrawRect(m_Shape);
 		return;
 	}
 
-	//utils::DrawRect(m_Shape);
+	utils::DrawRect(m_Shape);
 	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
 }
 

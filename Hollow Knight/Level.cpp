@@ -45,7 +45,7 @@ void Level::DrawForeground()const
 
 	m_pForeground->Draw();
 	m_EndSignTexture->Draw(m_EndSignShape);
-	//Test->Draw();
+	Test->Draw();
 	m_pPlatform->Draw();
 
 }
@@ -108,7 +108,7 @@ bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom - 1.0f);
 	Point2f ray2(actorShape.left + actorShape.width / 2, actorShape.bottom + actorShape.height);
 
-	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo);
+	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[0], ray2, ray1, hitInfo);
 }
 
 Rectf Level::GetBoundaries()const

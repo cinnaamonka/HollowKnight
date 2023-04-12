@@ -21,7 +21,7 @@ void Platform::Draw()const
 	m_pTexture->Draw(m_Shape);
 	
 	utils::SetColor(Color4f(1.0f, 1.0f, 1.0f, 1.0f));
-	utils::DrawRect(m_PlatformVertices[3][3], 127.0f, 134.0f);
+
 }
 
 void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
