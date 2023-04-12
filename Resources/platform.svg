@@ -3,7 +3,7 @@
 
 <svg
    version="1.1"
-   id="svg444"
+   id="svg442"
    width="10000"
    height="7000"
    viewBox="0 0 10000 7000"
@@ -15,9 +15,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs448" />
+     id="defs446" />
   <sodipodi:namedview
-     id="namedview446"
+     id="namedview444"
      pagecolor="#505050"
      bordercolor="#eeeeee"
      borderopacity="1"
@@ -26,29 +26,44 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#505050"
      showgrid="false"
-     inkscape:zoom="5.3097291"
-     inkscape:cx="8191.19"
-     inkscape:cy="4826.7999"
-     inkscape:window-width="2560"
-     inkscape:window-height="1494"
-     inkscape:window-x="-11"
-     inkscape:window-y="-11"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="g450" />
+     inkscape:zoom="1.2066905"
+     inkscape:cx="8420.5521"
+     inkscape:cy="4406.681"
+     inkscape:window-width="2414"
+     inkscape:window-height="1481"
+     inkscape:window-x="-9"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g448" />
   <g
      inkscape:groupmode="layer"
      inkscape:label="Image"
-     id="g450">
+     id="g448">
     <image
        width="10000"
        height="7000"
        preserveAspectRatio="none"
-       xlink:href="HollowKnight%20Level2.png"
-       id="image452" />
+       xlink:href="../../resources/findMe.png"
+       id="image450" />
     <path
        style="fill:#000000"
-       d="m 8086.4766,4890.8333 -1e-4,-60.0783 251.237,-0.5651 v 58.9484 z"
-       id="path454"
-       sodipodi:nodetypes="ccccc" />
+       d="m 8091.1391,4889.2672 -1.3109,-58.6603 246.111,-1.9663 0.3277,61.6097 z"
+       id="path252" />
+    <path
+       style="fill:#000000"
+       d="m 8486.9803,4601.4887 4.9156,133.7061 122.8917,-1.9663 -5.2434,-132.0675 z"
+       id="path254" />
+    <path
+       style="fill:#000000"
+       d="m 8611.8382,4205.7005 -259.5472,2.9494 -0.6554,-70.4579 255.6146,0.9831 z"
+       id="path256" />
+    <path
+       style="fill:#000000"
+       d="m 8829.2436,4418.8481 -146.9976,0.9443 -0.3148,-42.494 148.2567,0.3148 z"
+       id="path258" />
+    <path
+       style="fill:#000000"
+       d="m 7914.7955,4167.6755 1.7806,123.3071 132.6553,-1.3355 -2.6709,-123.7522 z"
+       id="path260" />
   </g>
 </svg>
