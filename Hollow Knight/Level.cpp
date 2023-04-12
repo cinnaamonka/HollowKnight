@@ -8,7 +8,7 @@
 
 Level::Level()
 {
-	m_pPlatform = new Platform{ Point2f(8076.0f,2070.0f) };
+	m_pPlatform = new Platform{ Point2f(8088.0f,2070.0f) };
 	m_pBackground = new Texture{ "Background Variation3.png" };
 	m_pLevel = new Texture{ "HollowKnightLevel2.png" };
 	m_pForeground = new Texture{ "HollowKnight LevelForeground.png" };
@@ -45,7 +45,7 @@ void Level::DrawForeground()const
 
 	m_pForeground->Draw();
 	m_EndSignTexture->Draw(m_EndSignShape);
-	Test->Draw();
+	//Test->Draw();
 	m_pPlatform->Draw();
 
 }
@@ -108,7 +108,7 @@ bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom - 1.0f);
 	Point2f ray2(actorShape.left + actorShape.width / 2, actorShape.bottom + actorShape.height);
 
-	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo);
+	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo);
 }
 
 Rectf Level::GetBoundaries()const
