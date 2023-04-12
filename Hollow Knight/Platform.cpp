@@ -122,7 +122,7 @@ void Platform::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape,
 	const float verticalOffset{ 2.0f };
 
 	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset) return;
-	actorShape.bottom = hitInfo.intersectPoint.y;
+	actorShape.bottom = hitInfo.intersectPoint.y - verticalOffset;
 	actorVelocity.y = 0.0f;
 }
 void Platform::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
