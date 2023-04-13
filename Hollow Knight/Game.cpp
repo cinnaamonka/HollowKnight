@@ -10,7 +10,7 @@
 #include <utils.h>
 
 Game::Game(const Window& window)
-	:BaseGame{ window }
+	:BaseGame{ window }, m_EndReached(false)
 {
 	Initialize();
 }

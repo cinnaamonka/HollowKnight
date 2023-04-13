@@ -48,11 +48,8 @@ private:
 	// DATA MEMBERS
 
 	Avatar *m_pAvatar;
-
 	PowerUpManager * m_pPowerUpManager;
-	
 	Level *m_pLevel;
-
 	Camera* m_Camera;
 	Hud* m_Hud;
 	

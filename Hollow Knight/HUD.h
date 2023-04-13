@@ -7,6 +7,8 @@ class Hud
 public:
 
 	Hud(const Point2f& topLeft, int totalPowerUps);
+	~Hud();
+
 	void Draw();
 	void PowerUpHit();
 

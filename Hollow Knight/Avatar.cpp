@@ -48,7 +48,6 @@ void Avatar::Update(float elapsedSec, Level *pLevel)
 		return;
 	}
 
-
 	if (ActionState::transforming == m_ActionState)
 	{
 		m_AccuTransformSec += elapsedSec;
@@ -65,10 +64,11 @@ void Avatar::Update(float elapsedSec, Level *pLevel)
 	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
 		return;
 
-	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) || 
-		(m_Shape.left + m_Shape.width >= pLevel->GetBoundaries().left + pLevel->GetBoundaries().width && m_Velocity.x > 0))
-	{
+	const Rectf bounds = pLevel->GetBoundaries();
 
+	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) || 
+		(m_Shape.left + m_Shape.width >= bounds.left + bounds.width && m_Velocity.x > 0))
+	{
 		m_ActionState = ActionState::waiting;
 
 		return;
@@ -96,19 +96,18 @@ void Avatar::Draw() const
 		m_pSpritesTexture->Draw(Point2f(0, 0), m_SourceRect);
 
 		glPopMatrix();
-
-		return;
 	}
-
-	utils::DrawRect(m_Shape);
-	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
+	else
+	{
+		utils::DrawRect(m_Shape);
+		m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
+	}
 }
 
 void Avatar::PowerUpHit()
 {
 	m_Power++;
 	//m_ActionState = ActionState::transforming;
-
 }
 
 Rectf Avatar::GetShape()const
@@ -118,7 +117,6 @@ Rectf Avatar::GetShape()const
 
 void Avatar::CheckState(const Level* pLevel)
 {
-
 	if (m_ActionState == ActionState::begin) 
 		return;
 
@@ -138,10 +136,9 @@ void Avatar::CheckState(const Level* pLevel)
 		m_Velocity.x = -m_HorSpeed;
 	}
 
-
 	// handle single jump
-	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(m_Shape, m_Velocity)) {
-
+	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(m_Shape, m_Velocity)) 
+	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
 
@@ -156,8 +153,8 @@ void Avatar::CheckState(const Level* pLevel)
 	}
 
 	// handle double jump
-	if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped) {
-
+	if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped) 
+	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
 

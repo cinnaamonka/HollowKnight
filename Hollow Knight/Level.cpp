@@ -5,8 +5,6 @@
 #include <utils.h>
 #include <iostream>
 
-//isColliding Level::m_IsColliding = isColliding::none;
-
 Level::Level()
 {
 	m_pPlatform = new Platform{ Point2f(8088.0f,2070.0f) };
@@ -23,7 +21,6 @@ Level::Level()
 	m_EndSignShape.width = m_EndSignTexture->GetWidth();
 	m_EndSignShape.height = m_EndSignTexture->GetHeight();
 	Test = new Texture{ "Level1.png" };
-	//  Level::m_IsColliding = isColliding::none;
 }
 Level::~Level()
 {
@@ -67,9 +64,9 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 	Point2f ray3(actorShape.left, actorShape.bottom + actorShape.height / 2);
 	Point2f ray4(actorShape.left + actorShape.width, actorShape.bottom + actorShape.height / 2);
 
-	utils::HitInfo hitInfo{};
+	utils::HitInfo hitInfo;
 
-	for (std::vector<Point2f>& ver : m_Vertices)
+	for (const std::vector<Point2f>& ver : m_Vertices)
 	{
 		if (isCollidingWalls(ver, ray3, ray4, hitInfo))
 		{
@@ -78,35 +75,28 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 			if (isCollidingGround(ver, actorShape, hitInfo)) 
 				ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
 
-			return;
+			break;
 		}
-
-		if (isCollidingTop(ver, actorShape, hitInfo))
+		else if (isCollidingTop(ver, actorShape, hitInfo))
 		{
-
 			ResetTopPosition(actorVelocity, actorShape, hitInfo);
 
-			return;
+			break;
 		}
-
-		if (isCollidingGround(ver, actorShape, hitInfo))
+		else if (isCollidingGround(ver, actorShape, hitInfo))
 		{
 			ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
 
-			return;
+			break;
 		}
-
 	}
 }
-
 
 bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 {
     //std::cout << m_pPlatform->isColliding << std::endl;
 	if (m_pPlatform->isOnPlatform)
-	{
 		return true;
-	}
 	
 	utils::HitInfo hitInfo{};
 
@@ -124,7 +114,6 @@ Rectf Level::GetBoundaries()const
 
 bool Level::HasReachedEnd(const Rectf& actorShape)
 {
-
 	return false;
 }
 
@@ -169,7 +158,6 @@ void Level::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, 
 {
 	if (actorVelocity.x >= 0)
 	{
-
 		std::cout << "Logs: collision with a right wall" << std::endl;
 		actorShape.left = hitInfo.intersectPoint.x - actorShape.width;
 	}
