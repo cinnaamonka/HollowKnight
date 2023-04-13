@@ -1,18 +1,33 @@
 #pragma once
 #include "Level.h"
-#include "PowerUp.h"
+#include "Enemy.h"
 
 class Avatar
 {
 public:
+
 	Avatar();
-	void Update(float elapsedSec, Level& level);
+	~Avatar();
+
+	Avatar(const Avatar& other) = delete;
+	Avatar& operator=(const Avatar& other) = delete;
+	Avatar(Avatar&& other) = delete;
+	Avatar& operator=(Avatar&& other) = delete;
+
+	void Update(float elapsedSec, Level* pLevel);
 	void Draw() const;
 	void PowerUpHit();
-	Rectf GetShape()const;
-
+	Rectf GetShape() const;
 
 private:
+
+	void CheckState(const Level* pLevel);
+	void MoveAvatar(float elapsedSec);
+	void UpdateFrame(float elapsedSec);
+	void ChangePosition(const Level* pLevel);
+
+private:
+
 	enum class ActionState
 	{
 		waiting,
@@ -22,29 +37,29 @@ private:
 		begin
 	};
 
+	ActionState m_ActionState;
+
 	Rectf m_Shape;
-	float m_HorSpeed;
-	float m_JumpSpeed;
+	Rectf m_SourceRect;
+
 	Vector2f m_Velocity;
 	Vector2f m_Acceleration;
-	ActionState m_ActionState;
+
+	float m_HorSpeed;
+	float m_JumpSpeed;
 	float m_AccuTransformSec;
 	float m_MaxTransformSec;
-	int m_Power;
-	Texture* m_pSpritesTexture;
 	float m_ClipHeight;
 	float m_ClipWidth;
-	int   m_NrOfFrames;
-	int   m_NrFramesPerSec;
 	float m_AnimTime;
-	int m_AnimFrame;
-	
-	Rectf m_SourceRect;
-	void CheckState(Level& level);
-	void MoveAvatar(float elapsedSec);
-	void UpdateFrame(float elapsedSec);
-	void ChangePosition(Level& level);
 	float m_PreviousPositionX;
+
+	Texture* m_pSpritesTexture;
+	
+	int m_NrOfFrames;
+	int m_NrFramesPerSec;
+	int m_AnimFrame;
+	int m_Power;
 	
 	bool m_IsMovingRight;
 	bool m_CanDoubleJump;

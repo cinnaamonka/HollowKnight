@@ -111,6 +111,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,7 +157,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="PowerUp.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="PowerUpManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +168,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="Level.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Platform.h" />
-    <ClInclude Include="PowerUp.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="PowerUpManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

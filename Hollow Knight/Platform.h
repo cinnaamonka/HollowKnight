@@ -4,16 +4,15 @@
 #include "Vector2f.h"
 #include "SVGParser.h"
 #include "utils.h"
+
 class Texture;
 class Platform
 {
-private:
-	Rectf m_Shape;
-	Texture* m_pTexture;
-	std::vector<std::vector<Point2f>> m_PlatformVertices;
-	
 public:
+
 	Platform(const Point2f& bottomLeft);
+	~Platform();
+
 	void Draw()const;
 	void HandleCollision(Rectf& actorShape,Vector2f& actorVelocity);
 	bool IsOnPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
@@ -26,5 +25,10 @@ public:
 	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	bool isOnPlatform;
 	bool isCollidingPlatform;
+
+private:
+	Rectf m_Shape;
+	Texture* m_pTexture;
+	std::vector<std::vector<Point2f>> m_PlatformVertices;
 };
 

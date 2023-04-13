@@ -1,8 +1,14 @@
 #include "pch.h"
-#include <iostream>
+
 #include "Game.h"
-#include "utils.h"
 #include "Hud.h"
+#include "Avatar.h"
+#include "PowerUpManager.h"
+#include "Level.h"
+
+#include <iostream>
+#include <utils.h>
+
 Game::Game(const Window& window)
 	:BaseGame{ window }
 {
@@ -19,16 +25,24 @@ void Game::Initialize()
 	ShowTestMessage();
 	AddPowerUps();
 
+	m_pAvatar = new Avatar();
+	m_pPowerUpManager = new PowerUpManager();
 	m_Camera = new Camera{ GetViewPort().width,GetViewPort().height };
-	m_Camera->SetLevelBoundaries(m_Level.GetBoundaries());
+	m_pLevel = new Level();
+	m_Camera->SetLevelBoundaries(m_pLevel->GetBoundaries());
 	m_Hud = new Hud{ Point2f(10.0f,200.0f),3 };
+	
 	m_EndReached = false;
-	m_pPowerUp = new SoundEffect{ "powerUp.mp3" };
+	//m_pPowerUp = new SoundEffect{ "powerUp.mp3" };
 }
 
 void Game::Cleanup()
 {
-	delete m_pPowerUp;
+	delete m_pAvatar;
+	delete m_Camera;
+	delete m_Hud;
+	delete m_pPowerUpManager;
+	delete m_pLevel;
 }
 
 void Game::Update(float elapsedSec)
@@ -37,10 +51,10 @@ void Game::Update(float elapsedSec)
 
 	if (m_EndReached) return;
 
-	m_Avatar.Update(elapsedSec, m_Level);
-	m_PowerUpManager.Update(elapsedSec);
+	m_pAvatar->Update(elapsedSec, m_pLevel);
+	m_pPowerUpManager->Update(elapsedSec);
 
-	if (m_Level.HasReachedEnd(m_Avatar.GetShape()))
+	if (m_pLevel->HasReachedEnd(m_pAvatar->GetShape()))
 	{
 		m_EndReached = true;
 	}
@@ -52,21 +66,22 @@ void Game::Draw() const
 {
 	ClearBackground();
 
-
 	glPushMatrix();
 
-	m_Camera->Transform(m_Avatar.GetShape());
-
+	
+	m_Camera->Transform(m_pAvatar->GetShape(),true);
+	
 	glPushMatrix();
-
-	m_Level.DrawBackground();
+	glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.1f, 0.0f, 0.0f);
+	m_pLevel->DrawBackground();
 
 	glPopMatrix();
 
-	m_Avatar.Draw();
-	m_Level.DrawForeground();
+	m_pLevel->DrawMiddleground();
+	m_pAvatar->Draw();
+	m_pLevel->DrawForeground();
 
-	m_PowerUpManager.Draw();
+	m_pPowerUpManager->Draw();
 
 	glPopMatrix();
 
@@ -126,14 +141,14 @@ void Game::ShowTestMessage() const
 
 void Game::AddPowerUps()
 {
-	m_PowerUpManager.AddItem(Point2f{ 185.0f, 500 - 183.0f }, PowerUp::Type::brown);
-	m_PowerUpManager.AddItem(Point2f{ 435.0f, 500 - 133.0f }, PowerUp::Type::green);
-	m_PowerUpManager.AddItem(Point2f{ 685.0f, 500 - 183.0f }, PowerUp::Type::brown);
+	//m_PowerUpManager->AddItem(Point2f{ 2400,2100 });
+	/*m_PowerUpManager.AddItem(Point2f{ 435.0f, 500 - 133.0f }, PowerUp::Type::green);
+	m_PowerUpManager.AddItem(Point2f{ 685.0f, 500 - 183.0f }, PowerUp::Type::brown);*/
 }
 
 void Game::DoCollisionTests()
 {
-	if (m_PowerUpManager.HitItem(m_Avatar.GetShape()))
+	if (m_pPowerUpManager->HitItem(m_pAvatar->GetShape()))
 	{
 		//m_Hud->PowerUpHit();
 		//m_Avatar.PowerUpHit( );

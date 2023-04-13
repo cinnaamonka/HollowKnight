@@ -9,27 +9,12 @@
 class Texture;
 
 Avatar::Avatar() :
-	m_ClipHeight{},
-	m_ClipWidth{},
-	m_Shape{ 2162, 5500, 0,0 },
-	m_HorSpeed{ 500 },
-	m_JumpSpeed{ 500.0f },
-	m_Velocity{ 0.0f, 0.0f },
-	m_Acceleration{ 0, -981.0f },
-	m_ActionState{ ActionState::begin },
-	m_AccuTransformSec{ 0.0f },
-	m_MaxTransformSec{ 1.0f },
-	m_Power{ 0 },
-	m_PreviousPositionX{ m_Shape.left },
-	m_NrOfFrames{ 12 },
-	m_NrFramesPerSec{ 1 },
-	m_AnimTime{ 0 },
-	m_AnimFrame{ 0 },
-	m_IsMovingRight{ true },
-	m_CanDoubleJump{ false },
+	m_ClipHeight(0), m_ClipWidth(0), m_Shape{ 2162, 5500, 0,0 }, m_HorSpeed (500.0f),
+	m_JumpSpeed( 500.0f ), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
+	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
+	m_Power{ 0 }, m_PreviousPositionX{ m_Shape.left }, m_NrOfFrames{ 12 }, m_NrFramesPerSec{ 1 },
+	m_AnimTime{ 0 }, m_AnimFrame{ 0 }, m_IsMovingRight{ true }, m_CanDoubleJump{ false },
 	m_HasDoubleJumped{ false }
-
-
 {
 	m_pSpritesTexture = new Texture{ "Knight.png" };
 
@@ -41,18 +26,22 @@ Avatar::Avatar() :
 
 }
 
-void Avatar::Update(float elapsedSec, Level& level)
+Avatar::~Avatar()
 {
+	delete m_pSpritesTexture;
+}
 
-	level.HandleCollision(m_Shape, m_Velocity);
+void Avatar::Update(float elapsedSec, Level *pLevel)
+{
+	pLevel->HandleCollision(m_Shape, m_Velocity);
 
-	CheckState(level);
+	CheckState(pLevel);
 
 	UpdateFrame(elapsedSec);
 
-	ChangePosition(level);
+	ChangePosition(pLevel);
 
-	if (!level.IsOnGround(m_Shape, m_Velocity) && ActionState::transforming != m_ActionState)
+	if (!pLevel->IsOnGround(m_Shape, m_Velocity) && ActionState::transforming != m_ActionState)
 	{
 		MoveAvatar(elapsedSec);
 
@@ -73,10 +62,11 @@ void Avatar::Update(float elapsedSec, Level& level)
 		return;
 	}
 
-	if (!level.IsOnGround(m_Shape, m_Velocity)) return;
+	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
+		return;
 
-
-	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) || (m_Shape.left + m_Shape.width >= level.GetBoundaries().left + level.GetBoundaries().width && m_Velocity.x > 0))
+	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) || 
+		(m_Shape.left + m_Shape.width >= pLevel->GetBoundaries().left + pLevel->GetBoundaries().width && m_Velocity.x > 0))
 	{
 
 		m_ActionState = ActionState::waiting;
@@ -104,9 +94,9 @@ void Avatar::Draw() const
 		glScalef(-1, 1, 1);
 		glTranslatef(-m_Shape.width, 0, 0);
 		m_pSpritesTexture->Draw(Point2f(0, 0), m_SourceRect);
-	
+
 		glPopMatrix();
-		utils::DrawRect(m_Shape);
+
 		return;
 	}
 
@@ -126,10 +116,11 @@ Rectf Avatar::GetShape()const
 	return m_Shape;
 }
 
-void Avatar::CheckState(Level& level)
+void Avatar::CheckState(const Level* pLevel)
 {
 
-	if (m_ActionState == ActionState::begin) return;
+	if (m_ActionState == ActionState::begin) 
+		return;
 
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
 
@@ -149,7 +140,7 @@ void Avatar::CheckState(Level& level)
 
 
 	// handle single jump
-	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && level.IsOnGround(m_Shape, m_Velocity)) {
+	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(m_Shape, m_Velocity)) {
 
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
@@ -207,7 +198,7 @@ void Avatar::UpdateFrame(float elapsedSec)
 
 }
 
-void Avatar::ChangePosition(Level& level)
+void Avatar::ChangePosition(const Level* pLevel)
 {
 	Rectf srcRect
 	{
@@ -219,7 +210,7 @@ void Avatar::ChangePosition(Level& level)
 
 	srcRect.left = m_AnimFrame * m_ClipWidth;
 
-	if (!level.IsOnGround(m_Shape, m_Velocity))
+	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
 	{
 		srcRect.bottom = 10 * m_ClipHeight;
 		m_SourceRect = srcRect;

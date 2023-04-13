@@ -1,5 +1,5 @@
 #pragma once
-#include "PowerUp.h"
+#include "Enemy.h"
 #include <vector>
 #include "structs.h"
 
@@ -13,7 +13,7 @@ public:
 	PowerUpManager(PowerUpManager&&) = delete;
 	PowerUpManager& operator=(PowerUpManager&&) = delete;
 
-	PowerUp* AddItem( const Point2f &center, PowerUp::Type type );
+	Enemy* AddItem( const Point2f &center);
 	void Update( float elapsedSec );
 	void Draw( ) const;
 
@@ -21,7 +21,7 @@ public:
 	bool HitItem( const Rectf& rect ) ;
 
 private:
-	std::vector<PowerUp*> m_pItems;
+	std::vector<Enemy*> m_pItems;
 
 	// Your helper functions
 };

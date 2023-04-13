@@ -1,19 +1,25 @@
 #include "pch.h"
 #include "Platform.h"
-#include "iostream"
-#include "utils.h"
+
+#include <utils.h>
+#include <iostream>
 
 Platform::Platform(const Point2f& bottomLeft) :
-	isOnPlatform{ false },
-	isCollidingPlatform{ false }
+	isOnPlatform{ false }, isCollidingPlatform{ false }
 {
 	m_pTexture = new Texture{ "platform.png" };
+
 	SVGParser::GetVerticesFromSvgFile("platform.svg", m_PlatformVertices);
+
 	m_Shape.left = bottomLeft.x - 180.0f;
 	m_Shape.bottom = bottomLeft.y + 30.0f;
 	m_Shape.width = m_pTexture->GetWidth() + 100.0f;
 	m_Shape.height = m_pTexture->GetHeight();
+}
 
+Platform::~Platform()
+{
+	delete m_pTexture;
 }
 
 void Platform::Draw()const

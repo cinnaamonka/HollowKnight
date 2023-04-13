@@ -10,9 +10,9 @@ PowerUpManager::~PowerUpManager()
 
 }
 
-PowerUp* PowerUpManager::AddItem(const Point2f& center, PowerUp::Type type)
+Enemy* PowerUpManager::AddItem(const Point2f& center)
 {
-	PowerUp* pPowerUp = new PowerUp{ center,type };
+	Enemy* pPowerUp = new Enemy{ center};
 
 	m_pItems.push_back(pPowerUp);
 
@@ -21,17 +21,17 @@ PowerUp* PowerUpManager::AddItem(const Point2f& center, PowerUp::Type type)
 
 void PowerUpManager::Draw() const
 {
-	for (PowerUp* pPowerUp : m_pItems)
+	for (Enemy* Enemy : m_pItems)
 	{
-		pPowerUp->Draw();
+		Enemy->Draw();
 	}
 }
 
 void PowerUpManager::Update(float elapsedSec)
 {
-	for (PowerUp* pPowerUp : m_pItems)
+	for (Enemy* Enemy : m_pItems)
 	{
-		pPowerUp->Update(elapsedSec);
+		Enemy->Update(elapsedSec);
 	}
 }
 
