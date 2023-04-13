@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "utils.h"
 #include "iostream"
+#include "Game.h"
 
 //isColliding Level::m_IsColliding = isColliding::none;
 
@@ -52,44 +53,49 @@ void Level::DrawForeground()const
 void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 {
 	m_pPlatform->HandleCollision(actorShape, actorVelocity);
-	
-	if (m_pPlatform->isCollidingPlatform && IsOnGround(actorShape, actorVelocity)) return;
-	
 
-	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom);
-	Point2f ray2(actorShape.left + actorShape.width / 2, actorShape.bottom + actorShape.height);
-	Point2f ray3(actorShape.left, actorShape.bottom + actorShape.height / 2);
-	Point2f ray4(actorShape.left + actorShape.width, actorShape.bottom + actorShape.height / 2);
+	if (m_pPlatform->isCollidingPlatform && IsOnGround(actorShape, actorVelocity)) return;
+
+
+	const Rectf actorShapeNextPos{
+		actorShape.left + actorVelocity.x * Game::elapsedSec,
+		actorShape.bottom + actorVelocity.y * Game::elapsedSec,
+		actorShape.width,
+		actorShape.height,
+	};
+
+	Point2f begHorizontalLeftRay(actorShapeNextPos.left + actorShapeNextPos.width / 4, actorShapeNextPos.bottom);
+	Point2f endHorizontalLeftRay(actorShapeNextPos.left + actorShapeNextPos.width / 4, actorShapeNextPos.bottom + actorShapeNextPos.height);
+
+	Point2f begHorizontalRightRay(actorShapeNextPos.left + 3 * actorShapeNextPos.width / 4, actorShapeNextPos.bottom);
+	Point2f endHorizontalRightRay(actorShapeNextPos.left + 3 * actorShapeNextPos.width / 4, actorShapeNextPos.bottom + actorShapeNextPos.height);
+
+
+	Point2f begVerticalBottomRay(actorShapeNextPos.left + actorShapeNextPos.width / 4, actorShapeNextPos.bottom);
+	Point2f endVerticalBottomRay(actorShapeNextPos.left + 3 * actorShapeNextPos.width / 4, actorShapeNextPos.bottom);
+
+	Point2f begVerticalTopRay(actorShapeNextPos.left + actorShapeNextPos.width / 4, actorShapeNextPos.bottom + actorShapeNextPos.height);
+	Point2f endVerticalTopRay(actorShapeNextPos.left + 3 * actorShapeNextPos.width / 4, actorShapeNextPos.bottom + actorShapeNextPos.height);
 
 	utils::HitInfo hitInfo{};
 
 	for (std::vector<Point2f>& ver : m_Vertices)
 	{
-		if (isCollidingWalls(ver, ray3, ray4, hitInfo))
+		if (isCollidingWall(ver, begVerticalBottomRay, endVerticalBottomRay, begVerticalTopRay, endVerticalTopRay, hitInfo))
 		{
-			
-			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
-
-			if (isCollidingGround(ver, actorShape, hitInfo)) ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
-
-			return;
+			actorShape.left -= actorVelocity.x * Game::elapsedSec;
+			actorVelocity.x = 0;
 		}
 
-		if (isCollidingTop(ver, actorShape, hitInfo))
+
+
+		if (isCollidingRoofing(ver, begHorizontalLeftRay, endHorizontalLeftRay, begHorizontalRightRay, endHorizontalRightRay, hitInfo, actorVelocity.y))
 		{
+			actorShape.bottom -= actorVelocity.y * Game::elapsedSec;
 
-			ResetTopPosition(actorVelocity, actorShape, hitInfo);
-
-			return;
+			actorVelocity.x = 0;
+			actorVelocity.y = 0;
 		}
-
-		if (isCollidingGround(ver, actorShape, hitInfo))
-		{
-			ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
-
-			return;
-		}
-
 
 	}
 }
@@ -97,18 +103,39 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 {
-    //std::cout << m_pPlatform->isColliding << std::endl;
-	if (m_pPlatform->isOnPlatform)
-	{
-		return true;
-	}
-	
+
+	if (m_pPlatform->isOnPlatform) 	return true;
+
 	utils::HitInfo hitInfo{};
 
-	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom - 1.0f);
-	Point2f ray2(actorShape.left + actorShape.width / 2, actorShape.bottom + actorShape.height);
+	const float offsetY = 2;
 
-	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[1], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[0], ray2, ray1, hitInfo);
+	const Rectf actorShapeNextPos{
+		actorShape.left + actorVelocity.x * Game::elapsedSec,
+		actorShape.bottom - actorVelocity.y * Game::elapsedSec,
+		actorShape.width,
+		actorShape.height,
+	};
+
+	Point2f begHorizontalLeftRay(actorShapeNextPos.left + actorShapeNextPos.width / 4, actorShapeNextPos.bottom - offsetY);
+	Point2f endHorizontalLeftRay(actorShapeNextPos.left + actorShapeNextPos.width / 4, actorShapeNextPos.bottom + actorShapeNextPos.height);
+
+	Point2f begHorizontalRightRay(actorShapeNextPos.left + 3 * actorShapeNextPos.width / 4, actorShapeNextPos.bottom - offsetY);
+	Point2f endHorizontalRightRay(actorShapeNextPos.left + 3 * actorShapeNextPos.width / 4, actorShapeNextPos.bottom + actorShapeNextPos.height);
+
+
+	bool isOnGround = false;
+
+	for (std::vector<Point2f> verticle : m_Vertices) {
+		if (utils::Raycast(verticle, begHorizontalLeftRay, endHorizontalLeftRay, hitInfo) ||
+			utils::Raycast(verticle, begHorizontalRightRay, endHorizontalRightRay, hitInfo)) {
+			isOnGround = true;
+
+			break;
+		}
+	}
+
+	return isOnGround;
 }
 
 Rectf Level::GetBoundaries()const
@@ -119,78 +146,24 @@ Rectf Level::GetBoundaries()const
 
 bool Level::HasReachedEnd(const Rectf& actorShape)
 {
-
 	return false;
 }
 
-bool Level::isCollidingWalls(std::vector<Point2f>& ver, Point2f& p1, const Point2f& p2, utils::HitInfo& hitInfo)
+bool Level::isCollidingWall(std::vector<Point2f>& ver, Point2f& p1, const Point2f& p2, const Point2f& p3, const Point2f& p4, utils::HitInfo& hitInfo)
 {
-    std::cout << "Level walls" << std::endl;
-	return utils::Raycast(ver, p1, p2, hitInfo);
+	const float offset = 6.f;
+
+	return utils::Raycast(ver, Point2f(p1.x - offset, p1.y + offset), Point2f(p2.x + offset, p2.y + offset), hitInfo)
+		|| utils::Raycast(ver, Point2f(p3.x - offset, p3.y + offset), Point2f(p4.x + offset, p4.y + offset), hitInfo);
 }
 
-void Level::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Level::isCollidingRoofing(std::vector<Point2f>& ver, Point2f& p1, const Point2f& p2, const Point2f& p3, const Point2f& p4, utils::HitInfo& hitInfo, float speed)
 {
-	if (actorVelocity.x >= 0)
-	{
-
-		std::cout << "Logs: collision with a right wall" << std::endl;
-		actorShape.left = hitInfo.intersectPoint.x - actorShape.width;
-	}
-	else {
-		std::cout << "Logs: collision with a left wall" << std::endl;
-		actorShape.left = hitInfo.intersectPoint.x;
-	}
-
+	return utils::Raycast(ver, p1, p2, hitInfo)
+		|| utils::Raycast(ver, p3, p4, hitInfo);
 }
 
-bool Level::isCollidingGround(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
-{
-	float borderDist{ 5.f };
 
-	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
-	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
-	const Point2f ray3{ actorShape.left + actorShape.width - borderDist, actorShape.bottom };
-	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
-	utils::DrawLine(ray1, ray2);
-	utils::DrawLine(ray3, ray4);
-	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
-
-}
-
-void Level::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
-{
-
-	const float verticalOffset{ 2.0f };
-
-	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset) return;
-	actorShape.bottom = hitInfo.intersectPoint.y - verticalOffset;
-	actorVelocity.y = 0.0f;
-}
-bool Level::isCollidingTop(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
-{
-	float borderDist{ 5.f };
-
-	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom + actorShape.height / 2 };
-	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
-	const Point2f ray3{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height / 2 };
-	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
-
-
-	const Point2f ray5{ actorShape.left, actorShape.bottom + actorShape.height - borderDist };
-	const Point2f ray6{ actorShape.left + actorShape.width,actorShape.bottom + actorShape.height - borderDist };
-
-	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo) || utils::Raycast(ver, ray5, ray6, hitInfo);
-}
-void Level::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
-{
-	const float verticalOffset{ 2.0f };
-
-	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height + verticalOffset) return;
-	actorShape.bottom = hitInfo.intersectPoint.y - actorShape.height - verticalOffset;
-	actorVelocity.y = 0.0f;
-	actorVelocity.x = 0.0f;
-}
 
 
 

@@ -18,6 +18,8 @@ public:
 	Game& operator=(Game&& other) = delete;
 	~Game();
 
+	static float elapsedSec;
+
 	void Update( float elapsedSec );
 	void Draw( ) const;
 

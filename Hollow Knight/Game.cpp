@@ -3,8 +3,12 @@
 #include "Game.h"
 #include "utils.h"
 #include "Hud.h"
+
+float Game::elapsedSec = 0;
+
 Game::Game(const Window& window)
 	:BaseGame{ window }
+
 {
 	Initialize();
 }
@@ -33,7 +37,10 @@ void Game::Cleanup()
 
 void Game::Update(float elapsedSec)
 {
+
 	// Update game objects
+
+	Game::elapsedSec = elapsedSec;
 
 	if (m_EndReached) return;
 

@@ -8,12 +8,14 @@ Platform::Platform(const Point2f& bottomLeft) :
 	isCollidingPlatform{ false }
 {
 	m_pTexture = new Texture{ "platform.png" };
+
 	SVGParser::GetVerticesFromSvgFile("platform.svg", m_PlatformVertices);
+
 	m_Shape.left = bottomLeft.x - 180.0f;
 	m_Shape.bottom = bottomLeft.y + 30.0f;
+
 	m_Shape.width = m_pTexture->GetWidth() + 100.0f;
 	m_Shape.height = m_pTexture->GetHeight();
-
 }
 
 void Platform::Draw()const
@@ -42,12 +44,12 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 	for (std::vector<Point2f>& ver : m_PlatformVertices)
 	{
-		
 		if (isCollidingWalls(ver, actorShape, hitInfo))
 		{
 			std::cout << "isCollidingWall" << std::endl;
 			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
 			isCollidingPlatform = true;
+
 			if (IsOnPlatform(ver, actorShape, hitInfo)) ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
 
 			return;

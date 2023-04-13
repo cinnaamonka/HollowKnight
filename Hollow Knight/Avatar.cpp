@@ -94,7 +94,33 @@ void Avatar::Update(float elapsedSec, Level& level)
 
 void Avatar::Draw() const
 {
-	//to make the character flip during running to the left
+	Point2f begHorizontalLeftRay(m_Shape.left + m_Shape.width / 4, m_Shape.bottom);
+	Point2f endHorizontalLeftRay(m_Shape.left + m_Shape.width / 4, m_Shape.bottom + m_Shape.height);
+
+	Point2f begHorizontalRightRay(m_Shape.left + 3 * m_Shape.width / 4, m_Shape.bottom);
+	Point2f endHorizontalRightRay(m_Shape.left + 3 * m_Shape.width / 4, m_Shape.bottom + m_Shape.height);
+
+
+	Point2f begVerticalBottomRay(m_Shape.left + m_Shape.width / 4, m_Shape.bottom);
+	Point2f endVerticalBottomRay(m_Shape.left + 3 * m_Shape.width / 4, m_Shape.bottom);
+
+	Point2f begVerticalTopRay(m_Shape.left + m_Shape.width / 4, m_Shape.bottom + m_Shape.height);
+	Point2f endVerticalTopRay(m_Shape.left + 3 * m_Shape.width / 4, m_Shape.bottom + m_Shape.height);
+
+	utils::SetColor(Color4f(1, 0, 0, 1));
+	utils::DrawLine(begHorizontalLeftRay, endHorizontalLeftRay);
+	utils::DrawLine(begHorizontalRightRay, endHorizontalRightRay);
+
+	utils::SetColor(Color4f(0, 1, 0, 1));
+	utils::DrawLine(begVerticalBottomRay, endVerticalBottomRay);
+	utils::DrawLine(begVerticalTopRay, endVerticalTopRay);
+
+
+	utils::SetColor(Color4f(1, 1, 1, 1));
+	//	utils::DrawRect(m_Shape);
+
+
+		//to make the character flip during running to the left
 	if (!m_IsMovingRight)
 	{
 		glPushMatrix();
@@ -104,13 +130,12 @@ void Avatar::Draw() const
 		glScalef(-1, 1, 1);
 		glTranslatef(-m_Shape.width, 0, 0);
 		m_pSpritesTexture->Draw(Point2f(0, 0), m_SourceRect);
-	
+
 		glPopMatrix();
-		utils::DrawRect(m_Shape);
+
 		return;
 	}
 
-	utils::DrawRect(m_Shape);
 	m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
 }
 
