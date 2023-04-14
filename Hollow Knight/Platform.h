@@ -21,12 +21,22 @@ public:
 	void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-	bool isOnPlatform;
-	bool isCollidingPlatform;
+
+	bool isCollidingCharacter() const {
+		return m_IsCollidingCharacter;
+	}
+
+	bool isCharacterOnPlatform() const {
+		return m_isCharacterOnPlatform;
+	}
 
 private:
+
 	Rectf m_Shape;
 	Texture* m_pTexture;
 	std::vector<std::vector<Point2f>> m_PlatformVertices;
+
+	bool m_isCharacterOnPlatform = false;
+	bool m_IsCollidingCharacter = false;
 };
 

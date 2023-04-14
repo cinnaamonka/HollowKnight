@@ -21,7 +21,7 @@ Level::Level()
 	m_EndSignShape.bottom = 224.0f;
 	m_EndSignShape.width = m_EndSignTexture->GetWidth();
 	m_EndSignShape.height = m_EndSignTexture->GetHeight();
-	Test = new Texture{ "Level1.png" };
+	//Test = new Texture{ "Level1.png" };
 }
 Level::~Level()
 {
@@ -57,7 +57,7 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 {
 	m_pPlatform->HandleCollision(actorShape, actorVelocity);
 	
-	if (m_pPlatform->isCollidingPlatform && IsOnGround(actorShape, actorVelocity)) 
+	if (m_pPlatform->isCollidingCharacter() && IsOnGround(actorShape, actorVelocity))
 		return;
 	
 	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom);
@@ -96,7 +96,7 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity) const
 {
     //std::cout << m_pPlatform->isColliding << std::endl;
-	if (m_pPlatform->isOnPlatform)
+	if (m_pPlatform->isCharacterOnPlatform())
 		return true;
 	
 	utils::HitInfo hitInfo{};
