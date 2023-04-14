@@ -67,7 +67,6 @@ void Game::Draw() const
 
 	glPushMatrix();
 
-	
 	m_Camera->Transform(m_pAvatar->GetShape(),true);
 	
 	glPushMatrix();
@@ -90,7 +89,6 @@ void Game::Draw() const
 		utils::SetColor(Color4f(0.5f, 0.5f, 0.5f, 0.3f));
 		utils::FillRect(GetViewPort().left, GetViewPort().bottom, GetViewPort().width, GetViewPort().height);
 	}
-
 }
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)

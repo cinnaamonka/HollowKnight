@@ -1,6 +1,7 @@
 #pragma once
-#include "Level.h"
-#include "Enemy.h"
+
+class Level;
+class Texture;
 
 class Avatar
 {

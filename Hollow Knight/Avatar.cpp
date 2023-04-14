@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Avatar.h"
 #include "Texture.h"
+#include "Level.h"
+#include "Enemy.h"
 
 #include <chrono>
 #include <thread>
@@ -226,7 +228,6 @@ void Avatar::ChangePosition(const Level* pLevel)
 	{
 		srcRect.bottom = 10 * m_ClipHeight;
 	}
-
 
 	m_SourceRect = srcRect;
 }

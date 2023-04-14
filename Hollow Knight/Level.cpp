@@ -2,6 +2,9 @@
 #include "Level.h"
 
 #include <Texture.h>
+#include "Platform.h"
+
+#include "SVGParser.h"
 
 Level::Level()
 {
@@ -29,14 +32,14 @@ Level::~Level()
 	delete m_EndSignTexture;
 }
 
-void Level::DrawBackground()const
+void Level::DrawBackground() const
 {
 
 	m_pBackground->Draw();
 	
 
 }
-void Level::DrawForeground()const
+void Level::DrawForeground() const
 {
 	
 	m_pForeground->Draw();
@@ -45,7 +48,7 @@ void Level::DrawForeground()const
 	m_pPlatform->Draw();
 
 }
-void Level::DrawMiddleground()const
+void Level::DrawMiddleground() const
 {
 	m_pLevel->Draw();
 
@@ -90,7 +93,7 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 	}
 }
 
-bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
+bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity) const
 {
     //std::cout << m_pPlatform->isColliding << std::endl;
 	if (m_pPlatform->isOnPlatform)
@@ -104,13 +107,13 @@ bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity)const
 	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[1], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[0], ray2, ray1, hitInfo);
 }
 
-Rectf Level::GetBoundaries()const
+Rectf Level::GetBoundaries() const
 {
 	return m_Boundaries;
 }
 
 
-bool Level::HasReachedEnd(const Rectf& actorShape)
+bool Level::HasReachedEnd(const Rectf& actorShape) const
 {
 	return false;
 }
