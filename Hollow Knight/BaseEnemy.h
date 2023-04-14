@@ -1,8 +1,8 @@
 #pragma once
 
-class Texture;
+#include "BaseMovingObject.h"
 
-class BaseEnemy
+class BaseEnemy : public BaseMovingObject
 {
 public:
 
@@ -15,7 +15,6 @@ public:
 	BaseEnemy& operator=(BaseEnemy&& other) = delete;
 
 	virtual void Update(float elapsedSec) = 0;
-	virtual void Draw() const = 0;
 
 	bool IsOverlapping(const Rectf& rect) const;
 
@@ -42,22 +41,17 @@ protected:
 		m_Shape  = shape;
 	}
 
-	const Texture* GetTexture() const {
-		return m_pEnemyTexture;
-	}
-
 private:
 
 	Rectf m_SourceRect;
 	Rectf m_Shape;
 	Rectf m_BoundariesBorder;
 
+	float m_AnimTime;
+
 	int   m_NrOfFrames;
 	int   m_NrFramesPerSec;
-	float m_AnimTime;
 	int m_AnimFrame;
-
-	Texture* m_pEnemyTexture;
 };
 
 

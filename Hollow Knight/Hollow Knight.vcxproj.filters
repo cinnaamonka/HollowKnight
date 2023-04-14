@@ -40,6 +40,9 @@
     <ClCompile Include="EnemyCentipede.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BaseMovingObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Avatar.h">
@@ -70,6 +73,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="EnemyCentipede.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMovingObject.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

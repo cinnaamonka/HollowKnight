@@ -7,17 +7,17 @@
 #include <thread>
 
 Avatar::Avatar() :
+	BaseMovingObject("Knight.png"),
 	m_ClipHeight(0), m_ClipWidth(0), m_Shape{ 2162, 5500, 0,0 }, m_HorSpeed(500.0f),
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
-	m_Power{ 0 }, m_PreviousPositionX{ m_Shape.left }, m_NrOfFrames{ 12 }, m_NrFramesPerSec{ 1 },
+	 m_PreviousPositionX{ m_Shape.left }, m_NrOfFrames{ 12 }, m_NrFramesPerSec{ 1 },
 	m_AnimTime{ 0 }, m_AnimFrame{ 0 }, m_IsMovingRight{ true }, m_CanDoubleJump{ false },
 	m_HasDoubleJumped{ false }
 {
-	m_pSpritesTexture = new Texture{ "Knight.png" };
 
-	m_ClipWidth = m_pSpritesTexture->GetWidth() / m_NrOfFrames;
-	m_ClipHeight = m_pSpritesTexture->GetHeight() / m_NrOfFrames;
+	m_ClipWidth = GetTexture()->GetWidth() / m_NrOfFrames;
+	m_ClipHeight = GetTexture()->GetHeight() / m_NrOfFrames;
 
 	m_Shape.width = m_ClipWidth;
 	m_Shape.height = m_ClipHeight;
@@ -26,7 +26,7 @@ Avatar::Avatar() :
 
 Avatar::~Avatar()
 {
-	delete m_pSpritesTexture;
+	
 }
 
 void Avatar::Update(float elapsedSec, Level* pLevel)
@@ -85,14 +85,14 @@ void Avatar::Draw() const
 		glRotatef(0, 0, 0, 1);
 		glScalef(-1, 1, 1);
 		glTranslatef(-m_Shape.width, 0, 0);
-		m_pSpritesTexture->Draw(Point2f(0, 0), m_SourceRect);
+		GetTexture()->Draw(Point2f(0, 0), m_SourceRect);
 		utils::DrawRect(m_Shape);
 		glPopMatrix();
 	}
 	else
 	{
 		utils::DrawRect(m_Shape);
-		m_pSpritesTexture->Draw(m_Shape, m_SourceRect);
+		GetTexture()->Draw(m_Shape, m_SourceRect);
 	}
 }
 

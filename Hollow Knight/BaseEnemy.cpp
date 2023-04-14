@@ -6,14 +6,13 @@
 #include <Texture.h>
 
 BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture) :
+	BaseMovingObject(texture),
 	m_SourceRect {0,0,0,0},
 	m_Shape{ 2400, 5500,0,0 }, m_NrOfFrames( 4 ),
 	m_AnimTime(0), m_AnimFrame(0), m_BoundariesBorder{0,0,0,0}, m_NrFramesPerSec(1)
 {
-	m_pEnemyTexture = new Texture{ texture };
-
-	m_SourceRect.width = m_pEnemyTexture->GetWidth() / m_NrOfFrames;
-	m_SourceRect.height = m_pEnemyTexture->GetHeight();
+	m_SourceRect.width = GetTexture()->GetWidth() / m_NrOfFrames;
+	m_SourceRect.height = GetTexture()->GetHeight();
 
 	m_Shape.left = position.x;
 	m_Shape.bottom = position.y;
@@ -28,7 +27,7 @@ BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture) :
 
 BaseEnemy::~BaseEnemy()
 {
-	delete m_pEnemyTexture;
+
 }
 
 void BaseEnemy::SetBoundaries(float width, float height)

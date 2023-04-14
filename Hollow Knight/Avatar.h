@@ -1,9 +1,10 @@
 #pragma once
 
 class Level;
-class Texture;
 
-class Avatar
+#include "BaseMovingObject.h"
+
+class Avatar : public BaseMovingObject
 {
 public:
 
@@ -16,7 +17,7 @@ public:
 	Avatar& operator=(Avatar&& other) = delete;
 
 	void Update(float elapsedSec, Level* pLevel);
-	void Draw() const;
+	void Draw() const override;
 	void EnemyHit();
 	Rectf GetShape() const;
 
@@ -52,15 +53,12 @@ private:
 	float m_MaxTransformSec;
 	float m_ClipHeight;
 	float m_ClipWidth;
-	float m_AnimTime;
 	float m_PreviousPositionX;
-
-	Texture* m_pSpritesTexture;
-	
+	float m_AnimTime;
+		
 	int m_NrOfFrames;
 	int m_NrFramesPerSec;
 	int m_AnimFrame;
-	int m_Power;
 	
 	bool m_IsMovingRight;
 	bool m_CanDoubleJump;
