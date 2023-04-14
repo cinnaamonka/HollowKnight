@@ -6,6 +6,10 @@ Camera::Camera(float width, float height) :
 {
 
 }
+Camera::~Camera()
+{
+
+}
 
 void Camera::SetLevelBoundaries(const Rectf& levelBoundaries)
 {

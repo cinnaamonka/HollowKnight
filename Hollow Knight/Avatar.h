@@ -19,13 +19,11 @@ public:
 	void Update(float elapsedSec, Level* pLevel);
 	void Draw() const override;
 	void EnemyHit();
-	Rectf GetShape() const;
 
 private:
 
 	void CheckState(const Level* pLevel);
 	void MoveAvatar(float elapsedSec);
-	void UpdateFrame(float elapsedSec);
 	void ChangeTexture(const Level* pLevel);
 
 private:
@@ -41,9 +39,6 @@ private:
 
 	ActionState m_ActionState;
 
-	Rectf m_Shape;
-	Rectf m_SourceRect;
-
 	Vector2f m_Velocity;
 	Vector2f m_Acceleration;
 
@@ -53,14 +48,10 @@ private:
 	float m_MaxTransformSec;
 	float m_ClipHeight;
 	float m_ClipWidth;
-	float m_PreviousPositionX;
-	float m_AnimTime;
-		
-	int m_NrOfFrames;
-	int m_NrFramesPerSec;
-	int m_AnimFrame;
-	
+	//float m_PreviousPositionX;
+
 	bool m_IsMovingRight;
 	bool m_CanDoubleJump;
 	bool m_HasDoubleJumped;
+
 };

@@ -10,10 +10,11 @@ EnemyCentipede::EnemyCentipede(const Point2f& position) :
 {
 	SetBoundaries(300.0f, GetShape().height); // default
 }
-
+EnemyCentipede::~EnemyCentipede()
+{}
 void EnemyCentipede::Update(float elapsedSec)
 {
-	UpdateFrame(elapsedSec);
+	UpdateFrame(elapsedSec,GetFramesNumber());
 
 	ChangeTexture();
 
@@ -32,27 +33,25 @@ void EnemyCentipede::Update(float elapsedSec)
 
 void EnemyCentipede::Draw() const
 {
-	Rectf myShape = GetShape();
-	Rectf sourceRect = GetSourceRect();
 
 	if (m_SpeedX < 0)
 	{
 		glPushMatrix();
 
-		glTranslatef(myShape.left, myShape.bottom, 0);
+		glTranslatef(GetShape().left, GetShape().bottom, 0);
 		glRotatef(0, 0, 0, 1);
 		glScalef(-1, 1, 1);
-		glTranslatef(-myShape.width, 0, 0);
+		glTranslatef(-GetShape().width, 0, 0);
 
-		GetTexture()->Draw(Point2f(0, 0), sourceRect);
+		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
 
 		glPopMatrix();
 	}
 	else
 	{
-		utils::DrawRect(myShape);
+		utils::DrawRect(GetShape());
 
-		GetTexture()->Draw(myShape, sourceRect);
+		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}
-
+	
 }

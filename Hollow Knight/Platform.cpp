@@ -31,14 +31,12 @@ void Platform::Draw()const
 void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 {
 	float borderDist{ 5.f };
+
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
 
 	const Point2f ray3{ actorShape.left + actorShape.width - borderDist, actorShape.bottom };
 	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
-
-	//utils::DrawLine(ray1, ray2);
-	//utils::DrawLine(ray3, ray4);
 
 	utils::HitInfo hitInfo{};
 
@@ -83,6 +81,7 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 bool Platform::IsOnPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	float borderDist{ 5.f };
+
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
 
@@ -104,10 +103,10 @@ bool Platform::IsUnderPlatform(std::vector<Point2f>& ver, Rectf& actorShape, uti
 	return  utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
 }
 
-bool Platform::isCollidingWalls(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Platform::isCollidingWalls(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
-	
 	float borderDist{ 5.f };
+
 	const Point2f ray1{ actorShape.left, actorShape.bottom + borderDist };
 	const Point2f ray2{ actorShape.left + actorShape.width, actorShape.bottom + borderDist };
 

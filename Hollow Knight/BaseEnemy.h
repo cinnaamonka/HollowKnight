@@ -20,7 +20,6 @@ public:
 
 protected:
 
-	void UpdateFrame(float elapsedSec);
 	void ChangeTexture();
 
 	void SetBoundaries(float width, float height);
@@ -29,29 +28,9 @@ protected:
 		return m_BoundariesBorder;
 	}
 
-	Rectf GetSourceRect() const {
-		return m_SourceRect;
-	}
-
-	Rectf GetShape() const {
-		return m_Shape;
-	}
-
-	void SetShape(const Rectf&shape) {
-		m_Shape  = shape;
-	}
-
 private:
 
-	Rectf m_SourceRect;
-	Rectf m_Shape;
 	Rectf m_BoundariesBorder;
-
-	float m_AnimTime;
-
-	int   m_NrOfFrames;
-	int   m_NrFramesPerSec;
-	int m_AnimFrame;
 };
 
 

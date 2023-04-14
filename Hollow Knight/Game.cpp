@@ -81,10 +81,11 @@ void Game::Draw() const
 	glPopMatrix();
 
 	m_pLevel->DrawMiddleground();
+	
 	m_pAvatar->Draw();
-	m_pLevel->DrawForeground();
-
 	m_pEnemyManager->Draw();
+
+	m_pLevel->DrawForeground();
 
 	glPopMatrix();
 
@@ -143,7 +144,7 @@ void Game::ShowTestMessage() const
 
 void Game::AddEnemies()
 {
-	EnemyCentipede* enemy1 = new EnemyCentipede(Point2f{ 4100,2280 });
+	BaseEnemy* enemy1 = new EnemyCentipede(Point2f{ 4100,2280});
 
 	m_pEnemyManager->AddItem(enemy1);
 }

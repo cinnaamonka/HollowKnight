@@ -12,7 +12,6 @@ Level::Level()
 	m_pBackground = new Texture{ "Background Variation3.png" };
 	m_pLevel = new Texture{ "HollowKnightLevel2.png" };
 	m_pForeground = new Texture{ "HollowKnight LevelForeground.png" };
-	m_FenceBottomLeftl = Point2f(200, 190);
 	m_Boundaries = Rectf(0, 0, m_pLevel->GetWidth(), m_pLevel->GetHeight());
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
 
@@ -21,7 +20,6 @@ Level::Level()
 	m_EndSignShape.bottom = 224.0f;
 	m_EndSignShape.width = m_EndSignTexture->GetWidth();
 	m_EndSignShape.height = m_EndSignTexture->GetHeight();
-	//Test = new Texture{ "Level1.png" };
 }
 Level::~Level()
 {
@@ -41,7 +39,6 @@ void Level::DrawForeground() const
 {
 	m_pForeground->Draw();
 	m_EndSignTexture->Draw(m_EndSignShape);
-	//Test->Draw();
 	m_pPlatform->Draw();
 }
 
@@ -92,7 +89,6 @@ void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity) const
 {
-    //std::cout << m_pPlatform->isColliding << std::endl;
 	if (m_pPlatform->isCharacterOnPlatform())
 		return true;
 	
@@ -114,13 +110,12 @@ bool Level::HasReachedEnd(const Rectf& actorShape) const
 	return false;
 }
 
-bool Level::isCollidingWalls(const std::vector<Point2f>& ver, const Point2f& p1, const Point2f& p2, utils::HitInfo& hitInfo) const
+bool Level::isCollidingWalls(const std::vector<Point2f>& ver, const Point2f& p1, const Point2f& p2, utils::HitInfo& hitInfo)
 {
-   // std::cout << "Level walls" << std::endl;
 	return utils::Raycast(ver, p1, p2, hitInfo);
 }
 
-bool Level::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const 
+bool Level::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) 
 {
 	float borderDist{ 5.f };
 
@@ -128,13 +123,14 @@ bool Level::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& acto
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
 	const Point2f ray3{ actorShape.left + actorShape.width - borderDist, actorShape.bottom };
 	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
+	
 	utils::DrawLine(ray1, ray2);
 	utils::DrawLine(ray3, ray4);
 	
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
 }
 
-bool Level::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
+bool Level::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	float borderDist{ 5.f };
 
@@ -142,7 +138,6 @@ bool Level::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorSh
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
 	const Point2f ray3{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height / 2 };
 	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
-
 
 	const Point2f ray5{ actorShape.left, actorShape.bottom + actorShape.height - borderDist };
 	const Point2f ray6{ actorShape.left + actorShape.width,actorShape.bottom + actorShape.height - borderDist };

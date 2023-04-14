@@ -12,6 +12,10 @@ class Level
 public:
 
 	Level();
+	Level(const Level& other) = delete;
+	Level& operator=(const Level& other) = delete;
+	Level(Level&& other) = delete;
+	Level& operator=(Level&& other) = delete;
 	~Level();
 
 	void DrawBackground() const;
@@ -27,9 +31,9 @@ private:
 
 	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 
-	bool isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const;
-	bool isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const;
-	bool isCollidingWalls(const std::vector<Point2f>& ver, const Point2f& p1, const Point2f& p2, utils::HitInfo& hitInfo) const;
+	static bool isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
+	static bool isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
+	static bool isCollidingWalls(const std::vector<Point2f>& ver, const Point2f& p1, const Point2f& p2, utils::HitInfo& hitInfo);
 
 	void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
@@ -42,10 +46,6 @@ private:
 	Texture* m_pForeground;
 	Texture* m_EndSignTexture;
 	Texture* m_pBackground;
-	Texture* m_pMiddleGround;
-	//Texture* Test;
-
-	Point2f m_FenceBottomLeftl;
 
 	Rectf m_Boundaries ;
 	Rectf m_EndSignShape;

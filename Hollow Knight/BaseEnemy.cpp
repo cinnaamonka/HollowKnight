@@ -7,22 +7,29 @@
 
 BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture) :
 	BaseMovingObject(texture),
-	m_SourceRect {0,0,0,0},
-	m_Shape{ 2400, 5500,0,0 }, m_NrOfFrames( 4 ),
-	m_AnimTime(0), m_AnimFrame(0), m_BoundariesBorder{0,0,0,0}, m_NrFramesPerSec(1)
+	m_BoundariesBorder{ 0,0,0,0 }
 {
-	m_SourceRect.width = GetTexture()->GetWidth() / m_NrOfFrames;
-	m_SourceRect.height = GetTexture()->GetHeight();
+	SetFramesNumber(4);
 
-	m_Shape.left = position.x;
-	m_Shape.bottom = position.y;
-	m_Shape.width = m_SourceRect.width;
-	m_Shape.height = m_SourceRect.height;
+	Rectf sourceRect{ 0,0,0,0 };
 
-	m_BoundariesBorder.left = m_Shape.left;
-	m_BoundariesBorder.bottom = m_Shape.bottom;
+	sourceRect.width = GetTexture()->GetWidth() / GetFramesNumber();
+	sourceRect.height = GetTexture()->GetHeight();
 
-	SetBoundaries(300.0f, m_Shape.height); // default
+	SetSourceRect(sourceRect);
+
+	Rectf shape{ 0,0,0,0 };
+
+	shape.left = position.x;
+	shape.bottom = position.y;
+	shape.width = sourceRect.width;
+	shape.height = sourceRect.height;
+
+	m_BoundariesBorder.left = shape.left;
+	m_BoundariesBorder.bottom = shape.bottom;
+
+	SetBoundaries(300.0f, shape.height); // default
+	SetShape(shape);
 }
 
 BaseEnemy::~BaseEnemy()
@@ -38,7 +45,7 @@ void BaseEnemy::SetBoundaries(float width, float height)
 
 bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 {
-    // for avatar rectf
+	// for avatar rectf
 	const float left = rect.left;
 	const float right = rect.left + rect.width;
 	const float bottom = rect.bottom;
@@ -46,26 +53,26 @@ bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 
 	bool isCollidingRight
 	{
-		right >= m_Shape.left &&
-		left <= m_Shape.left &&
-		top >= m_Shape.bottom &&
-		bottom <= m_Shape.bottom + m_Shape.height
+		right >= GetShape().left &&
+		left <= GetShape().left &&
+		top >= GetShape().bottom &&
+		bottom <= GetShape().bottom + GetShape().height
 	};
 
-	if (right >= m_Shape.left)
+	if (right >= GetShape().left)
 	{
-		std::cout <<"Shape Left" << m_Shape.left << std::endl;
+		std::cout << "Shape Left" << GetShape().left << std::endl;
 		std::cout << "Character left" << left << std::endl;
 
 	}
 	bool isCollidingLeft
 	{
-		left <= m_Shape.left + m_Shape.width &&
-		right >= m_Shape.left + m_Shape.width &&
-		bottom <= m_Shape.bottom + m_Shape.height &&
-		top >= m_Shape.bottom 
+		left <= GetShape().left + GetShape().width &&
+		right >= GetShape().left + GetShape().width &&
+		bottom <= GetShape().bottom + GetShape().height &&
+		top >= GetShape().bottom
 	};
-	
+
 	if (isCollidingLeft)
 	{
 		std::cout << "colldiding left";
@@ -79,29 +86,17 @@ bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 	return isCollidingLeft || isCollidingRight;
 }
 
-void BaseEnemy::UpdateFrame(float elapsedSec)
-{
-	m_AnimTime += elapsedSec;
-
-	if (m_AnimTime >= 1.f / m_NrOfFrames)
-	{
-		++m_AnimFrame %= m_NrOfFrames;
-
-		m_AnimTime = 0.0f;
-	}
-}
-
 void BaseEnemy::ChangeTexture()
 {
 	Rectf srcRect
 	{
 		0.0f,
-		m_SourceRect.height,
-		m_SourceRect.width,
-		m_SourceRect.height
+		GetSourceRect().height,
+		GetSourceRect().width,
+		GetSourceRect().height
 	};
 
-	srcRect.left = m_AnimFrame * srcRect.width;
-	
-	m_SourceRect = srcRect;
+	srcRect.left = GetAnimationFrame() * srcRect.width;
+
+	SetSourceRect(srcRect);
 }

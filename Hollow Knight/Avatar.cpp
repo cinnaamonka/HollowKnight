@@ -8,20 +8,25 @@
 
 Avatar::Avatar() :
 	BaseMovingObject("Knight.png"),
-	m_ClipHeight(0), m_ClipWidth(0), m_Shape{ 2162, 5500, 0,0 }, m_HorSpeed(500.0f),
+	m_ClipHeight(0), m_ClipWidth(0), m_HorSpeed(500.0f),
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
-	 m_PreviousPositionX{ m_Shape.left }, m_NrOfFrames{ 12 }, m_NrFramesPerSec{ 1 },
-	m_AnimTime{ 0 }, m_AnimFrame{ 0 }, m_IsMovingRight{ true }, m_CanDoubleJump{ false },
+	 /*m_PreviousPositionX{ m_Shape.left }*/ m_IsMovingRight{ true }, m_CanDoubleJump{ false },
 	m_HasDoubleJumped{ false }
 {
+	SetFramesNumber(12);
 
-	m_ClipWidth = GetTexture()->GetWidth() / m_NrOfFrames;
-	m_ClipHeight = GetTexture()->GetHeight() / m_NrOfFrames;
+	Rectf sourceRect{ 0,0,0,0 };
 
-	m_Shape.width = m_ClipWidth;
-	m_Shape.height = m_ClipHeight;
+	sourceRect.width = GetTexture()->GetWidth() / GetFramesNumber();
+	sourceRect.height = GetTexture()->GetHeight();
 
+	SetSourceRect(sourceRect);
+
+	m_ClipWidth = GetTexture()->GetWidth() / GetFramesNumber();
+	m_ClipHeight = GetTexture()->GetHeight() / GetFramesNumber();
+
+	SetShape(Rectf(2162, 5500, m_ClipWidth, m_ClipHeight));
 }
 
 Avatar::~Avatar()
@@ -31,15 +36,17 @@ Avatar::~Avatar()
 
 void Avatar::Update(float elapsedSec, Level* pLevel)
 {
-	pLevel->HandleCollision(m_Shape, m_Velocity);
+	Rectf currentShape = GetShape();
 
+	pLevel->HandleCollision(currentShape, m_Velocity);
+	SetShape(currentShape);
 	CheckState(pLevel);
 
-	UpdateFrame(elapsedSec);
+	UpdateFrame(elapsedSec,9);
 
 	ChangeTexture(pLevel);
 
-	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
+	if (!pLevel->IsOnGround(currentShape, m_Velocity))
 	{
 		MoveAvatar(elapsedSec);
 
@@ -53,13 +60,13 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 	
 	}
 
-	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
+	if (!pLevel->IsOnGround(currentShape, m_Velocity))
 		return;
 
 	const Rectf bounds = pLevel->GetBoundaries();
 
-	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) ||
-		(m_Shape.left + m_Shape.width >= bounds.left + bounds.width && m_Velocity.x > 0))
+	if ((currentShape.left <= 0.0f && m_Velocity.x < 0) ||
+		(currentShape.left + currentShape.width >= bounds.left + bounds.width && m_Velocity.x > 0))
 	{
 		m_ActionState = ActionState::waiting;
 
@@ -72,28 +79,30 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 	m_HasDoubleJumped = false;
 
 	m_ActionState = ActionState::waiting;
+
+	
 }
 
-void Avatar::Draw() const
+void Avatar::Draw()const
 {
 	//to make the character flip during running to the left
 	if (!m_IsMovingRight)
 	{
 		glPushMatrix();
 
-		glTranslatef(m_Shape.left, m_Shape.bottom, 0);
+		glTranslatef(GetShape().left, GetShape().bottom, 0);
 		glRotatef(0, 0, 0, 1);
 		glScalef(-1, 1, 1);
-		glTranslatef(-m_Shape.width, 0, 0);
-		GetTexture()->Draw(Point2f(0, 0), m_SourceRect);
-		utils::DrawRect(m_Shape);
+		glTranslatef(-GetShape().width, 0, 0);
+		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
+	
 		glPopMatrix();
 	}
 	else
 	{
-		utils::DrawRect(m_Shape);
-		GetTexture()->Draw(m_Shape, m_SourceRect);
+		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}
+	
 }
 
 void Avatar::EnemyHit()
@@ -102,13 +111,10 @@ void Avatar::EnemyHit()
 	
 }
 
-Rectf Avatar::GetShape()const
-{
-	return m_Shape;
-}
-
 void Avatar::CheckState(const Level* pLevel)
 {
+	Rectf currentShape = GetShape();
+
 	if (m_ActionState == ActionState::begin)
 		return;
 
@@ -129,7 +135,7 @@ void Avatar::CheckState(const Level* pLevel)
 	}
 
 	// handle single jump
-	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(m_Shape, m_Velocity))
+	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(currentShape, m_Velocity))
 	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
@@ -154,47 +160,39 @@ void Avatar::CheckState(const Level* pLevel)
 
 void Avatar::MoveAvatar(float elapsedSec)
 {
-	m_Shape.bottom += m_Velocity.y * elapsedSec;
+	Rectf currentShape = GetShape();
+
+	currentShape.bottom += m_Velocity.y * elapsedSec;
 
 	if (m_ActionState == ActionState::moving)
 	{
 
-		m_PreviousPositionX = m_Shape.left;
-		m_Shape.left += m_Velocity.x * elapsedSec;
+		//m_PreviousPositionX = currentShape.left;
+		currentShape.left += m_Velocity.x * elapsedSec;
 	}
 	if (m_ActionState == ActionState::collidingEnemy)
 	{
-		m_Shape.left += (m_Velocity.x) * elapsedSec;
+		currentShape.left += (m_Velocity.x) * elapsedSec;
 	}
 
 	if (m_Velocity.y >= m_Acceleration.y) {
 		m_Velocity.y += m_Acceleration.y * elapsedSec;
 	}
-}
 
-void Avatar::UpdateFrame(float elapsedSec)
-{
-	m_AnimTime += elapsedSec;
-
-	if (m_AnimTime >= 1.f / 9)
-	{
-		++m_AnimFrame %= 9;
-
-		m_AnimTime = 0.0f;
-	}
-
+	SetShape(currentShape);
 }
 
 void Avatar::ChangeTexture(const Level* pLevel)
 {
 	Rectf srcRect { 0.0f, m_ClipHeight, m_ClipWidth, m_ClipHeight };
+	Rectf currentShape = GetShape();
 
-	srcRect.left = m_AnimFrame * m_ClipWidth;
+	srcRect.left = GetAnimationFrame() * m_ClipWidth;
 
-	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
+	if (!pLevel->IsOnGround(currentShape, m_Velocity))
 	{
 		srcRect.bottom = 10 * m_ClipHeight;
-		m_SourceRect = srcRect;
+		SetSourceRect(srcRect);
 	}
 	else
 	{
@@ -212,6 +210,8 @@ void Avatar::ChangeTexture(const Level* pLevel)
 			srcRect.bottom = 10 * m_ClipHeight;
 		}
 
-		m_SourceRect = srcRect;
+		SetSourceRect(srcRect);
 	}
+
+	SetShape(currentShape);
 }
