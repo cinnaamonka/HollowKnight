@@ -1,10 +1,11 @@
 #pragma once
+#include "GroundObject.h"
 
 #include <Vector2f.h>
 
 class Texture;
 
-class Platform
+class Platform:public GroundObject
 {
 public:
 
@@ -27,17 +28,9 @@ public:
 	{
 		return m_isCharacterOnPlatform;
 	}
+	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) override;
 private:
-
-	bool IsOnPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
-	bool IsUnderPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
-	bool isCollidingWalls(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
-
-	void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-	void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-
-private:
+	
 
 	Rectf m_Shape;
 	Texture* m_pTexture;

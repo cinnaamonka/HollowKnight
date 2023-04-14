@@ -1,13 +1,14 @@
 #pragma once
 
 #include <vector>
-
 #include <Vector2f.h>
+
+#include "GroundObject.h"
 
 class Texture;
 class Platform;
 
-class Level
+class Level:public GroundObject
 {
 public:
 
@@ -29,16 +30,7 @@ public:
 
 private:
 
-	void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-
-	static bool isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
-	static bool isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
-	static bool isCollidingWalls(const std::vector<Point2f>& ver, const Point2f& p1, const Point2f& p2, utils::HitInfo& hitInfo);
-
-	void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-	void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
-
-private:
+	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) override;
 
 	std::vector<std::vector<Point2f>> m_Vertices;
 

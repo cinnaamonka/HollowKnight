@@ -43,6 +43,9 @@
     <ClCompile Include="BaseMovingObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GroundObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Avatar.h">
@@ -78,5 +81,6 @@
     <ClInclude Include="BaseMovingObject.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GroundObject.h" />
   </ItemGroup>
 </Project>

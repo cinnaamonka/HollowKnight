@@ -67,7 +67,7 @@ void Game::Update(float elapsedSec)
 
 void Game::Draw() const
 {
-	//ClearBackground();
+	ClearBackground();
 
 	glPushMatrix();
 

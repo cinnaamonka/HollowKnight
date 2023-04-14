@@ -51,12 +51,12 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
 			m_IsCollidingCharacter = true;
 
-			if (IsOnPlatform(ver, actorShape, hitInfo)) 
+			if (isCollidingGround(ver, actorShape, hitInfo))
 				ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
 
 			break;
 		}
-		else if (IsUnderPlatform(ver, actorShape, hitInfo) && actorVelocity.y > 0)
+		else if (isCollidingTop(ver, actorShape, hitInfo) && actorVelocity.y > 0)
 		{
 			std::cout << "IsUnderPlatform" << std::endl;
 			ResetTopPosition(actorVelocity, actorShape, hitInfo);
@@ -64,7 +64,7 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 			break;
 		}
-		else if (IsOnPlatform(ver, actorShape, hitInfo) && actorVelocity.y < 0)
+		else if (isCollidingGround(ver, actorShape, hitInfo) && actorVelocity.y < 0)
 		{
 			std::cout << "IsOnPlatform" << std::endl;
 			
@@ -77,33 +77,7 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 		}
 	}
 }
-
-bool Platform::IsOnPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
-{
-	float borderDist{ 5.f };
-
-	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
-	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
-
-	const Point2f ray3{ actorShape.left + actorShape.width - borderDist, actorShape.bottom };
-	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
-
-	return  utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
-}
-
-bool Platform::IsUnderPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
-{
-	float borderDist{ 5.f };
-
-	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom + actorShape.height / 2 };
-	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
-	const Point2f ray3{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height / 2 };
-	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
-
-	return  utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
-}
-
-bool Platform::isCollidingWalls(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
+ bool Platform::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	float borderDist{ 5.f };
 
@@ -119,43 +93,5 @@ bool Platform::isCollidingWalls(std::vector<Point2f>& ver, Rectf& actorShape, ut
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo) || utils::Raycast(ver, ray5, ray6, hitInfo);
 }
 
-void Platform::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
-{
-	const float verticalOffset{ 2.0f };
-
-	if ( (hitInfo.intersectPoint.y - actorShape.bottom) <= (actorShape.height - verticalOffset) ) // TODO: maybe < ?
-	{
-		actorShape.bottom = hitInfo.intersectPoint.y - verticalOffset;
-		actorVelocity.y = 0.0f;
-	}
-}
-
-void Platform::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
-{
-	const float verticalOffset{ 2.0f };
-
-	if ((hitInfo.intersectPoint.y - actorShape.bottom) <= (actorShape.height + verticalOffset)) // TODO: maybe < ?
-	{
-		actorShape.bottom = hitInfo.intersectPoint.y - actorShape.height - verticalOffset;
-		actorVelocity.y = 0.0f;
-		actorVelocity.x = 0.0f;
-	}	
-}
-
-void Platform::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
-{
-	if (actorVelocity.x >= 0)
-	{
-		std::cout << "here right" << std::endl;
-		actorShape.left = hitInfo.intersectPoint.x - actorShape.width;
-	}
-	else 
-	{
-		std::cout << "here left" << std::endl;
-		actorShape.left = hitInfo.intersectPoint.x;
-	}
-
-	actorVelocity.x = 0.0f;
-}
 
 
