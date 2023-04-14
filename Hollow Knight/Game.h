@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Camera.h"
-#include "Hud.h"
-
 #include <Vector2f.h>
 #include <BaseGame.h>
 
@@ -11,6 +8,7 @@ class Avatar;
 class EnemyManager;
 class Level;
 class EnemyManager;
+class Hud;
 
 class Game : public BaseGame
 {

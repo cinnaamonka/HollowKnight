@@ -2,7 +2,6 @@
 #include "Avatar.h"
 #include "Texture.h"
 #include "Level.h"
-#include "Enemy.h"
 
 #include <chrono>
 #include <thread>
@@ -141,22 +140,16 @@ void Avatar::CheckState(const Level* pLevel)
 			});
 
 		timer.detach();
-
-		return;
-	}
-
+	} 
 	// handle double jump
-	if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped)
+	else if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped)
 	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
 
 		m_HasDoubleJumped = true;
 		m_CanDoubleJump = false;
-
-		return;
 	}
-
 }
 
 void Avatar::MoveAvatar(float elapsedSec)

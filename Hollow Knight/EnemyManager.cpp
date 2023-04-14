@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "BaseEnemy.h"
 #include "EnemyManager.h"
 
 EnemyManager::EnemyManager()
@@ -8,31 +9,28 @@ EnemyManager::EnemyManager()
 
 EnemyManager::~EnemyManager()
 {
-
+	for (const BaseEnemy* Enemy : m_pItems)
+	{
+		delete Enemy;
+	}
 }
 
-Enemy* EnemyManager::AddItem(const Point2f& center)
+void EnemyManager::AddItem(BaseEnemy *enemy)
 {
-	Enemy* pPowerUp = new Enemy{ center};
-
-	m_pItems.push_back(pPowerUp);
-
-	return pPowerUp;
+	m_pItems.push_back(enemy);
 }
 
 void EnemyManager::Draw() const
 {
-
-	for (Enemy* Enemy : m_pItems)
+	for (const BaseEnemy* Enemy : m_pItems)
 	{
-		
 		Enemy->Draw();
 	}
 }
 
 void EnemyManager::Update(float elapsedSec)
 {
-	for (Enemy* Enemy : m_pItems)
+	for (BaseEnemy* Enemy : m_pItems)
 	{
 		Enemy->Update(elapsedSec);
 	}
@@ -45,9 +43,9 @@ size_t EnemyManager::Size() const
 
 bool EnemyManager::HitItem(const Rectf& rect)
 {
-	if (m_pItems.empty()) return false;
+	if (m_pItems.empty()) // TODO: Do I really need this check?
+		return false;
 
-	
 	for (auto& item : m_pItems)
 	{
 		if (item->IsOverlapping(rect))

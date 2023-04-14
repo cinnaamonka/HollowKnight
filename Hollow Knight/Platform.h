@@ -11,10 +11,10 @@ public:
 	Platform(const Point2f& bottomLeft);
 	~Platform();
 
-	void Draw()const;
+	void Draw() const;
 	void HandleCollision(Rectf& actorShape,Vector2f& actorVelocity);
-	bool IsOnPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
-	bool IsUnderPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
+	bool IsOnPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
+	bool IsUnderPlatform(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
 	bool isCollidingWalls(std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
 
 	
@@ -34,6 +34,7 @@ private:
 
 	Rectf m_Shape;
 	Texture* m_pTexture;
+
 	std::vector<std::vector<Point2f>> m_PlatformVertices;
 
 	bool m_isCharacterOnPlatform = false;

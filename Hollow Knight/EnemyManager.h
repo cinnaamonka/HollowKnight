@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Enemy.h"
 #include <vector>
 
-#include <structs.h>
+class BaseEnemy;
 
 class EnemyManager final
 {
@@ -16,7 +15,8 @@ public:
 	EnemyManager(EnemyManager&&) = delete;
 	EnemyManager& operator=(EnemyManager&&) = delete;
 
-	Enemy* AddItem( const Point2f &center);
+	void AddItem(BaseEnemy *pEnemy);
+
 	void Update( float elapsedSec );
 	void Draw( ) const;
 
@@ -24,7 +24,8 @@ public:
 	bool HitItem( const Rectf& rect ) ;
 
 private:
-	std::vector<Enemy*> m_pItems;
+
+	std::vector<BaseEnemy *> m_pItems;
 
 	// Your helper functions
 };

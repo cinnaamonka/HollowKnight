@@ -5,6 +5,9 @@
 #include "Avatar.h"
 #include "EnemyManager.h"
 #include "Level.h"
+#include "Camera.h"
+
+#include "EnemyCentipede.h"
 
 Game::Game(const Window& window)
 	:BaseGame{ window }, m_EndReached(false)
@@ -48,7 +51,8 @@ void Game::Update(float elapsedSec)
 {
 	// Update game objects
 
-	if (m_EndReached) return;
+	if (m_EndReached) 
+		return;
 
 	m_pAvatar->Update(elapsedSec, m_pLevel);
 	m_pEnemyManager->Update(elapsedSec);
@@ -63,7 +67,7 @@ void Game::Update(float elapsedSec)
 
 void Game::Draw() const
 {
-	ClearBackground();
+	//ClearBackground();
 
 	glPushMatrix();
 
@@ -71,6 +75,7 @@ void Game::Draw() const
 	
 	glPushMatrix();
 	glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.1f, 0.0f, 0.0f);
+
 	m_pLevel->DrawBackground();
 
 	glPopMatrix();
@@ -84,6 +89,7 @@ void Game::Draw() const
 	glPopMatrix();
 
 	//m_Hud->Draw();
+
 	if (m_EndReached)
 	{
 		utils::SetColor(Color4f(0.5f, 0.5f, 0.5f, 0.3f));
@@ -119,7 +125,6 @@ void Game::ClearBackground() const
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-
 void Game::ShowTestMessage() const
 {
 	std::cout << "--> Avatar test <--\n";
@@ -138,7 +143,9 @@ void Game::ShowTestMessage() const
 
 void Game::AddEnemies()
 {
-	m_pEnemyManager->AddItem(Point2f{ 4100,2280 });
+	EnemyCentipede* enemy1 = new EnemyCentipede(Point2f{ 4100,2280 });
+
+	m_pEnemyManager->AddItem(enemy1);
 }
 
 void Game::DoCollisionTests()

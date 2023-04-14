@@ -34,25 +34,22 @@ Level::~Level()
 
 void Level::DrawBackground() const
 {
-
 	m_pBackground->Draw();
-	
-
 }
+
 void Level::DrawForeground() const
 {
-	
 	m_pForeground->Draw();
 	m_EndSignTexture->Draw(m_EndSignShape);
 	//Test->Draw();
 	m_pPlatform->Draw();
-
 }
+
 void Level::DrawMiddleground() const
 {
 	m_pLevel->Draw();
-
 }
+
 void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 {
 	m_pPlatform->HandleCollision(actorShape, actorVelocity);
@@ -112,7 +109,6 @@ Rectf Level::GetBoundaries() const
 	return m_Boundaries;
 }
 
-
 bool Level::HasReachedEnd(const Rectf& actorShape) const
 {
 	return false;
@@ -154,7 +150,6 @@ bool Level::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorSh
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo) || utils::Raycast(ver, ray5, ray6, hitInfo);
 }
 
-
 void Level::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	if (actorVelocity.x >= 0)
@@ -166,7 +161,6 @@ void Level::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, 
 		std::cout << "Logs: collision with a left wall" << std::endl;
 		actorShape.left = hitInfo.intersectPoint.x;
 	}
-
 }
 
 void Level::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
