@@ -71,10 +71,12 @@ bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 	{
 		std::cout << "colldiding left";
 	}
+
 	if (isCollidingRight)
 	{
 		std::cout << "colldiding right";
 	}
+
 	return isCollidingLeft || isCollidingRight;
 }
 

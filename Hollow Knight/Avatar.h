@@ -25,7 +25,7 @@ private:
 	void CheckState(const Level* pLevel);
 	void MoveAvatar(float elapsedSec);
 	void UpdateFrame(float elapsedSec);
-	void ChangePosition(const Level* pLevel);
+	void ChangeTexture(const Level* pLevel);
 
 private:
 

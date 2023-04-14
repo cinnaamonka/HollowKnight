@@ -37,7 +37,7 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 
 	UpdateFrame(elapsedSec);
 
-	ChangePosition(pLevel);
+	ChangeTexture(pLevel);
 
 	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
 	{
@@ -185,15 +185,9 @@ void Avatar::UpdateFrame(float elapsedSec)
 
 }
 
-void Avatar::ChangePosition(const Level* pLevel)
+void Avatar::ChangeTexture(const Level* pLevel)
 {
-	Rectf srcRect
-	{
-		0.0f,
-		m_ClipHeight,
-		m_ClipWidth,
-		m_ClipHeight
-	};
+	Rectf srcRect { 0.0f, m_ClipHeight, m_ClipWidth, m_ClipHeight };
 
 	srcRect.left = m_AnimFrame * m_ClipWidth;
 
@@ -201,26 +195,23 @@ void Avatar::ChangePosition(const Level* pLevel)
 	{
 		srcRect.bottom = 10 * m_ClipHeight;
 		m_SourceRect = srcRect;
-
-		return;
-
 	}
-
-	if (m_ActionState == ActionState::waiting)
+	else
 	{
-		srcRect.left = 0;
-		srcRect.bottom = m_ClipHeight;
-	}
+		if (m_ActionState == ActionState::waiting)
+		{
+			srcRect.left = 0;
+			srcRect.bottom = m_ClipHeight;
+		}
+		else if (m_ActionState == ActionState::moving)
+		{
+			srcRect.bottom = m_ClipHeight;
+		}
+		else if (m_ActionState == ActionState::begin || m_ActionState == ActionState::jumping)
+		{
+			srcRect.bottom = 10 * m_ClipHeight;
+		}
 
-	if (m_ActionState == ActionState::moving)
-	{
-		srcRect.bottom = m_ClipHeight;
+		m_SourceRect = srcRect;
 	}
-
-	if (m_ActionState == ActionState::begin || m_ActionState == ActionState::jumping)
-	{
-		srcRect.bottom = 10 * m_ClipHeight;
-	}
-
-	m_SourceRect = srcRect;
 }
