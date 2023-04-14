@@ -1,16 +1,13 @@
 #include "pch.h"
 #include "Avatar.h"
-#include "utils.h"
-#include "iostream"
 #include "Texture.h"
-#include "chrono"
-#include "thread"
 
-class Texture;
+#include <chrono>
+#include <thread>
 
 Avatar::Avatar() :
-	m_ClipHeight(0), m_ClipWidth(0), m_Shape{ 2162, 5500, 0,0 }, m_HorSpeed (500.0f),
-	m_JumpSpeed( 500.0f ), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
+	m_ClipHeight(0), m_ClipWidth(0), m_Shape{ 2162, 5500, 0,0 }, m_HorSpeed(500.0f),
+	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
 	m_Power{ 0 }, m_PreviousPositionX{ m_Shape.left }, m_NrOfFrames{ 12 }, m_NrFramesPerSec{ 1 },
 	m_AnimTime{ 0 }, m_AnimFrame{ 0 }, m_IsMovingRight{ true }, m_CanDoubleJump{ false },
@@ -31,7 +28,7 @@ Avatar::~Avatar()
 	delete m_pSpritesTexture;
 }
 
-void Avatar::Update(float elapsedSec, Level *pLevel)
+void Avatar::Update(float elapsedSec, Level* pLevel)
 {
 	pLevel->HandleCollision(m_Shape, m_Velocity);
 
@@ -41,24 +38,18 @@ void Avatar::Update(float elapsedSec, Level *pLevel)
 
 	ChangePosition(pLevel);
 
-	if (!pLevel->IsOnGround(m_Shape, m_Velocity) && ActionState::transforming != m_ActionState)
+	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
 	{
 		MoveAvatar(elapsedSec);
 
 		return;
 	}
-
-	if (ActionState::transforming == m_ActionState)
+	if (m_ActionState == ActionState::collidingEnemy)
 	{
-		m_AccuTransformSec += elapsedSec;
-
-		if (m_AccuTransformSec >= m_MaxTransformSec)
-		{
-			m_AccuTransformSec = 0;
-			m_ActionState = ActionState::waiting;
-		}
-
-		return;
+		std::cout << "colliding enemy" << std::endl;
+		m_Velocity.x = -m_HorSpeed;
+		m_Velocity.y = m_JumpSpeed;
+	
 	}
 
 	if (!pLevel->IsOnGround(m_Shape, m_Velocity))
@@ -66,7 +57,7 @@ void Avatar::Update(float elapsedSec, Level *pLevel)
 
 	const Rectf bounds = pLevel->GetBoundaries();
 
-	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) || 
+	if ((m_Shape.left <= 0.0f && m_Velocity.x < 0) ||
 		(m_Shape.left + m_Shape.width >= bounds.left + bounds.width && m_Velocity.x > 0))
 	{
 		m_ActionState = ActionState::waiting;
@@ -94,7 +85,7 @@ void Avatar::Draw() const
 		glScalef(-1, 1, 1);
 		glTranslatef(-m_Shape.width, 0, 0);
 		m_pSpritesTexture->Draw(Point2f(0, 0), m_SourceRect);
-
+		utils::DrawRect(m_Shape);
 		glPopMatrix();
 	}
 	else
@@ -104,10 +95,10 @@ void Avatar::Draw() const
 	}
 }
 
-void Avatar::PowerUpHit()
+void Avatar::EnemyHit()
 {
-	m_Power++;
-	//m_ActionState = ActionState::transforming;
+	m_ActionState = ActionState::collidingEnemy;
+	
 }
 
 Rectf Avatar::GetShape()const
@@ -117,7 +108,7 @@ Rectf Avatar::GetShape()const
 
 void Avatar::CheckState(const Level* pLevel)
 {
-	if (m_ActionState == ActionState::begin) 
+	if (m_ActionState == ActionState::begin)
 		return;
 
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
@@ -137,7 +128,7 @@ void Avatar::CheckState(const Level* pLevel)
 	}
 
 	// handle single jump
-	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(m_Shape, m_Velocity)) 
+	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(m_Shape, m_Velocity))
 	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
@@ -153,7 +144,7 @@ void Avatar::CheckState(const Level* pLevel)
 	}
 
 	// handle double jump
-	if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped) 
+	if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped)
 	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
@@ -163,6 +154,7 @@ void Avatar::CheckState(const Level* pLevel)
 
 		return;
 	}
+
 }
 
 void Avatar::MoveAvatar(float elapsedSec)
@@ -175,7 +167,10 @@ void Avatar::MoveAvatar(float elapsedSec)
 		m_PreviousPositionX = m_Shape.left;
 		m_Shape.left += m_Velocity.x * elapsedSec;
 	}
-
+	if (m_ActionState == ActionState::collidingEnemy)
+	{
+		m_Shape.left += (m_Velocity.x) * elapsedSec;
+	}
 
 	if (m_Velocity.y >= m_Acceleration.y) {
 		m_Velocity.y += m_Acceleration.y * elapsedSec;
@@ -230,11 +225,6 @@ void Avatar::ChangePosition(const Level* pLevel)
 	if (m_ActionState == ActionState::begin || m_ActionState == ActionState::jumping)
 	{
 		srcRect.bottom = 10 * m_ClipHeight;
-	}
-
-	if (m_ActionState == ActionState::transforming)
-	{
-		srcRect.bottom += ((m_Power - 1) * m_ClipHeight * 3 + int(ActionState::transforming) * m_ClipHeight);
 	}
 
 

@@ -38,7 +38,7 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PowerUpManager.cpp">
+    <ClCompile Include="EnemyManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -67,7 +67,7 @@
     <ClInclude Include="Platform.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="PowerUpManager.h">
+    <ClInclude Include="EnemyManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

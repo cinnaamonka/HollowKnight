@@ -2,8 +2,6 @@
 #include "Level.h"
 
 #include <Texture.h>
-#include <utils.h>
-#include <iostream>
 
 Level::Level()
 {

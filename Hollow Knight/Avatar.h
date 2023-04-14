@@ -16,7 +16,7 @@ public:
 
 	void Update(float elapsedSec, Level* pLevel);
 	void Draw() const;
-	void PowerUpHit();
+	void EnemyHit();
 	Rectf GetShape() const;
 
 private:
@@ -32,7 +32,7 @@ private:
 	{
 		waiting,
 		moving,
-		transforming,
+		collidingEnemy,
 		jumping,
 		begin
 	};

@@ -3,11 +3,8 @@
 #include "Game.h"
 #include "Hud.h"
 #include "Avatar.h"
-#include "PowerUpManager.h"
+#include "EnemyManager.h"
 #include "Level.h"
-
-#include <iostream>
-#include <utils.h>
 
 Game::Game(const Window& window)
 	:BaseGame{ window }, m_EndReached(false)
@@ -22,15 +19,17 @@ Game::~Game()
 
 void Game::Initialize()
 {
-	ShowTestMessage();
-	AddPowerUps();
+	/*ShowTestMessage();*/
+	m_pEnemyManager = new EnemyManager();
+	AddEnemies();
 
 	m_pAvatar = new Avatar();
-	m_pPowerUpManager = new PowerUpManager();
+	
 	m_Camera = new Camera{ GetViewPort().width,GetViewPort().height };
 	m_pLevel = new Level();
 	m_Camera->SetLevelBoundaries(m_pLevel->GetBoundaries());
 	m_Hud = new Hud{ Point2f(10.0f,200.0f),3 };
+	
 	
 	m_EndReached = false;
 	//m_pPowerUp = new SoundEffect{ "powerUp.mp3" };
@@ -41,7 +40,7 @@ void Game::Cleanup()
 	delete m_pAvatar;
 	delete m_Camera;
 	delete m_Hud;
-	delete m_pPowerUpManager;
+	delete m_pEnemyManager;
 	delete m_pLevel;
 }
 
@@ -52,7 +51,7 @@ void Game::Update(float elapsedSec)
 	if (m_EndReached) return;
 
 	m_pAvatar->Update(elapsedSec, m_pLevel);
-	m_pPowerUpManager->Update(elapsedSec);
+	m_pEnemyManager->Update(elapsedSec);
 
 	if (m_pLevel->HasReachedEnd(m_pAvatar->GetShape()))
 	{
@@ -81,7 +80,7 @@ void Game::Draw() const
 	m_pAvatar->Draw();
 	m_pLevel->DrawForeground();
 
-	m_pPowerUpManager->Draw();
+	m_pEnemyManager->Draw();
 
 	glPopMatrix();
 
@@ -139,19 +138,18 @@ void Game::ShowTestMessage() const
 
 }
 
-void Game::AddPowerUps()
+void Game::AddEnemies()
 {
-	//m_PowerUpManager->AddItem(Point2f{ 2400,2100 });
-	/*m_PowerUpManager.AddItem(Point2f{ 435.0f, 500 - 133.0f }, PowerUp::Type::green);
-	m_PowerUpManager.AddItem(Point2f{ 685.0f, 500 - 183.0f }, PowerUp::Type::brown);*/
+	m_pEnemyManager->AddItem(Point2f{ 4100,2280 });
 }
 
 void Game::DoCollisionTests()
 {
-	if (m_pPowerUpManager->HitItem(m_pAvatar->GetShape()))
+	if (m_pEnemyManager->HitItem(m_pAvatar->GetShape()))
 	{
+		
 		//m_Hud->PowerUpHit();
-		//m_Avatar.PowerUpHit( );
+		m_pAvatar->EnemyHit();
 		//m_pPowerUp->Play(0);
 
 	}

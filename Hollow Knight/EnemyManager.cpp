@@ -1,16 +1,17 @@
 #include "pch.h"
-#include "PowerUpManager.h"
-PowerUpManager::PowerUpManager()
+#include "EnemyManager.h"
+
+EnemyManager::EnemyManager()
 {
 
 }
 
-PowerUpManager::~PowerUpManager()
+EnemyManager::~EnemyManager()
 {
 
 }
 
-Enemy* PowerUpManager::AddItem(const Point2f& center)
+Enemy* EnemyManager::AddItem(const Point2f& center)
 {
 	Enemy* pPowerUp = new Enemy{ center};
 
@@ -19,15 +20,17 @@ Enemy* PowerUpManager::AddItem(const Point2f& center)
 	return pPowerUp;
 }
 
-void PowerUpManager::Draw() const
+void EnemyManager::Draw() const
 {
+
 	for (Enemy* Enemy : m_pItems)
 	{
+		
 		Enemy->Draw();
 	}
 }
 
-void PowerUpManager::Update(float elapsedSec)
+void EnemyManager::Update(float elapsedSec)
 {
 	for (Enemy* Enemy : m_pItems)
 	{
@@ -35,22 +38,22 @@ void PowerUpManager::Update(float elapsedSec)
 	}
 }
 
-size_t PowerUpManager::Size() const
+size_t EnemyManager::Size() const
 {
 	return m_pItems.size();
 }
 
-bool PowerUpManager::HitItem(const Rectf& rect)
+bool EnemyManager::HitItem(const Rectf& rect)
 {
 	if (m_pItems.empty()) return false;
 
-
+	
 	for (auto& item : m_pItems)
 	{
 		if (item->IsOverlapping(rect))
 		{
+			std::cout << "overlaps" << std::endl;
 			std::swap(item, m_pItems.back());
-			m_pItems.pop_back();
 
 			return true;
 		}

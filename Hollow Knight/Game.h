@@ -8,8 +8,9 @@
 
 class Camera;
 class Avatar;
-class PowerUpManager;
+class EnemyManager;
 class Level;
+class EnemyManager;
 
 class Game : public BaseGame
 {
@@ -40,7 +41,7 @@ private:
 	void Cleanup();
 	void ClearBackground() const;
 	void ShowTestMessage() const;
-	void AddPowerUps();
+	void AddEnemies();
 	void DoCollisionTests();
 
 private:
@@ -48,7 +49,7 @@ private:
 	// DATA MEMBERS
 
 	Avatar *m_pAvatar;
-	PowerUpManager * m_pPowerUpManager;
+	EnemyManager *m_pEnemyManager;
 	Level *m_pLevel;
 	Camera* m_Camera;
 	Hud* m_Hud;

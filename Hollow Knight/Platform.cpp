@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "Platform.h"
 
-#include <utils.h>
-#include <iostream>
-
 Platform::Platform(const Point2f& bottomLeft) :
 	isOnPlatform{ false }, isCollidingPlatform{ false }
 {

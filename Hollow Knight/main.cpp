@@ -2,7 +2,6 @@
 #include <ctime>
 #include "Game.h"
 
-
 void StartHeapControl();
 void DumpMemoryLeaks();
 

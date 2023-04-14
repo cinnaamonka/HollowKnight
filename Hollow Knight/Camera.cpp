@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "Camera.h"
-#include "utils.h"
-#include "iostream"
 
 Camera::Camera(float width, float height) :
 	m_Width{ width },
@@ -19,11 +17,7 @@ void Camera::SetLevelBoundaries(const Rectf& levelBoundaries)
 
 void Camera::Transform(const Rectf& target,bool isShortDistance)
 {
-
-	Point2f posCenter
-	{
-		Track(target)
-	};
+	Point2f posCenter = Track(target);
 	Clamp(posCenter);
 	glTranslatef(-posCenter.x, -posCenter.y, 0);
 	
@@ -31,7 +25,6 @@ void Camera::Transform(const Rectf& target,bool isShortDistance)
 
 Point2f Camera::Track(const Rectf& target)
 {
-
 	return Point2f(target.left + target.width / 2 - m_Width / 2,
 		target.bottom + target.height / 2 - m_Height / 2);
 }
