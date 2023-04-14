@@ -11,7 +11,7 @@ Avatar::Avatar() :
 	m_ClipHeight(0), m_ClipWidth(0), m_HorSpeed(500.0f),
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
-	 /*m_PreviousPositionX{ m_Shape.left }*/ m_IsMovingRight{ true }, m_CanDoubleJump{ false },
+	 m_IsMovingRight{ true }, m_CanDoubleJump{ false },
 	m_HasDoubleJumped{ false }
 {
 	SetFramesNumber(12);
@@ -37,7 +37,7 @@ Avatar::~Avatar()
 void Avatar::Update(float elapsedSec, Level* pLevel)
 {
 	Rectf currentShape = GetShape();
-
+	
 	pLevel->HandleCollision(currentShape, m_Velocity);
 	SetShape(currentShape);
 	CheckState(pLevel);
@@ -160,14 +160,13 @@ void Avatar::CheckState(const Level* pLevel)
 
 void Avatar::MoveAvatar(float elapsedSec)
 {
+	
 	Rectf currentShape = GetShape();
 
 	currentShape.bottom += m_Velocity.y * elapsedSec;
 
 	if (m_ActionState == ActionState::moving)
 	{
-
-		//m_PreviousPositionX = currentShape.left;
 		currentShape.left += m_Velocity.x * elapsedSec;
 	}
 	if (m_ActionState == ActionState::collidingEnemy)

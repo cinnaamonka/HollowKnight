@@ -6,7 +6,6 @@
 #include "EnemyManager.h"
 #include "Level.h"
 #include "Camera.h"
-
 #include "EnemyCentipede.h"
 
 Game::Game(const Window& window)

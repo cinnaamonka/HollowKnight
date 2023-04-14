@@ -8,7 +8,7 @@ Platform::Platform(const Point2f& bottomLeft)
 {
 	m_pTexture = new Texture{ "platform.png" };
 
-	SVGParser::GetVerticesFromSvgFile("platform.svg", m_PlatformVertices);
+	SVGParser::GetVerticesFromSvgFile("platform.svg", m_Vertices);
 
 	m_Shape.left = bottomLeft.x - 180.0f;
 	m_Shape.bottom = bottomLeft.y + 30.0f;
@@ -43,11 +43,10 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 	m_isCharacterOnPlatform = false;
 	m_IsCollidingCharacter = false;
 
-	for (std::vector<Point2f>& ver : m_PlatformVertices)
+	for (std::vector<Point2f>& ver : m_Vertices)
 	{
 		if (isCollidingWalls(ver, actorShape, hitInfo))
 		{
-			std::cout << "isCollidingWall" << std::endl;
 			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
 			m_IsCollidingCharacter = true;
 
@@ -58,7 +57,6 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 		}
 		else if (isCollidingTop(ver, actorShape, hitInfo) && actorVelocity.y > 0)
 		{
-			std::cout << "IsUnderPlatform" << std::endl;
 			ResetTopPosition(actorVelocity, actorShape, hitInfo);
 			m_IsCollidingCharacter = true;
 
@@ -66,8 +64,7 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 		}
 		else if (isCollidingGround(ver, actorShape, hitInfo) && actorVelocity.y < 0)
 		{
-			std::cout << "IsOnPlatform" << std::endl;
-			
+
 			ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
 
 			m_isCharacterOnPlatform = true;

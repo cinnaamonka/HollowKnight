@@ -17,8 +17,9 @@ public:
 	~Platform();
 
 	void Draw() const;
-	void HandleCollision(Rectf& actorShape,Vector2f& actorVelocity);
-	
+
+	virtual void HandleCollision(Rectf& actorShape,Vector2f& actorVelocity)override;
+	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) override;
 	bool isCollidingCharacter() const 
 	{
 		return m_IsCollidingCharacter;
@@ -28,14 +29,11 @@ public:
 	{
 		return m_isCharacterOnPlatform;
 	}
-	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) override;
+
 private:
 	
-
 	Rectf m_Shape;
 	Texture* m_pTexture;
-
-	std::vector<std::vector<Point2f>> m_PlatformVertices;
 
 	bool m_isCharacterOnPlatform = false;
 	bool m_IsCollidingCharacter = false;

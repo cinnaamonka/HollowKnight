@@ -48,7 +48,6 @@ private:
 	float m_MaxTransformSec;
 	float m_ClipHeight;
 	float m_ClipWidth;
-	//float m_PreviousPositionX;
 
 	bool m_IsMovingRight;
 	bool m_CanDoubleJump;

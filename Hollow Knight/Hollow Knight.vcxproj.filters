@@ -5,11 +5,41 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source Files\AvatarClass">
+      <UniqueIdentifier>{21e5fac5-cd7a-452e-875d-83a33f8c93d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BaseEnemyClass">
+      <UniqueIdentifier>{3d508375-5913-4357-8e91-51fee953eea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BaseMovinfObjectClass">
+      <UniqueIdentifier>{449b5c78-c014-4933-98aa-de11b0a3512a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CameraClass">
+      <UniqueIdentifier>{d4377e27-c965-441d-81b7-12c2970066a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EnemyCentipede">
+      <UniqueIdentifier>{485f4e17-828a-4fdd-9480-61207f3ff2c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EnemyManagerClass">
+      <UniqueIdentifier>{f3f82554-793e-48bf-9b8f-d36ac378f93e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameClass">
+      <UniqueIdentifier>{4f3eb917-c3c3-4145-80b4-11cbdba5fcbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GroundObjectClass">
+      <UniqueIdentifier>{e1e65e96-c26d-4598-a157-929bfed80d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HUDClass">
+      <UniqueIdentifier>{0359110c-c446-4781-b8a7-e90b55728251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LevelClass">
+      <UniqueIdentifier>{7bedad22-d1e4-4e2b-9717-19a155b65be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PlatformClass">
+      <UniqueIdentifier>{afa41afc-0253-4cff-a6e2-4a667db5c3de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -17,70 +47,75 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Avatar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\AvatarClass</Filter>
     </ClCompile>
     <ClCompile Include="BaseEnemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyCentipede.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BaseEnemyClass</Filter>
     </ClCompile>
     <ClCompile Include="BaseMovingObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BaseMovinfObjectClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\CameraClass</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyCentipede.cpp">
+      <Filter>Source Files\EnemyCentipede</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Source Files\EnemyManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\GameClass</Filter>
     </ClCompile>
     <ClCompile Include="GroundObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GroundObjectClass</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Source Files\HUDClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\LevelClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files\PlatformClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Avatar.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Avatar.h">
+      <Filter>Source Files\AvatarClass</Filter>
     </ClInclude>
     <ClInclude Include="BaseEnemy.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyCentipede.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BaseEnemyClass</Filter>
     </ClInclude>
     <ClInclude Include="BaseMovingObject.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BaseMovinfObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="GroundObject.h" />
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\CameraClass</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyCentipede.h">
+      <Filter>Source Files\EnemyCentipede</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Source Files\EnemyManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Source Files\GameClass</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundObject.h">
+      <Filter>Source Files\GroundObjectClass</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Source Files\HUDClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Source Files\LevelClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Source Files\PlatformClass</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,16 +23,16 @@ public:
 	void DrawForeground() const;
 	void DrawMiddleground() const;
 
-	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity);
+	virtual void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)override;
+	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) override;
+
 	bool IsOnGround(Rectf&  actorShape, Vector2f& actorVelocity) const;
 	Rectf GetBoundaries() const;
 	bool HasReachedEnd(const Rectf& actorShape) const;
 
+	
+
 private:
-
-	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) override;
-
-	std::vector<std::vector<Point2f>> m_Vertices;
 
 	Texture* m_pLevel;
 	Texture* m_pForeground;

@@ -61,8 +61,8 @@ bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 
 	if (right >= GetShape().left)
 	{
-		std::cout << "Shape Left" << GetShape().left << std::endl;
-		std::cout << "Character left" << left << std::endl;
+		/*std::cout << "Shape Left" << GetShape().left << std::endl;
+		std::cout << "Character left" << left << std::endl;*/
 
 	}
 	bool isCollidingLeft
@@ -75,12 +75,12 @@ bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 
 	if (isCollidingLeft)
 	{
-		std::cout << "colldiding left";
+		//std::cout << "colldiding left";
 	}
 
 	if (isCollidingRight)
 	{
-		std::cout << "colldiding right";
+		//std::cout << "colldiding right";
 	}
 
 	return isCollidingLeft || isCollidingRight;

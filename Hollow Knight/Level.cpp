@@ -3,8 +3,7 @@
 
 #include <Texture.h>
 #include "Platform.h"
-
-#include "SVGParser.h"
+#include <SVGParser.h>
 
 Level::Level()
 {
