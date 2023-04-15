@@ -52,5 +52,5 @@ private:
 	bool m_IsMovingRight;
 	bool m_CanDoubleJump;
 	bool m_HasDoubleJumped;
-
+	bool m_IsNovingAfterCollision;
 };

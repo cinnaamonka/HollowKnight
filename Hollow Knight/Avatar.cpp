@@ -11,8 +11,8 @@ Avatar::Avatar() :
 	m_ClipHeight(0), m_ClipWidth(0), m_HorSpeed(500.0f),
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
-	 m_IsMovingRight{ true }, m_CanDoubleJump{ false },
-	m_HasDoubleJumped{ false }
+	m_IsMovingRight{ true }, m_CanDoubleJump{ false },
+	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }
 {
 	SetFramesNumber(12);
 
@@ -31,18 +31,20 @@ Avatar::Avatar() :
 
 Avatar::~Avatar()
 {
-	
+
 }
 
 void Avatar::Update(float elapsedSec, Level* pLevel)
 {
+
 	Rectf currentShape = GetShape();
-	
+
 	pLevel->HandleCollision(currentShape, m_Velocity);
 	SetShape(currentShape);
 	CheckState(pLevel);
 
-	UpdateFrame(elapsedSec,9);
+	UpdateFrame(elapsedSec, 9);
+
 
 	ChangeTexture(pLevel);
 
@@ -52,12 +54,26 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 
 		return;
 	}
-		
-	if (m_ActionState == ActionState::collidingEnemy)
+
+	if (m_ActionState == ActionState::collidingEnemy && !m_IsNovingAfterCollision)
 	{
-		m_Velocity.x = -m_HorSpeed;
+		if (m_IsMovingRight)
+		{
+			m_Velocity.x = -m_HorSpeed;
+		}
+		else
+		{
+			m_Velocity.x = m_HorSpeed;
+		}
+		
 		m_Velocity.y = m_JumpSpeed;
+
+		m_IsNovingAfterCollision = true;
+		MoveAvatar(elapsedSec);
+		return;
 	}
+
+
 	const Rectf bounds = pLevel->GetBoundaries();
 
 	if ((currentShape.left <= 0.0f && m_Velocity.x < 0) ||
@@ -70,16 +86,16 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 
 	MoveAvatar(elapsedSec);
 
-	if (m_ActionState != ActionState::collidingEnemy)
+	m_CanDoubleJump = false;
+	m_HasDoubleJumped = false;
+
+	if (m_ActionState != ActionState::collidingEnemy && m_IsNovingAfterCollision)
 	{
-		m_CanDoubleJump = false;
-		m_HasDoubleJumped = false;
+		m_IsNovingAfterCollision = false;
 	}
-	
 
 	m_ActionState = ActionState::waiting;
 
-	
 }
 
 void Avatar::Draw()const
@@ -94,20 +110,21 @@ void Avatar::Draw()const
 		glScalef(-1, 1, 1);
 		glTranslatef(-GetShape().width, 0, 0);
 		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
-	
+		utils::DrawRect(GetShape());
 		glPopMatrix();
 	}
 	else
 	{
+		utils::DrawRect(GetShape());
 		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}
-	
 }
 
 void Avatar::EnemyHit()
 {
+
 	m_ActionState = ActionState::collidingEnemy;
-	
+
 }
 
 void Avatar::CheckState(const Level* pLevel)
@@ -116,17 +133,18 @@ void Avatar::CheckState(const Level* pLevel)
 
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
 
+
 	if (m_ActionState == ActionState::begin)
 		return;
 
-	if (pStates[SDL_SCANCODE_RIGHT] && m_ActionState != ActionState::collidingEnemy)
+	if (pStates[SDL_SCANCODE_RIGHT] && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
 		m_IsMovingRight = true;
 		m_Velocity.x = m_HorSpeed;
 	}
 
-	if (pStates[SDL_SCANCODE_LEFT] && m_ActionState != ActionState::collidingEnemy)
+	if (pStates[SDL_SCANCODE_LEFT] && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
 		m_IsMovingRight = false;
@@ -145,7 +163,7 @@ void Avatar::CheckState(const Level* pLevel)
 			});
 
 		timer.detach();
-	} 
+	}
 	// handle double jump
 	else if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped)
 	{
@@ -169,10 +187,12 @@ void Avatar::MoveAvatar(float elapsedSec)
 	}
 	if (m_ActionState == ActionState::collidingEnemy)
 	{
+
 		currentShape.left += (m_Velocity.x) * elapsedSec;
 	}
 
-	if (m_Velocity.y >= m_Acceleration.y) {
+	if (m_Velocity.y >= m_Acceleration.y)
+	{
 		m_Velocity.y += m_Acceleration.y * elapsedSec;
 	}
 
@@ -181,10 +201,13 @@ void Avatar::MoveAvatar(float elapsedSec)
 
 void Avatar::ChangeTexture(const Level* pLevel)
 {
-	Rectf srcRect { 0.0f, m_ClipHeight, m_ClipWidth, m_ClipHeight };
+	Rectf srcRect{ 0.0f, m_ClipHeight, m_ClipWidth, m_ClipHeight };
 	Rectf currentShape = GetShape();
 
 	srcRect.left = GetAnimationFrame() * m_ClipWidth;
+
+	std::cout << int(m_ActionState) << std::endl;
+	std::cout << m_Velocity.x << "," << m_Velocity.y << std::endl;
 
 	if (!pLevel->IsOnGround(currentShape, m_Velocity))
 	{
@@ -198,15 +221,16 @@ void Avatar::ChangeTexture(const Level* pLevel)
 			srcRect.left = 0;
 			srcRect.bottom = m_ClipHeight;
 		}
+
 		else if (m_ActionState == ActionState::moving)
 		{
 			srcRect.bottom = m_ClipHeight;
 		}
 		else if (m_ActionState == ActionState::begin || m_ActionState == ActionState::jumping)
 		{
+
 			srcRect.bottom = 10 * m_ClipHeight;
 		}
-
 		SetSourceRect(srcRect);
 	}
 

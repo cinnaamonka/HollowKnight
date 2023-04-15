@@ -51,23 +51,15 @@ bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 	const float bottom = rect.bottom;
 	const float top = rect.bottom + rect.height;
 
-	bool isCollidingRight
+	bool isColliding
 	{
-		right >= GetShape().left &&
-		left <= GetShape().left &&
-		top >= GetShape().bottom &&
-		bottom <= GetShape().bottom + GetShape().height
+		rect.left < GetShape().left + GetShape().width &&
+		(rect.left + rect.width > GetShape().left) &&
+		(rect.bottom < GetShape().bottom + GetShape().height) &&
+		rect.bottom + rect.height > GetShape().bottom
 	};
-
-	bool isCollidingLeft
-	{
-		left <= GetShape().left + GetShape().width &&
-		right >= GetShape().left + GetShape().width &&
-		bottom <= GetShape().bottom + GetShape().height &&
-		top >= GetShape().bottom
-	};
-
-	return isCollidingLeft || isCollidingRight;
+	
+	return isColliding;
 }
 
 void BaseEnemy::ChangeTexture()

@@ -53,6 +53,7 @@ void GroundObject::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actor
 
 void GroundObject::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
+
 	const float verticalOffset{ 2.0f };
 
 	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset)
