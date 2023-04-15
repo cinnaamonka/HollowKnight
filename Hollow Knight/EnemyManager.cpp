@@ -50,7 +50,6 @@ bool EnemyManager::HitItem(const Rectf& rect)
 	{
 		if (item->IsOverlapping(rect))
 		{
-			std::cout << "overlaps" << std::endl;
 			std::swap(item, m_pItems.back());
 
 			return true;

@@ -52,17 +52,12 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 
 		return;
 	}
+		
 	if (m_ActionState == ActionState::collidingEnemy)
 	{
-		std::cout << "colliding enemy" << std::endl;
 		m_Velocity.x = -m_HorSpeed;
 		m_Velocity.y = m_JumpSpeed;
-	
 	}
-
-	if (!pLevel->IsOnGround(currentShape, m_Velocity))
-		return;
-
 	const Rectf bounds = pLevel->GetBoundaries();
 
 	if ((currentShape.left <= 0.0f && m_Velocity.x < 0) ||
@@ -75,8 +70,12 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 
 	MoveAvatar(elapsedSec);
 
-	m_CanDoubleJump = false;
-	m_HasDoubleJumped = false;
+	if (m_ActionState != ActionState::collidingEnemy)
+	{
+		m_CanDoubleJump = false;
+		m_HasDoubleJumped = false;
+	}
+	
 
 	m_ActionState = ActionState::waiting;
 
@@ -115,19 +114,19 @@ void Avatar::CheckState(const Level* pLevel)
 {
 	Rectf currentShape = GetShape();
 
+	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
+
 	if (m_ActionState == ActionState::begin)
 		return;
 
-	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
-
-	if (pStates[SDL_SCANCODE_RIGHT])
+	if (pStates[SDL_SCANCODE_RIGHT] && m_ActionState != ActionState::collidingEnemy)
 	{
 		m_ActionState = ActionState::moving;
 		m_IsMovingRight = true;
 		m_Velocity.x = m_HorSpeed;
 	}
 
-	if (pStates[SDL_SCANCODE_LEFT])
+	if (pStates[SDL_SCANCODE_LEFT] && m_ActionState != ActionState::collidingEnemy)
 	{
 		m_ActionState = ActionState::moving;
 		m_IsMovingRight = false;
@@ -160,7 +159,6 @@ void Avatar::CheckState(const Level* pLevel)
 
 void Avatar::MoveAvatar(float elapsedSec)
 {
-	
 	Rectf currentShape = GetShape();
 
 	currentShape.bottom += m_Velocity.y * elapsedSec;
