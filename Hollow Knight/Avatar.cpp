@@ -59,13 +59,13 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 	{
 		if (m_IsMovingRight)
 		{
-			m_Velocity.x = -m_HorSpeed;
+			m_Velocity.x = - 1.5f * m_HorSpeed;
 		}
 		else
 		{
-			m_Velocity.x = m_HorSpeed;
+			m_Velocity.x = 1.5f * m_HorSpeed;
 		}
-		
+
 		m_Velocity.y = m_JumpSpeed;
 
 		m_IsNovingAfterCollision = true;
@@ -205,14 +205,21 @@ void Avatar::ChangeTexture(const Level* pLevel)
 	Rectf currentShape = GetShape();
 
 	srcRect.left = GetAnimationFrame() * m_ClipWidth;
-
 	std::cout << int(m_ActionState) << std::endl;
-	std::cout << m_Velocity.x << "," << m_Velocity.y << std::endl;
-
 	if (!pLevel->IsOnGround(currentShape, m_Velocity))
 	{
-		srcRect.bottom = 10 * m_ClipHeight;
-		SetSourceRect(srcRect);
+		if (m_ActionState == ActionState::collidingEnemy)
+		{
+			srcRect.bottom =11 * m_ClipHeight;
+			SetSourceRect(srcRect);
+		}
+		else
+		{
+			
+			srcRect.bottom = 10 * m_ClipHeight;
+			SetSourceRect(srcRect);
+		}
+		
 	}
 	else
 	{
@@ -231,6 +238,8 @@ void Avatar::ChangeTexture(const Level* pLevel)
 
 			srcRect.bottom = 10 * m_ClipHeight;
 		}
+
+
 		SetSourceRect(srcRect);
 	}
 
