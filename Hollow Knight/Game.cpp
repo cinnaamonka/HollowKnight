@@ -26,13 +26,13 @@ void Game::Initialize()
 	AddEnemies();
 
 	m_pAvatar = new Avatar();
-	
+
 	m_Camera = new Camera{ GetViewPort().width,GetViewPort().height };
 	m_pLevel = new Level();
 	m_Camera->SetLevelBoundaries(m_pLevel->GetBoundaries());
 	m_Hud = new Hud{ Point2f(10.0f,200.0f),3 };
-	
-	
+
+
 	m_EndReached = false;
 	//m_pPowerUp = new SoundEffect{ "powerUp.mp3" };
 }
@@ -50,7 +50,7 @@ void Game::Update(float elapsedSec)
 {
 	// Update game objects
 
-	if (m_EndReached) 
+	if (m_EndReached)
 		return;
 
 	m_pAvatar->Update(elapsedSec, m_pLevel);
@@ -70,8 +70,8 @@ void Game::Draw() const
 
 	glPushMatrix();
 
-	m_Camera->Transform(m_pAvatar->GetShape(),true);
-	
+	m_Camera->Transform(m_pAvatar->GetShape(), true);
+
 	glPushMatrix();
 	glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.1f, 0.0f, 0.0f);
 
@@ -80,7 +80,7 @@ void Game::Draw() const
 	glPopMatrix();
 
 	m_pLevel->DrawMiddleground();
-	
+
 	m_pAvatar->Draw();
 	m_pEnemyManager->Draw();
 
@@ -143,16 +143,20 @@ void Game::ShowTestMessage() const
 
 void Game::AddEnemies()
 {
-	BaseEnemy* enemy1 = new EnemyCentipede(Point2f{ 4100,2280});
+	BaseEnemy* enemy1 = new EnemyCentipede(Point2f{ 4100,2280 });
+	BaseEnemy* enemy2 = new EnemyCentipede(Point2f{ 7932,1930 });
+	BaseEnemy* enemy3 = new EnemyCentipede(Point2f{ 4304,5269 });
 
 	m_pEnemyManager->AddItem(enemy1);
+	m_pEnemyManager->AddItem(enemy2);
+	m_pEnemyManager->AddItem(enemy3);
 }
 
 void Game::DoCollisionTests()
 {
 	if (m_pEnemyManager->HitItem(m_pAvatar->GetShape()))
 	{
-		
+
 		//m_Hud->PowerUpHit();
 		m_pAvatar->EnemyHit();
 		//m_pPowerUp->Play(0);

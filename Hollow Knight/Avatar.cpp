@@ -36,7 +36,7 @@ Avatar::~Avatar()
 
 void Avatar::Update(float elapsedSec, Level* pLevel)
 {
-	std::cout << GetShape().left << GetShape().bottom << std::endl;
+	std::cout << GetShape().left << "," << GetShape().bottom << std::endl;
 	Rectf currentShape = GetShape();
 
 	pLevel->HandleCollision(currentShape, m_Velocity);
