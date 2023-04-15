@@ -8,7 +8,7 @@
 EnemyCentipede::EnemyCentipede(const Point2f& position) :
 	BaseEnemy(position, "EnemyCentipede.png"), m_SpeedX(30.0f)
 {
-	SetBoundaries(300.0f, GetShape().height); // default
+	SetBoundaries(600.0f, GetShape().height); // default
 }
 EnemyCentipede::~EnemyCentipede()
 {}
@@ -49,7 +49,7 @@ void EnemyCentipede::Draw() const
 	}
 	else
 	{
-		utils::DrawRect(GetShape());
+	
 
 		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}

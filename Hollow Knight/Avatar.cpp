@@ -36,7 +36,7 @@ Avatar::~Avatar()
 
 void Avatar::Update(float elapsedSec, Level* pLevel)
 {
-
+	std::cout << GetShape().left << GetShape().bottom << std::endl;
 	Rectf currentShape = GetShape();
 
 	pLevel->HandleCollision(currentShape, m_Velocity);
@@ -110,12 +110,10 @@ void Avatar::Draw()const
 		glScalef(-1, 1, 1);
 		glTranslatef(-GetShape().width, 0, 0);
 		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
-		utils::DrawRect(GetShape());
 		glPopMatrix();
 	}
 	else
 	{
-		utils::DrawRect(GetShape());
 		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}
 }
@@ -137,14 +135,14 @@ void Avatar::CheckState(const Level* pLevel)
 	if (m_ActionState == ActionState::begin)
 		return;
 
-	if (pStates[SDL_SCANCODE_RIGHT] && !m_IsNovingAfterCollision)
+	if (pStates[SDL_SCANCODE_RIGHT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
 		m_IsMovingRight = true;
 		m_Velocity.x = m_HorSpeed;
 	}
 
-	if (pStates[SDL_SCANCODE_LEFT] && !m_IsNovingAfterCollision)
+	if (pStates[SDL_SCANCODE_LEFT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
 		m_IsMovingRight = false;
