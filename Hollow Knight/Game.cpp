@@ -142,6 +142,7 @@ void Game::DoCollisionTests()
 		{
 			AddCoins();
 			m_pCoinManager->SetPositions(shapeRect);
+
 			return;
 		}
 	}

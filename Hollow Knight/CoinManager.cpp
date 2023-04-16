@@ -48,7 +48,15 @@ void CoinManager::HandleCollection(const Rectf& rect)
 }
 void CoinManager::SetPositions(const Rectf& rect) const
 {
-	m_pCoins[0]->SetPosition(Point2f(rect.left - 70.0f, rect.bottom));
-	m_pCoins[1]->SetPosition(Point2f(rect.left - 20.0f, rect.bottom));
-	m_pCoins[2]->SetPosition(Point2f(rect.left + 40.0f, rect.bottom));
+	const int coinsPerKill = 3;
+	const int coinsStartingOffset = -70;
+	const int offsetStep = 50;
+
+	int offset = coinsStartingOffset;
+
+	for (int i = m_pCoins.size() - coinsPerKill; i < m_pCoins.size(); i++) {
+		m_pCoins[i]->SetPosition(Point2f(rect.left + offset, rect.bottom));
+
+		offset += offsetStep;
+	}
 }

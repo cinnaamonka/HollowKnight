@@ -22,13 +22,26 @@ void Coin::Draw() const
 
 bool Coin::IsOverlapping(const Rectf& rect) const
 {
-	Rectf rectidsfoi = GetShape();
+	Rectf coinShape = GetShape();
+
+	const float actorRight = rect.left + 2 * rect.width / 3;
+	const float actorLeft = rect.left + rect.width / 3;
+	const float actorBottom = rect.bottom;
+	const float actorTop = rect.bottom + rect.height;
+
+
+	const float coinRight = coinShape.left + coinShape.width;
+	const float coinLeft = coinShape.left;
+	const float coinBottom = coinShape.bottom;
+	const float coinTop = coinShape.bottom + coinShape.height;
+
+
 	bool isColliding
 	{
-		rect.left < GetShape().left + GetShape().width &&
-		(rect.left + rect.width > GetShape().left) &&
-		(rect.bottom < GetShape().bottom + GetShape().height) &&
-		rect.bottom + rect.height > GetShape().bottom
+		actorLeft < coinRight &&
+		actorRight > coinLeft &&
+		actorBottom < coinTop &&
+		actorTop > coinBottom
 	};
 
 	return isColliding;
