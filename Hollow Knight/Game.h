@@ -38,7 +38,6 @@ private:
 	void Initialize();
 	void Cleanup();
 	void ClearBackground() const;
-	void ShowTestMessage() const;
 	void AddEnemies();
 	void DoCollisionTests();
 

@@ -47,6 +47,15 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 
 	ChangeTexture(pLevel);
 
+	const Rectf bounds = pLevel->GetBoundaries();
+
+	if ((currentShape.left <= 0.0f && m_Velocity.x < 0) ||
+		(currentShape.left + currentShape.width >= bounds.left + bounds.width && m_Velocity.x > 0))
+	{
+	
+		SetShape(Rectf(bounds.left + bounds.width - currentShape.width, currentShape.bottom, currentShape.width, currentShape.height));
+	}
+
 	if (!pLevel->IsOnGround(currentShape, m_Velocity))
 	{
 		MoveAvatar(elapsedSec);
@@ -71,17 +80,6 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 
 		m_IsNovingAfterCollision = true;
 		MoveAvatar(elapsedSec);
-		return;
-	}
-
-
-	const Rectf bounds = pLevel->GetBoundaries();
-
-	if ((currentShape.left <= 0.0f && m_Velocity.x < 0) ||
-		(currentShape.left + currentShape.width >= bounds.left + bounds.width && m_Velocity.x > 0))
-	{
-		m_ActionState = ActionState::waiting;
-
 		return;
 	}
 

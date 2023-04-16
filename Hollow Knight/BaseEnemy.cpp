@@ -89,6 +89,6 @@ void BaseEnemy::ChangeTexture()
 }
 bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
 {
-	float distance = sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2));
+	float distance = float(sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2)));
 	return distance <= 40.0f;
 }

@@ -13,12 +13,6 @@ Level::Level()
 	m_pForeground = new Texture{ "HollowKnight LevelForeground.png" };
 	m_Boundaries = Rectf(0, 0, m_pLevel->GetWidth(), m_pLevel->GetHeight());
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
-
-	m_EndSignTexture = new Texture{ "EndSign.png" };
-	m_EndSignShape.left = 730.0f;
-	m_EndSignShape.bottom = 224.0f;
-	m_EndSignShape.width = m_EndSignTexture->GetWidth();
-	m_EndSignShape.height = m_EndSignTexture->GetHeight();
 }
 Level::~Level()
 {
@@ -26,7 +20,6 @@ Level::~Level()
 	delete m_pBackground;
 	delete m_pLevel;
 	delete m_pForeground;
-	delete m_EndSignTexture;
 }
 
 void Level::DrawBackground() const
@@ -37,7 +30,6 @@ void Level::DrawBackground() const
 void Level::DrawForeground() const
 {
 	m_pForeground->Draw();
-	m_EndSignTexture->Draw(m_EndSignShape);
 	m_pPlatform->Draw();
 }
 

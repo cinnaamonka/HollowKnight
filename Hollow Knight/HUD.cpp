@@ -6,16 +6,12 @@
 Hud::Hud(const Point2f& topLeft, int totalPowerUps) :
 	m_BottomLeft{ topLeft }, m_TotalPowerUps{ totalPowerUps }, m_HitPowerUps{ 0 }
 {
-	m_pLeftTexture = new Texture{ "HudLeft.png" };
-	m_pRightTexture = new Texture{ "HudRight.png" };
-	m_pPowerUpTexture = new Texture{ "HudPowerUp.png" };
+
 }
 
 Hud::~Hud()
 {
-	delete m_pLeftTexture;
-	delete m_pRightTexture;
-	delete m_pPowerUpTexture;
+
 }
 
 void Hud::Draw()
