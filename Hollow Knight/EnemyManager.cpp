@@ -13,6 +13,7 @@ EnemyManager::~EnemyManager()
 	{
 		delete Enemy;
 	}
+	
 }
 
 void EnemyManager::AddItem(BaseEnemy* enemy)
@@ -26,6 +27,7 @@ void EnemyManager::Draw() const
 	{
 		Enemy->Draw();
 	}
+	TakeDamage(); 
 }
 
 void EnemyManager::Update(float elapsedSec)
@@ -70,10 +72,21 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 			}
 			else
 			{
+
 				item->SetKilled(true);
 			}
 
 			return true;
+		}
+	}
+}
+void EnemyManager::TakeDamage()const
+{
+	for (auto& item : m_pItems)
+	{
+		if (item->IsKilled())
+		{
+			item->DrawCoins();
 		}
 	}
 }

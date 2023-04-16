@@ -26,9 +26,6 @@
     <Filter Include="Source Files\GroundObjectClass">
       <UniqueIdentifier>{e1e65e96-c26d-4598-a157-929bfed80d21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\HUDClass">
-      <UniqueIdentifier>{0359110c-c446-4781-b8a7-e90b55728251}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\LevelClass">
       <UniqueIdentifier>{7bedad22-d1e4-4e2b-9717-19a155b65be8}</UniqueIdentifier>
     </Filter>
@@ -37,6 +34,9 @@
     </Filter>
     <Filter Include="Source Files\BaseMovingObject">
       <UniqueIdentifier>{449b5c78-c014-4933-98aa-de11b0a3512a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Coin">
+      <UniqueIdentifier>{439ea2d0-b1c7-4197-b91c-f309ce4903f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,9 +67,6 @@
     <ClCompile Include="GroundObject.cpp">
       <Filter>Source Files\GroundObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>Source Files\HUDClass</Filter>
-    </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>Source Files\LevelClass</Filter>
     </ClCompile>
@@ -78,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="BaseMovingObject.cpp">
       <Filter>Source Files\BaseMovingObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files\Coin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +102,6 @@
     <ClInclude Include="GroundObject.h">
       <Filter>Source Files\GroundObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>Source Files\HUDClass</Filter>
-    </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Source Files\LevelClass</Filter>
     </ClInclude>
@@ -116,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="BaseMovingObject.h">
       <Filter>Source Files\BaseMovingObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Source Files\Coin</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

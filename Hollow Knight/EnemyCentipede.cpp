@@ -16,6 +16,8 @@ EnemyCentipede::~EnemyCentipede()
 }
 void EnemyCentipede::Update(float elapsedSec)
 {
+	BaseEnemy::Update(elapsedSec);
+
 	UpdateFrame(elapsedSec,GetFramesNumber());
 
 	ChangeTexture();

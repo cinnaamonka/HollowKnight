@@ -27,6 +27,10 @@ public:
 
 private:
 
+	void TakeDamage() const;
+
+private:
+
 	std::vector<BaseEnemy *> m_pItems;
 
 };

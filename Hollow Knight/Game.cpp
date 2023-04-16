@@ -1,7 +1,6 @@
 #include "pch.h"
 
 #include "Game.h"
-#include "Hud.h"
 #include "Avatar.h"
 #include "EnemyManager.h"
 #include "Level.h"
@@ -29,17 +28,13 @@ void Game::Initialize()
 	m_Camera = new Camera{ GetViewPort().width,GetViewPort().height };
 	m_pLevel = new Level();
 	m_Camera->SetLevelBoundaries(m_pLevel->GetBoundaries());
-	m_Hud = new Hud{ Point2f(10.0f,200.0f),3 };
 
-
-	m_EndReached = false;
 }
 
 void Game::Cleanup()
 {
 	delete m_pAvatar;
 	delete m_Camera;
-	delete m_Hud;
 	delete m_pEnemyManager;
 	delete m_pLevel;
 }
@@ -145,10 +140,6 @@ void Game::DoCollisionTests()
 	{
 		m_pAvatar->EnemyHit();
 	}
-
-	//m_Hud->PowerUpHit();
-	//m_pPowerUp->Play(0);
-
 }
 
 

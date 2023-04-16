@@ -8,7 +8,6 @@ class Avatar;
 class EnemyManager;
 class Level;
 class EnemyManager;
-class Hud;
 
 class Game : public BaseGame
 {
@@ -49,7 +48,6 @@ private:
 	EnemyManager *m_pEnemyManager;
 	Level *m_pLevel;
 	Camera* m_Camera;
-	Hud* m_Hud;
 	
 	bool m_EndReached;
 	
