@@ -41,6 +41,9 @@
     <Filter Include="Source Files\EnemyCentipedeClass">
       <UniqueIdentifier>{485f4e17-828a-4fdd-9480-61207f3ff2c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SpikesClass">
+      <UniqueIdentifier>{4c7a69ed-a671-4cb2-a568-4031a212edea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -85,6 +88,9 @@
     <ClCompile Include="CoinManager.cpp">
       <Filter>Source Files\CoinManagerClass</Filter>
     </ClCompile>
+    <ClCompile Include="Spikes.cpp">
+      <Filter>Source Files\SpikesClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -125,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="CoinManager.h">
       <Filter>Source Files\CoinManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Spikes.h">
+      <Filter>Source Files\SpikesClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

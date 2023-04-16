@@ -7,6 +7,7 @@ class BaseMovingObject
 public:
 
 	BaseMovingObject(const std::string &path);
+	BaseMovingObject();
 	virtual ~BaseMovingObject();
 
 	const Texture* GetTexture() const {

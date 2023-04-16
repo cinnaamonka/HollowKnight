@@ -1,7 +1,6 @@
 #include "pch.h"
 
 #include "BaseEnemy.h"
-#include "Game.h"
 
 #include <Texture.h>
 
@@ -31,7 +30,10 @@ BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture) :
 	SetBoundaries(300.0f, shape.height); // default
 	SetShape(shape);
 }
+BaseEnemy::BaseEnemy()
+{
 
+}
 BaseEnemy::~BaseEnemy()
 {
 

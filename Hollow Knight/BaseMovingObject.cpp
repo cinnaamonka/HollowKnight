@@ -12,6 +12,10 @@ BaseMovingObject::BaseMovingObject(const std::string& path) :
 {
 	m_pTexture = new Texture{ path };
 }
+BaseMovingObject::BaseMovingObject()
+{
+
+}
 
 BaseMovingObject::~BaseMovingObject()
 {

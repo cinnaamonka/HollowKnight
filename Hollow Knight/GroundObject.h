@@ -10,6 +10,7 @@ public:
 	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) = 0;
 
 protected:
+
 	std::vector<std::vector<Point2f>> m_Vertices;
 
 	static bool isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);

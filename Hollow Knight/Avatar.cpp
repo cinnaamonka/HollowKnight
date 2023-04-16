@@ -122,6 +122,10 @@ void Avatar::EnemyHit()
 	m_ActionState = ActionState::collidingEnemy;
 
 }
+void Avatar::Die()
+{
+	m_ActionState = ActionState::dying;
+}
 bool Avatar::IsAtacking()
 {
 	return m_IsKilling;

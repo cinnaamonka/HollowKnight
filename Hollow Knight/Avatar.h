@@ -20,6 +20,7 @@ public:
 	void Draw() const override;
 	void EnemyHit();
 	bool IsAtacking();
+	void Die();
 
 private:
 
@@ -35,7 +36,8 @@ private:
 		moving,
 		collidingEnemy,
 		jumping,
-		begin
+		begin,
+		dying
 	};
 
 	ActionState m_ActionState;

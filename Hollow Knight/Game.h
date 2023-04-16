@@ -9,6 +9,7 @@ class EnemyManager;
 class Level;
 class EnemyManager;
 class CoinManager;
+class Spikes;
 
 class Game : public BaseGame
 {
@@ -51,6 +52,7 @@ private:
 	Level *m_pLevel;
 	Camera* m_Camera;
 	CoinManager* m_pCoinManager;
+	Spikes* m_pSpikes;
 
 	bool m_EndReached;
 	

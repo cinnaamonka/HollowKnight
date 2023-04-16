@@ -8,6 +8,7 @@
 #include "EnemyCentipede.h"
 #include "CoinManager.h"
 #include "Coin.h"
+#include "Spikes.h"
 
 Game::Game(const Window& window)
 	:BaseGame{ window }, m_EndReached(false)
@@ -33,6 +34,8 @@ void Game::Initialize()
 	m_pLevel = new Level();
 	m_Camera->SetLevelBoundaries(m_pLevel->GetBoundaries());
 
+	m_pSpikes =  new Spikes(Rectf(3322.f,3015.f,400.0f,100.0f));
+
 }
 
 void Game::Cleanup()
@@ -45,7 +48,6 @@ void Game::Cleanup()
 
 void Game::Update(float elapsedSec)
 {
-
 	if (m_EndReached)
 		return;
 
@@ -65,6 +67,7 @@ void Game::Draw() const
 {
 	ClearBackground();
 
+	
 	glPushMatrix();
 
 	m_Camera->Transform(m_pAvatar->GetShape(), true);
@@ -81,6 +84,7 @@ void Game::Draw() const
 	m_pAvatar->Draw();
 	m_pEnemyManager->Draw();
 	m_pCoinManager->Draw();
+	m_pSpikes->Draw();
 	m_pLevel->DrawForeground();
 
 	glPopMatrix();

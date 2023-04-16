@@ -2,7 +2,7 @@
 
 class Texture;
 
-class Coin
+class Coin final
 {
 public:
 
