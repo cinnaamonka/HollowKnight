@@ -9,7 +9,7 @@ BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture) :
 	BaseMovingObject(texture),
 	m_BoundariesBorder{ 0,0,0,0 }
 {
-	SetFramesNumber(4);
+	SetFramesNumber(5);
 
 	Rectf sourceRect{ 0,0,0,0 };
 
@@ -71,8 +71,24 @@ void BaseEnemy::ChangeTexture()
 		GetSourceRect().width,
 		GetSourceRect().height
 	};
+	
+	if (IsKilled())
+	{
+		SetFramesNumber(1);
+		srcRect.left = 4 * srcRect.width;
+		SetSourceRect(srcRect);
+	}
+	else
+	{
+		SetFramesNumber(4);
+		srcRect.left = GetAnimationFrame() * srcRect.width;
+		SetSourceRect(srcRect);
+	}
 
-	srcRect.left = GetAnimationFrame() * srcRect.width;
-
-	SetSourceRect(srcRect);
+	
+}
+bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
+{
+	float distance = sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2));
+	return distance <= 40.0f;
 }

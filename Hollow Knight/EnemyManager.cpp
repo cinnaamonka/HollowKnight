@@ -15,7 +15,7 @@ EnemyManager::~EnemyManager()
 	}
 }
 
-void EnemyManager::AddItem(BaseEnemy *enemy)
+void EnemyManager::AddItem(BaseEnemy* enemy)
 {
 	m_pItems.push_back(enemy);
 }
@@ -48,7 +48,7 @@ bool EnemyManager::HitItem(const Rectf& rect)
 
 	for (auto& item : m_pItems)
 	{
-		if (item->IsOverlapping(rect))
+		if (item->IsOverlapping(rect) && !item->IsKilled())
 		{
 			std::swap(item, m_pItems.back());
 
@@ -57,4 +57,23 @@ bool EnemyManager::HitItem(const Rectf& rect)
 	}
 
 	return false;
+}
+bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
+{
+	for (auto& item : m_pItems)
+	{
+		if (item->IsOnCloseDistance(actor))
+		{
+			if (item->GetLifesAmount() >= 1)
+			{
+				item->DecreaseLifesAmount();
+			}
+			else
+			{
+				item->SetKilled(true);
+			}
+
+			return true;
+		}
+	}
 }

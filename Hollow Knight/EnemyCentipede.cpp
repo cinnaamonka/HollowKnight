@@ -11,7 +11,9 @@ EnemyCentipede::EnemyCentipede(const Point2f& position) :
 	SetBoundaries(600.0f, GetShape().height); // default
 }
 EnemyCentipede::~EnemyCentipede()
-{}
+{
+
+}
 void EnemyCentipede::Update(float elapsedSec)
 {
 	UpdateFrame(elapsedSec,GetFramesNumber());
@@ -25,8 +27,11 @@ void EnemyCentipede::Update(float elapsedSec)
 	{
 		m_SpeedX *= -1;
 	}
-
-	myShape.left += m_SpeedX * elapsedSec;
+	if (!IsKilled())
+	{
+		myShape.left += m_SpeedX * elapsedSec;
+	}
+	
 
 	SetShape(myShape);
 }

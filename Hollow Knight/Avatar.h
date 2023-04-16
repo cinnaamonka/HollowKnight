@@ -19,6 +19,7 @@ public:
 	void Update(float elapsedSec, Level* pLevel);
 	void Draw() const override;
 	void EnemyHit();
+	bool IsAtacking();
 
 private:
 
@@ -53,4 +54,5 @@ private:
 	bool m_CanDoubleJump;
 	bool m_HasDoubleJumped;
 	bool m_IsNovingAfterCollision;
+	bool m_IsKilling;
 };

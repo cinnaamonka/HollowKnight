@@ -154,13 +154,21 @@ void Game::AddEnemies()
 
 void Game::DoCollisionTests()
 {
-	if (m_pEnemyManager->HitItem(m_pAvatar->GetShape()))
+	if (m_pAvatar->IsAtacking())
 	{
-
-		//m_Hud->PowerUpHit();
-		m_pAvatar->EnemyHit();
-		//m_pPowerUp->Play(0);
-
+		if (m_pEnemyManager->IsEnemyKilled(m_pAvatar->GetShape()))
+		{
+			return;
+		}
 	}
+	else if (m_pEnemyManager->HitItem(m_pAvatar->GetShape()))
+	{
+		m_pAvatar->EnemyHit();
+	}
+
+	//m_Hud->PowerUpHit();
+	//m_pPowerUp->Play(0);
+
 }
+
 

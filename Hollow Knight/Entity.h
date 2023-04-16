@@ -1,13 +1,15 @@
 #pragma once
 
+#include <utils.h>
+
 class Texture;
 
-class BaseMovingObject
+class Entity
 {
 public:
 
-	BaseMovingObject(const std::string &path);
-	virtual ~BaseMovingObject();
+	Entity(const std::string &path);
+	virtual ~Entity();
 
 	const Texture* GetTexture() const {
 		return m_pTexture;
@@ -17,30 +19,8 @@ public:
 	{
 		return m_Shape;
 	}
-
-	virtual void Draw() const = 0;
-	
+	virtual void Draw() = 0;
 	void UpdateFrame(float elapsedSec, int numberFrames);
-
-	int GetLifesAmount()
-	{
-		return m_LifesAmount;
-	}
-	void DecreaseLifesAmount()
-	{
-		m_LifesAmount--;
-	}
-
-	bool IsKilled()
-	{
-		return m_IsKilled;
-	}
-
-	void SetKilled(bool isKilled)
-	{
-		m_IsKilled = isKilled;
-	}
-	
 
 protected:
 
@@ -80,7 +60,6 @@ protected:
 		return m_SourceRect;
 	}
 
-	
 private:
 
 	Texture* m_pTexture;
@@ -94,8 +73,7 @@ private:
 	Rectf m_Shape;
 	Rectf m_SourceRect;
 
-	int m_LifesAmount = 2;
-	bool m_IsKilled;
+	int m_LifesAmount;
 
-
+	bool isAlive;
 };

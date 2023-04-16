@@ -23,9 +23,10 @@ public:
 	size_t Size( ) const;
 	bool HitItem( const Rectf& rect ) ;
 
+	bool IsEnemyKilled(const Rectf& actor) const;
+
 private:
 
 	std::vector<BaseEnemy *> m_pItems;
 
-	// Your helper functions
 };

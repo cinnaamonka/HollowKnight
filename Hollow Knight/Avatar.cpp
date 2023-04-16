@@ -12,7 +12,7 @@ Avatar::Avatar() :
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
 	m_IsMovingRight{ true }, m_CanDoubleJump{ false },
-	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }
+	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false },m_IsKilling{false}
 {
 	SetFramesNumber(12);
 
@@ -36,7 +36,6 @@ Avatar::~Avatar()
 
 void Avatar::Update(float elapsedSec, Level* pLevel)
 {
-	std::cout << GetShape().left << "," << GetShape().bottom << std::endl;
 	Rectf currentShape = GetShape();
 
 	pLevel->HandleCollision(currentShape, m_Velocity);
@@ -55,11 +54,13 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 		return;
 	}
 
-	if (m_ActionState == ActionState::collidingEnemy && !m_IsNovingAfterCollision)
+	if (m_ActionState == ActionState::collidingEnemy && !m_IsNovingAfterCollision && !m_IsKilling)
 	{
 		if (m_IsMovingRight)
 		{
 			m_Velocity.x = - 1.5f * m_HorSpeed;
+
+			SetShape(currentShape);
 		}
 		else
 		{
@@ -124,6 +125,11 @@ void Avatar::EnemyHit()
 	m_ActionState = ActionState::collidingEnemy;
 
 }
+bool Avatar::IsAtacking()
+{
+	return m_IsKilling;
+}
+
 
 void Avatar::CheckState(const Level* pLevel)
 {
@@ -171,6 +177,11 @@ void Avatar::CheckState(const Level* pLevel)
 		m_HasDoubleJumped = true;
 		m_CanDoubleJump = false;
 	}
+
+	if (pStates[SDL_SCANCODE_X])
+	{
+		m_IsKilling = true;
+	}
 }
 
 void Avatar::MoveAvatar(float elapsedSec)
@@ -185,7 +196,6 @@ void Avatar::MoveAvatar(float elapsedSec)
 	}
 	if (m_ActionState == ActionState::collidingEnemy)
 	{
-
 		currentShape.left += (m_Velocity.x) * elapsedSec;
 	}
 
@@ -203,17 +213,16 @@ void Avatar::ChangeTexture(const Level* pLevel)
 	Rectf currentShape = GetShape();
 
 	srcRect.left = GetAnimationFrame() * m_ClipWidth;
-	std::cout << int(m_ActionState) << std::endl;
+
 	if (!pLevel->IsOnGround(currentShape, m_Velocity))
 	{
 		if (m_ActionState == ActionState::collidingEnemy)
 		{
-			srcRect.bottom =11 * m_ClipHeight;
+			srcRect.bottom = 11 * m_ClipHeight;
 			SetSourceRect(srcRect);
 		}
 		else
 		{
-			
 			srcRect.bottom = 10 * m_ClipHeight;
 			SetSourceRect(srcRect);
 		}
@@ -221,6 +230,21 @@ void Avatar::ChangeTexture(const Level* pLevel)
 	}
 	else
 	{
+		if (m_IsKilling)
+		{
+			if (GetAnimationFrame() != 4)
+			{
+				srcRect.bottom = 5 * m_ClipHeight;
+			}
+			else 
+			{
+				m_IsKilling = false;
+			}
+
+			SetSourceRect(srcRect);
+			return;
+		}
+
 		if (m_ActionState == ActionState::waiting)
 		{
 			srcRect.left = 0;
@@ -236,10 +260,9 @@ void Avatar::ChangeTexture(const Level* pLevel)
 
 			srcRect.bottom = 10 * m_ClipHeight;
 		}
-
-
+		
 		SetSourceRect(srcRect);
 	}
 
-	SetShape(currentShape);
+
 }

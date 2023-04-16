@@ -11,9 +11,6 @@
     <Filter Include="Source Files\BaseEnemyClass">
       <UniqueIdentifier>{3d508375-5913-4357-8e91-51fee953eea4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\BaseMovinfObjectClass">
-      <UniqueIdentifier>{449b5c78-c014-4933-98aa-de11b0a3512a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\CameraClass">
       <UniqueIdentifier>{d4377e27-c965-441d-81b7-12c2970066a4}</UniqueIdentifier>
     </Filter>
@@ -38,6 +35,9 @@
     <Filter Include="Source Files\PlatformClass">
       <UniqueIdentifier>{afa41afc-0253-4cff-a6e2-4a667db5c3de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\BaseMovingObject">
+      <UniqueIdentifier>{449b5c78-c014-4933-98aa-de11b0a3512a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,9 +51,6 @@
     </ClCompile>
     <ClCompile Include="BaseEnemy.cpp">
       <Filter>Source Files\BaseEnemyClass</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseMovingObject.cpp">
-      <Filter>Source Files\BaseMovinfObjectClass</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\CameraClass</Filter>
@@ -79,19 +76,16 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files\PlatformClass</Filter>
     </ClCompile>
+    <ClCompile Include="BaseMovingObject.cpp">
+      <Filter>Source Files\BaseMovingObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Avatar.h">
-      <Filter>Source Files\AvatarClass</Filter>
-    </ClInclude>
     <ClInclude Include="BaseEnemy.h">
       <Filter>Source Files\BaseEnemyClass</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseMovingObject.h">
-      <Filter>Source Files\BaseMovinfObjectClass</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Source Files\CameraClass</Filter>
@@ -116,6 +110,12 @@
     </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Source Files\PlatformClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Avatar.h">
+      <Filter>Source Files\AvatarClass</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMovingObject.h">
+      <Filter>Source Files\BaseMovingObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,6 +18,8 @@ public:
 
 	bool IsOverlapping(const Rectf& rect) const;
 
+	bool IsOnCloseDistance(const Rectf& rect) const;
+
 protected:
 
 	void ChangeTexture();
@@ -31,6 +33,8 @@ protected:
 private:
 
 	Rectf m_BoundariesBorder;
+
+	
 };
 
 
