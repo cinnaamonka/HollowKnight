@@ -6,6 +6,8 @@
 #include "Level.h"
 #include "Camera.h"
 #include "EnemyCentipede.h"
+#include "CoinManager.h"
+#include "Coin.h"
 
 Game::Game(const Window& window)
 	:BaseGame{ window }, m_EndReached(false)
@@ -22,6 +24,8 @@ void Game::Initialize()
 {
 	m_pEnemyManager = new EnemyManager();
 	AddEnemies();
+
+	m_pCoinManager = new CoinManager();
 
 	m_pAvatar = new Avatar();
 
@@ -45,6 +49,7 @@ void Game::Update(float elapsedSec)
 	if (m_EndReached)
 		return;
 
+	m_pCoinManager->HandleCollection(m_pAvatar->GetShape());
 	m_pAvatar->Update(elapsedSec, m_pLevel);
 	m_pEnemyManager->Update(elapsedSec);
 
@@ -75,7 +80,7 @@ void Game::Draw() const
 
 	m_pAvatar->Draw();
 	m_pEnemyManager->Draw();
-
+	m_pCoinManager->Draw();
 	m_pLevel->DrawForeground();
 
 	glPopMatrix();
@@ -129,17 +134,32 @@ void Game::AddEnemies()
 
 void Game::DoCollisionTests()
 {
+	const Rectf shapeRect = m_pAvatar->GetShape();
+
 	if (m_pAvatar->IsAtacking())
 	{
-		if (m_pEnemyManager->IsEnemyKilled(m_pAvatar->GetShape()))
+		if (m_pEnemyManager->IsEnemyKilled(shapeRect))
 		{
+			AddCoins();
+			m_pCoinManager->SetPositions(shapeRect);
 			return;
 		}
 	}
-	else if (m_pEnemyManager->HitItem(m_pAvatar->GetShape()))
+	else if (m_pEnemyManager->HitItem(shapeRect))
 	{
 		m_pAvatar->EnemyHit();
 	}
+
+}
+void Game::AddCoins()
+{
+	Coin* coin1 = new Coin();
+	Coin* coin2 = new Coin();
+	Coin* coin3 = new Coin();
+
+	m_pCoinManager->AddItem(coin1);
+	m_pCoinManager->AddItem(coin2);
+	m_pCoinManager->AddItem(coin3);
 }
 
 

@@ -8,6 +8,7 @@ class Avatar;
 class EnemyManager;
 class Level;
 class EnemyManager;
+class CoinManager;
 
 class Game : public BaseGame
 {
@@ -38,6 +39,7 @@ private:
 	void Cleanup();
 	void ClearBackground() const;
 	void AddEnemies();
+	void AddCoins();
 	void DoCollisionTests();
 
 private:
@@ -48,7 +50,8 @@ private:
 	EnemyManager *m_pEnemyManager;
 	Level *m_pLevel;
 	Camera* m_Camera;
-	
+	CoinManager* m_pCoinManager;
+
 	bool m_EndReached;
 	
 };

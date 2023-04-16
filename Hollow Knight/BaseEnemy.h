@@ -1,7 +1,6 @@
 #pragma once
 
 #include "BaseMovingObject.h"
-class Coin;
 
 class BaseEnemy : public BaseMovingObject
 {
@@ -15,13 +14,11 @@ public:
 	BaseEnemy(BaseEnemy&& other) = delete;
 	BaseEnemy& operator=(BaseEnemy&& other) = delete;
 
-	virtual void Update(float elapsedSec);
+	virtual void Update(float elapsedSec) = 0;
 
 	bool IsOverlapping(const Rectf& rect) const;
 
 	bool IsOnCloseDistance(const Rectf& rect) const;
-
-	void DrawCoins()const;
 
 protected:
 
@@ -37,7 +34,6 @@ private:
 
 	Rectf m_BoundariesBorder;
 
-	std::vector<Coin*> m_pCoins;
 };
 
 

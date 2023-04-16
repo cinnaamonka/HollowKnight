@@ -14,9 +14,6 @@
     <Filter Include="Source Files\CameraClass">
       <UniqueIdentifier>{d4377e27-c965-441d-81b7-12c2970066a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\EnemyCentipede">
-      <UniqueIdentifier>{485f4e17-828a-4fdd-9480-61207f3ff2c6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\EnemyManagerClass">
       <UniqueIdentifier>{f3f82554-793e-48bf-9b8f-d36ac378f93e}</UniqueIdentifier>
     </Filter>
@@ -32,11 +29,17 @@
     <Filter Include="Source Files\PlatformClass">
       <UniqueIdentifier>{afa41afc-0253-4cff-a6e2-4a667db5c3de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\BaseMovingObject">
+    <Filter Include="Source Files\CoinManagerClass">
+      <UniqueIdentifier>{aae23cd9-0299-4e63-980c-292c0497f650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CoinClass">
+      <UniqueIdentifier>{439ea2d0-b1c7-4197-b91c-f309ce4903f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BaseMovingObjectClass">
       <UniqueIdentifier>{449b5c78-c014-4933-98aa-de11b0a3512a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Coin">
-      <UniqueIdentifier>{439ea2d0-b1c7-4197-b91c-f309ce4903f0}</UniqueIdentifier>
+    <Filter Include="Source Files\EnemyCentipedeClass">
+      <UniqueIdentifier>{485f4e17-828a-4fdd-9480-61207f3ff2c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,7 +59,7 @@
       <Filter>Source Files\CameraClass</Filter>
     </ClCompile>
     <ClCompile Include="EnemyCentipede.cpp">
-      <Filter>Source Files\EnemyCentipede</Filter>
+      <Filter>Source Files\EnemyCentipedeClass</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Source Files\EnemyManagerClass</Filter>
@@ -74,10 +77,13 @@
       <Filter>Source Files\PlatformClass</Filter>
     </ClCompile>
     <ClCompile Include="BaseMovingObject.cpp">
-      <Filter>Source Files\BaseMovingObject</Filter>
+      <Filter>Source Files\BaseMovingObjectClass</Filter>
     </ClCompile>
     <ClCompile Include="Coin.cpp">
-      <Filter>Source Files\Coin</Filter>
+      <Filter>Source Files\CoinClass</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinManager.cpp">
+      <Filter>Source Files\CoinManagerClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +97,7 @@
       <Filter>Source Files\CameraClass</Filter>
     </ClInclude>
     <ClInclude Include="EnemyCentipede.h">
-      <Filter>Source Files\EnemyCentipede</Filter>
+      <Filter>Source Files\EnemyCentipedeClass</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>Source Files\EnemyManagerClass</Filter>
@@ -112,10 +118,13 @@
       <Filter>Source Files\AvatarClass</Filter>
     </ClInclude>
     <ClInclude Include="BaseMovingObject.h">
-      <Filter>Source Files\BaseMovingObject</Filter>
+      <Filter>Source Files\BaseMovingObjectClass</Filter>
     </ClInclude>
     <ClInclude Include="Coin.h">
-      <Filter>Source Files\Coin</Filter>
+      <Filter>Source Files\CoinClass</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinManager.h">
+      <Filter>Source Files\CoinManagerClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "Avatar.h"
-#include "Texture.h"
 #include "Level.h"
 
 #include <chrono>
 #include <thread>
+#include <Texture.h>
 
-Avatar::Avatar() :
+Avatar::Avatar():
 	BaseMovingObject("Knight.png"),
 	m_ClipHeight(0), m_ClipWidth(0), m_HorSpeed(500.0f),
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
@@ -43,7 +43,6 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 	CheckState(pLevel);
 
 	UpdateFrame(elapsedSec, 9);
-
 
 	ChangeTexture(pLevel);
 
@@ -261,6 +260,4 @@ void Avatar::ChangeTexture(const Level* pLevel)
 		
 		SetSourceRect(srcRect);
 	}
-
-
 }

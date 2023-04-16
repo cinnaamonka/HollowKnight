@@ -9,6 +9,8 @@ public:
     Coin();
     ~Coin();
 
+    void Draw() const;
+
     Rectf GetShape() const
     {
         return m_Shape;
@@ -20,22 +22,24 @@ public:
         m_Shape.bottom = pos.y;
     }
 
-    bool GetIsPickedUp() const
+    bool IsOverlapping(const Rectf& rect) const;
+
+    bool IsCollected() const 
     {
-        return isPickedUp;
+        return m_IsCollected;
     }
 
-    void setIsPickedUp(const bool newIsPickedUp) {
-        isPickedUp = newIsPickedUp;
+    void SetIsCollected(const bool isCollected)
+    {
+        m_IsCollected = isCollected;
     }
-
-    void Draw() const;
 
 private:
 
     Rectf m_Shape;
-    bool isPickedUp;
 
     Texture* m_pCoinTexture;
+
+    bool m_IsCollected;
 
 };

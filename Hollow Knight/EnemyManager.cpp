@@ -13,7 +13,7 @@ EnemyManager::~EnemyManager()
 	{
 		delete Enemy;
 	}
-	
+
 }
 
 void EnemyManager::AddItem(BaseEnemy* enemy)
@@ -23,11 +23,10 @@ void EnemyManager::AddItem(BaseEnemy* enemy)
 
 void EnemyManager::Draw() const
 {
-	for (const BaseEnemy* Enemy : m_pItems)
+	for (const BaseEnemy* pEnemy : m_pItems)
 	{
-		Enemy->Draw();
+		pEnemy->Draw();
 	}
-	TakeDamage(); 
 }
 
 void EnemyManager::Update(float elapsedSec)
@@ -45,7 +44,7 @@ size_t EnemyManager::Size() const
 
 bool EnemyManager::HitItem(const Rectf& rect)
 {
-	if (m_pItems.empty()) // TODO: Do I really need this check?
+	if (m_pItems.empty())
 		return false;
 
 	for (auto& item : m_pItems)
@@ -64,7 +63,7 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 {
 	for (auto& item : m_pItems)
 	{
-		if (item->IsOnCloseDistance(actor))
+		if (item->IsOnCloseDistance(actor) && !item->IsKilled())
 		{
 			if (item->GetLifesAmount() >= 1)
 			{
@@ -72,21 +71,12 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 			}
 			else
 			{
-
 				item->SetKilled(true);
+				return true;
 			}
-
-			return true;
+			
 		}
+		
 	}
-}
-void EnemyManager::TakeDamage()const
-{
-	for (auto& item : m_pItems)
-	{
-		if (item->IsKilled())
-		{
-			item->DrawCoins();
-		}
-	}
+	return false;
 }

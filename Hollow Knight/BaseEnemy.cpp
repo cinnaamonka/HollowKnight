@@ -2,7 +2,6 @@
 
 #include "BaseEnemy.h"
 #include "Game.h"
-#include "Coin.h"
 
 #include <Texture.h>
 
@@ -31,30 +30,13 @@ BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture) :
 
 	SetBoundaries(300.0f, shape.height); // default
 	SetShape(shape);
-
-	Coin* leftCoin = new Coin{};
-	Coin* middleCoin = new Coin{};
-	Coin* rightCoin = new Coin{};
-
-	m_pCoins.push_back(leftCoin);
-	m_pCoins.push_back(middleCoin);
-	m_pCoins.push_back(rightCoin);
 }
 
 BaseEnemy::~BaseEnemy()
 {
-	for (const Coin* pCoin : m_pCoins)
-	{
-		delete pCoin;
-	}
+
 }
-void BaseEnemy::Update(float elapsedSec)
-{
-	
-	m_pCoins[0]->SetPosition(Point2f(GetShape().left - 40.0f, GetShape().bottom));
-	m_pCoins[1]->SetPosition(Point2f(GetShape().left + 20.0f, GetShape().bottom));
-	m_pCoins[2]->SetPosition(Point2f(GetShape().left + 40.0f, GetShape().bottom - 10.0f));
-}
+
 void BaseEnemy::SetBoundaries(float width, float height)
 {
 	m_BoundariesBorder.width = width;
@@ -110,11 +92,4 @@ bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
 	float distance = float(sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2)));
 
 	return distance <= 40.0f;
-}
-void BaseEnemy::DrawCoins() const
-{
-	for (Coin* pCoin : m_pCoins)
-	{
-		pCoin->Draw();
-	}
 }
