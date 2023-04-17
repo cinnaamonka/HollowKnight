@@ -47,12 +47,6 @@ void BaseEnemy::SetBoundaries(float width, float height)
 
 bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 {
-	// for avatar rectf
-	const float left = rect.left;
-	const float right = rect.left + rect.width;
-	const float bottom = rect.bottom;
-	const float top = rect.bottom + rect.height;
-
 	bool isColliding
 	{
 		rect.left < GetShape().left + GetShape().width &&

@@ -7,6 +7,10 @@ class BaseMovingObject
 public:
 
 	BaseMovingObject(const std::string &path);
+	BaseMovingObject(const BaseMovingObject& other) = delete;
+	BaseMovingObject& operator=(const BaseMovingObject& other) = delete;
+	BaseMovingObject(BaseMovingObject&& other) = delete;
+	BaseMovingObject& operator=(BaseMovingObject&& other) = delete;
 	BaseMovingObject();
 	virtual ~BaseMovingObject();
 

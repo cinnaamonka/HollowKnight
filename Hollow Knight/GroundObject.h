@@ -3,7 +3,10 @@ class GroundObject
 {
 public:
 	GroundObject();
-
+	GroundObject(const GroundObject& other) = delete;
+	GroundObject& operator=(const GroundObject& other) = delete;
+	GroundObject(GroundObject&& other) = delete;
+	GroundObject& operator=(GroundObject&& other) = delete;
 	virtual ~GroundObject();
 
 	virtual void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity) = 0;

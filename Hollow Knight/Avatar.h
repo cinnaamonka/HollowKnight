@@ -45,6 +45,8 @@ private:
 	Vector2f m_Velocity;
 	Vector2f m_Acceleration;
 
+	Rectf m_ShapeBeforeDying;
+
 	float m_HorSpeed;
 	float m_JumpSpeed;
 	float m_AccuTransformSec;

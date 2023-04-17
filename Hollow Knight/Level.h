@@ -3,12 +3,11 @@
 #include <vector>
 #include <Vector2f.h>
 
-#include "GroundObject.h"
 
 class Texture;
 class Platform;
 
-class Level:public GroundObject
+class Level
 {
 public:
 
@@ -23,16 +22,24 @@ public:
 	void DrawForeground() const;
 	void DrawMiddleground() const;
 
-	virtual void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)override;
-	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) override;
+	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity);
+	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
 
 	bool IsOnGround(Rectf&  actorShape, Vector2f& actorVelocity) const;
 	Rectf GetBoundaries() const;
 	bool HasReachedEnd(const Rectf& actorShape) const;
 
-	
+	static bool isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
+	static bool isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
+
+
+	static void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
+	static void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
+	static void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 
 private:
+
+	std::vector<std::vector<Point2f>> m_Vertices;
 
 	Texture* m_pLevel;
 	Texture* m_pForeground;

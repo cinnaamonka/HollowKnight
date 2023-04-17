@@ -41,7 +41,7 @@ private:
 	void ClearBackground() const;
 	void AddEnemies();
 	void AddCoins();
-	void DoCollisionTests();
+	void CheckAvatarCollison();
 
 private:
 

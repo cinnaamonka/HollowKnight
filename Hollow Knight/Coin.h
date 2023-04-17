@@ -7,6 +7,10 @@ class Coin final
 public:
 
     Coin();
+    Coin(const Coin& other) = delete;
+    Coin& operator=(const Coin& other) = delete;
+    Coin(Coin&& other) = delete;
+    Coin& operator=(Coin&& other) = delete;
     ~Coin();
 
     void Draw() const;

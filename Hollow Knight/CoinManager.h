@@ -7,13 +7,14 @@ class CoinManager final
 
 public:
 	CoinManager();
-	~CoinManager();
-
 	CoinManager(const CoinManager&) = delete;
 	CoinManager& operator=(const CoinManager&) = delete;
 	CoinManager(CoinManager&&) = delete;
 	CoinManager& operator=(CoinManager&&) = delete;
 
+	~CoinManager();
+
+	
 	void AddItem(Coin* pCoin);
 
 	void Draw() const;

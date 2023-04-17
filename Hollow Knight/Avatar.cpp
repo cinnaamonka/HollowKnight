@@ -125,6 +125,7 @@ void Avatar::EnemyHit()
 void Avatar::Die()
 {
 	m_ActionState = ActionState::dying;
+	m_ShapeBeforeDying = GetShape();
 }
 bool Avatar::IsAtacking()
 {
@@ -139,7 +140,7 @@ void Avatar::CheckState(const Level* pLevel)
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
 
 
-	if (m_ActionState == ActionState::begin)
+	if (m_ActionState == ActionState::begin || m_ActionState == ActionState::dying)
 		return;
 
 	if (pStates[SDL_SCANCODE_RIGHT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
@@ -189,7 +190,11 @@ void Avatar::MoveAvatar(float elapsedSec)
 {
 	Rectf currentShape = GetShape();
 
-	currentShape.bottom += m_Velocity.y * elapsedSec;
+	if (m_ActionState != ActionState::dying)
+	{
+		currentShape.bottom += m_Velocity.y * elapsedSec;
+	}
+	
 
 	if (m_ActionState == ActionState::moving)
 	{
@@ -200,9 +205,19 @@ void Avatar::MoveAvatar(float elapsedSec)
 		currentShape.left += (m_Velocity.x) * elapsedSec;
 	}
 
-	if (m_Velocity.y >= m_Acceleration.y)
+	if (m_Velocity.y >= m_Acceleration.y && m_ActionState != ActionState::dying)
 	{
 		m_Velocity.y += m_Acceleration.y * elapsedSec;
+	}
+	if (m_ActionState == ActionState::dying)
+	{
+		std::cout << m_Velocity.y << std::endl;
+	
+		if (currentShape.bottom - m_ShapeBeforeDying.bottom < 70.0f)
+		{
+			currentShape.bottom += 15.0f * elapsedSec;
+		}
+		
 	}
 
 	SetShape(currentShape);
@@ -215,6 +230,14 @@ void Avatar::ChangeTexture(const Level* pLevel)
 
 	srcRect.left = GetAnimationFrame() * m_ClipWidth;
 
+	if (m_ActionState == ActionState::dying)
+	{
+		SetAnimationFrame(1);
+		srcRect.left = 3 * m_ClipWidth;
+		srcRect.bottom = 12 * m_ClipHeight;
+		SetSourceRect(srcRect);
+		return;
+	}
 	if (!pLevel->IsOnGround(currentShape, m_Velocity))
 	{
 		if (m_ActionState == ActionState::collidingEnemy)

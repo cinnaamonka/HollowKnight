@@ -34,7 +34,7 @@ void Game::Initialize()
 	m_pLevel = new Level();
 	m_Camera->SetLevelBoundaries(m_pLevel->GetBoundaries());
 
-	m_pSpikes =  new Spikes(Rectf(3322.f,3015.f,400.0f,100.0f));
+	m_pSpikes =  new Spikes(Rectf(3150.f,3100.f,400.0f,100.0f));
 
 }
 
@@ -60,35 +60,43 @@ void Game::Update(float elapsedSec)
 		m_EndReached = true;
 	}
 
-	DoCollisionTests();
+	CheckAvatarCollison();
 }
 
 void Game::Draw() const
 {
 	ClearBackground();
-
 	
 	glPushMatrix();
-
-	m_Camera->Transform(m_pAvatar->GetShape(), true);
-
-	glPushMatrix();
-	glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.1f, 0.0f, 0.0f);
+	glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.5f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 0.5f, 0.0f);
 
 	m_pLevel->DrawBackground();
 
 	glPopMatrix();
 
-	m_pLevel->DrawMiddleground();
 
+	glPushMatrix();
+
+	m_Camera->Transform(m_pAvatar->GetShape(), true);
+
+	m_pLevel->DrawMiddleground();
+	
 	m_pAvatar->Draw();
 	m_pEnemyManager->Draw();
 	m_pCoinManager->Draw();
-	m_pSpikes->Draw();
-	m_pLevel->DrawForeground();
+
 
 	glPopMatrix();
 
+
+	glPushMatrix();
+
+	glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 1.1f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 1.02f, 0.0f);
+
+	m_pLevel->DrawForeground();
+
+	glPopMatrix();
+	
 
 	if (m_EndReached)
 	{
@@ -136,7 +144,7 @@ void Game::AddEnemies()
 	m_pEnemyManager->AddItem(enemy3);
 }
 
-void Game::DoCollisionTests()
+void Game::CheckAvatarCollison()
 {
 	const Rectf shapeRect = m_pAvatar->GetShape();
 
@@ -153,6 +161,11 @@ void Game::DoCollisionTests()
 	else if (m_pEnemyManager->HitItem(shapeRect))
 	{
 		m_pAvatar->EnemyHit();
+	}
+
+	if (m_pSpikes->IsOverlapping(m_pAvatar->GetShape()))
+	{
+		m_pAvatar->Die();
 	}
 
 }
