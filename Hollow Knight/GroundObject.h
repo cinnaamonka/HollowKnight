@@ -1,16 +1,23 @@
 #pragma once
+
+class Texture;
+
 class GroundObject
 {
 public:
-	GroundObject();
+	GroundObject(const std::string& texture);
 	GroundObject(const GroundObject& other) = delete;
 	GroundObject& operator=(const GroundObject& other) = delete;
 	GroundObject(GroundObject&& other) = delete;
 	GroundObject& operator=(GroundObject&& other) = delete;
 	virtual ~GroundObject();
 
-	virtual void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity) = 0;
-	virtual bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) = 0;
+	void Draw(const Point2f& pos);
+
+	Rectf GetShape()
+	{
+		return m_Shape;
+	}
 
 protected:
 
@@ -23,5 +30,13 @@ protected:
 	static void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	static void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	static void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
+
+	void SetShape(const Rectf& rect);
+
+private:
+
+	 Texture* m_pTexture;
+
+	 Rectf m_Shape;
 };
 

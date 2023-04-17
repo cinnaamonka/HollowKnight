@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Level.h"
+#include "GroundObject.h"
 
 #include <Texture.h>
 #include "Platform.h"
@@ -9,33 +10,34 @@ Level::Level()
 {
 	m_pPlatform = new Platform{ Point2f(8088.0f,2070.0f) };
 	m_pBackground = new Texture{ "Background Variation3.png" };
-	m_pLevel = new Texture{ "HollowKnightLevel2.png" };
-	m_pForeground = new Texture{ "HollowKnight LevelForeground.png" };
-	m_Boundaries = Rectf(0, 0, m_pLevel->GetWidth(), m_pLevel->GetHeight());
+	m_pGround = new GroundObject{ "HollowKnightLevel2.png" };
+	m_pForeground = new GroundObject{ "HollowKnight LevelForeground.png" };
+	m_Boundaries = Rectf(0, 0, m_pGround->GetShape().width, m_pGround->GetShape().height);
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
+	m_EndSignShape = Rectf(0.0f, 0.0f, 0.0f, 0.0f);
 }
 Level::~Level()
 {
 	delete m_pPlatform;
 	delete m_pBackground;
-	delete m_pLevel;
+	delete m_pGround;
 	delete m_pForeground;
 }
 
 void Level::DrawBackground() const
 {
-	m_pBackground->Draw();
+	m_pBackground->Draw(Point2f(0.0f, 0.f));
 }
 
 void Level::DrawForeground() const
 {
-	m_pForeground->Draw();
+	m_pForeground->Draw(Point2f(0.0f, 0.f));
 }
 
 void Level::DrawMiddleground() const
 {
-	m_pLevel->Draw();
-	m_pPlatform->Draw();
+	m_pGround->Draw(Point2f(0.0f,0.f));
+	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
 }
 
 void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)

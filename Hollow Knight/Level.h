@@ -6,6 +6,7 @@
 
 class Texture;
 class Platform;
+class GroundObject;
 
 class Level
 {
@@ -41,8 +42,6 @@ private:
 
 	std::vector<std::vector<Point2f>> m_Vertices;
 
-	Texture* m_pLevel;
-	Texture* m_pForeground;
 	Texture* m_EndSignTexture;
 	Texture* m_pBackground;
 
@@ -50,5 +49,9 @@ private:
 	Rectf m_EndSignShape;
 
 	Platform* m_pPlatform;
+
+	GroundObject* m_pGround;
+
+	GroundObject* m_pForeground;
 };
 

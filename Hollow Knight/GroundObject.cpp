@@ -1,13 +1,17 @@
 #include "pch.h"
 #include "GroundObject.h"
 
-GroundObject::GroundObject()
-{
+#include <Texture.h>
 
+GroundObject::GroundObject(const std::string& texture)
+{
+	m_pTexture = new Texture(texture);
+
+	SetShape(Rectf(0.0f, 0.0f, m_pTexture->GetWidth(), m_pTexture->GetHeight()));
 }
 GroundObject::~GroundObject()
 {
-
+	delete m_pTexture;
 }
 
 bool GroundObject::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
@@ -73,4 +77,15 @@ void GroundObject::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, 
 	actorShape.bottom = hitInfo.intersectPoint.y - actorShape.height - verticalOffset;
 	actorVelocity.y = 0.0f;
 	actorVelocity.x = 0.0f;
+}
+void GroundObject::Draw(const Point2f& pos)
+{
+	m_pTexture->Draw(pos);
+}
+void GroundObject::SetShape(const Rectf& rect)
+{
+	m_Shape = rect;
+	m_Shape.width = m_pTexture->GetWidth();
+	m_Shape.height = m_pTexture->GetHeight();
+
 }

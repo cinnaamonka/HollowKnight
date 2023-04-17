@@ -4,28 +4,33 @@
 #include <SVGParser.h>
 #include <Texture.h>
 
-Platform::Platform(const Point2f& bottomLeft)
+Platform::Platform(const Point2f& bottomLeft) :
+	GroundObject("platform.png")
+
 {
-	m_pTexture = new Texture{ "platform.png" };
+
 
 	SVGParser::GetVerticesFromSvgFile("platform.svg", m_Vertices);
 
-	m_Shape.left = bottomLeft.x - 180.0f;
-	m_Shape.bottom = bottomLeft.y + 30.0f;
-	m_Shape.width = m_pTexture->GetWidth() + 100.0f;
-	m_Shape.height = m_pTexture->GetHeight();
+	Rectf platfromRect
+	{
+		bottomLeft.x - 130.0f,
+		bottomLeft.y + 30.0f,
+		0.0f,
+		0.f
+	};
+
+	SetShape(platfromRect);
+
+	Point2f pos = Point2f(platfromRect.left, platfromRect.bottom);
+
+	SetPosition(pos);
+
 }
 
 Platform::~Platform()
 {
-	delete m_pTexture;
-}
 
-void Platform::Draw()const
-{
-	m_pTexture->Draw(m_Shape);
-	
-	utils::SetColor(Color4f(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
 void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
@@ -74,7 +79,7 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 		}
 	}
 }
- bool Platform::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
+ bool Platform::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const
 {
 	float borderDist{ 5.f };
 
