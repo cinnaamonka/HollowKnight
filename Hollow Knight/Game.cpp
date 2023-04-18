@@ -44,6 +44,8 @@ void Game::Cleanup()
 	delete m_Camera;
 	delete m_pEnemyManager;
 	delete m_pLevel;
+	delete m_pCoinManager;
+	delete m_pSpikes;
 }
 
 void Game::Update(float elapsedSec)
@@ -68,33 +70,34 @@ void Game::Draw() const
 	ClearBackground();
 	
 	glPushMatrix();
-	glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.5f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 0.5f, 0.0f);
+	{
+		glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.5f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 0.5f, 0.0f);
 
-	m_pLevel->DrawBackground();
-
+		m_pLevel->DrawBackground();
+	}
 	glPopMatrix();
 
 
 	glPushMatrix();
+	{
+		m_Camera->Transform(m_pAvatar->GetShape(), true);
 
-	m_Camera->Transform(m_pAvatar->GetShape(), true);
+		m_pLevel->DrawMiddleground();
 
-	m_pLevel->DrawMiddleground();
-	
-	m_pAvatar->Draw();
-	m_pEnemyManager->Draw();
-	m_pCoinManager->Draw();
-
-
+		m_pAvatar->Draw();
+		m_pEnemyManager->Draw();
+		m_pCoinManager->Draw();
+	}
 	glPopMatrix();
 
 
 	glPushMatrix();
+	{
+		glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 1.1f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 1.02f, 0.0f);
 
-	glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 1.1f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 1.02f, 0.0f);
+		m_pLevel->DrawForeground();
 
-	m_pLevel->DrawForeground();
-
+	}
 	glPopMatrix();
 	
 
@@ -152,6 +155,7 @@ void Game::CheckAvatarCollison()
 	{
 		if (m_pEnemyManager->IsEnemyKilled(shapeRect))
 		{
+			// pass as parameter into manager
 			AddCoins();
 			m_pCoinManager->SetPositions(shapeRect);
 
