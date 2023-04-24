@@ -81,7 +81,7 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 	return false;
 }
 
-void EnemyManager::Atack(const Rectf& actor, const Vector2f& velocity)
+void EnemyManager::Atack(const Rectf& actor, const Vector2f& velocity)const
 {
 	for (auto& item : m_pItems)
 	{

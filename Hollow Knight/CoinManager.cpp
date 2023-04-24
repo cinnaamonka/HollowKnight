@@ -35,7 +35,7 @@ size_t CoinManager::Size() const
 	return m_pCoins.size();
 }
 
-void CoinManager::HandleCollection(const Rectf& rect)
+void CoinManager::HandleCollection(const Rectf& rect)const
 {
 	for (Coin* pCoin : m_pCoins)
 	{

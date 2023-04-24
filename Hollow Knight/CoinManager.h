@@ -21,7 +21,7 @@ public:
 
 	size_t Size() const;
 
-	void HandleCollection(const Rectf& rect);
+	void HandleCollection(const Rectf& rect) const;
 
 	void SetPositions(const Rectf& rect) const;
 

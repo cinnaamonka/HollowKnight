@@ -130,7 +130,7 @@ void Avatar::Die()
 	m_ActionState = ActionState::dying;
 	m_ShapeBeforeDying = GetShape();
 }
-bool Avatar::IsAtacking()
+bool Avatar::IsAtacking()const
 {
 	return m_IsKilling;
 }

@@ -78,7 +78,7 @@ void GroundObject::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, 
 	actorVelocity.y = 0.0f;
 	actorVelocity.x = 0.0f;
 }
-void GroundObject::Draw(const Point2f& pos)
+void GroundObject::Draw(const Point2f& pos)const
 {
 	m_pTexture->Draw(pos);
 }

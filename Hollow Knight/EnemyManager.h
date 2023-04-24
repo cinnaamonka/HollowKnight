@@ -25,7 +25,7 @@ public:
 
 	bool IsEnemyKilled(const Rectf& actor) const;
 
-	void Atack(const Rectf& actor, const Vector2f& velocity);
+	void Atack(const Rectf& actor, const Vector2f& velocity)const;
 
 private:
 

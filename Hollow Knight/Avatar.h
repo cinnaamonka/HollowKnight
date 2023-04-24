@@ -19,7 +19,7 @@ public:
 	void Update(float elapsedSec, Level* pLevel);
 	void Draw() const override;
 	void EnemyHit();
-	bool IsAtacking();
+	bool IsAtacking()const;
 	void Die();
 
 	Vector2f GetVelocity()

@@ -12,7 +12,7 @@ public:
 	GroundObject& operator=(GroundObject&& other) = delete;
 	virtual ~GroundObject();
 
-	void Draw(const Point2f& pos);
+	void Draw(const Point2f& pos) const;
 
 	Rectf GetShape()
 	{
