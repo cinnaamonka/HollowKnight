@@ -55,8 +55,6 @@ void EnemyCentipede::Draw() const
 	}
 	else
 	{
-	
-
 		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}
 	

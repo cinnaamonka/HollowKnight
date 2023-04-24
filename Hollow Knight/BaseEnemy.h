@@ -47,6 +47,7 @@ public:
 		m_AvatarVelocity = velocity;
 	}
 
+
 protected:
 
 	void ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMoving, int amountOFFramesAtacking = 0);

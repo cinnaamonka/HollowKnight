@@ -18,5 +18,6 @@ public:
 private:
 
 	float m_SpeedX;
+	
 };
 

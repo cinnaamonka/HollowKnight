@@ -18,9 +18,19 @@ void EnemyDragonfly::Update(float elapsedSec)
 
 	ChangeTexture(1, 6, 8);
 
+	const float groundPos = 3200.f;
 	Rectf myShape = GetShape();
 	Rectf bounds = GetBoundaries();
 
+	if (IsKilled())
+	{
+		if (myShape.bottom >= groundPos)
+		{
+			myShape.bottom -= 65.0f * elapsedSec;
+		}
+		SetShape(myShape);
+		return;
+	}
 
 	if (myShape.left + myShape.width >= bounds.left + bounds.width || myShape.left < bounds.left)
 	{
@@ -39,14 +49,11 @@ void EnemyDragonfly::Update(float elapsedSec)
 		Vector2f velocity = directionVector;
 
 		m_Velocity = velocity;
-
 	}
+	
+	myShape.left += m_Velocity.x * elapsedSec;
+	myShape.bottom += m_Velocity.y * elapsedSec;
 
-	if (!IsKilled())
-	{
-		myShape.left += m_Velocity.x * elapsedSec;
-		myShape.bottom += m_Velocity.y * elapsedSec;
-	}
 
 	SetShape(myShape);
 }
