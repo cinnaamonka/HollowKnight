@@ -3,10 +3,10 @@
 
 #include <Texture.h>
 
-BaseMovingObject::BaseMovingObject(const std::string& path) :
+BaseMovingObject::BaseMovingObject(const std::string& path, int framesNumber) :
 	m_AnimTime(0),
-	m_NrOfFrames(0),
-	m_NrFramesPerSec(0),
+	m_NrOfFrames(framesNumber),
+	m_NrFramesPerSec(10),
 	m_AnimFrame(0), m_IsKilled{ false }, m_LifesAmount(2)
 
 {
@@ -26,7 +26,7 @@ void BaseMovingObject::UpdateFrame(float elapsedSec, int numberFrames)
 {
 	m_AnimTime += elapsedSec;
 
-	if (m_AnimTime >= 1.f / numberFrames)
+	if (m_AnimTime >= 1.f / m_NrFramesPerSec)
 	{
 		++m_AnimFrame %= numberFrames;
 

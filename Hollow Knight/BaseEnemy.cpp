@@ -4,11 +4,11 @@
 
 #include <Texture.h>
 
-BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture) :
-	BaseMovingObject(texture),
+BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture, int framesNumber) :
+	BaseMovingObject(texture, framesNumber),
 	m_BoundariesBorder{ 0,0,0,0 }
 {
-	SetFramesNumber(5);
+	SetFramesNumber(framesNumber);
 
 	Rectf sourceRect{ 0,0,0,0 };
 
@@ -54,11 +54,11 @@ bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 		(rect.bottom < GetShape().bottom + GetShape().height) &&
 		rect.bottom + rect.height > GetShape().bottom
 	};
-	
+
 	return isColliding;
 }
 
-void BaseEnemy::ChangeTexture()
+void BaseEnemy::ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMoving, int amountOFFramesAtacking)
 {
 	Rectf srcRect
 	{
@@ -67,21 +67,21 @@ void BaseEnemy::ChangeTexture()
 		GetSourceRect().width,
 		GetSourceRect().height
 	};
-	
+
 	if (IsKilled())
 	{
-		SetFramesNumber(1);
-		srcRect.left = 4 * srcRect.width;
+		SetFramesNumber(amountOfFramesIfKilled);
+		srcRect.left = (amountOfFramesMoving + amountOFFramesAtacking) * srcRect.width;
 		SetSourceRect(srcRect);
 	}
 	else
 	{
-		SetFramesNumber(4);
-		srcRect.left = GetAnimationFrame() * srcRect.width;
+		SetFramesNumber(amountOfFramesMoving);
+		srcRect.left = amountOFFramesAtacking * srcRect.width + GetAnimationFrame() * srcRect.width;
 		SetSourceRect(srcRect);
 	}
 
-	
+
 }
 bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
 {

@@ -6,6 +6,7 @@
 #include "Level.h"
 #include "Camera.h"
 #include "EnemyCentipede.h"
+#include "EnemyDragonfly.h"
 #include "CoinManager.h"
 #include "Coin.h"
 #include "Spikes.h"
@@ -141,10 +142,12 @@ void Game::AddEnemies()
 	BaseEnemy* enemy1 = new EnemyCentipede(Point2f{ 4100,2280 });
 	BaseEnemy* enemy2 = new EnemyCentipede(Point2f{ 7932,1930 });
 	BaseEnemy* enemy3 = new EnemyCentipede(Point2f{ 4304,5269 });
+	BaseEnemy* enemy4 = new EnemyDragonfly(Point2f{ 5010,3261 });
 
 	m_pEnemyManager->AddItem(enemy1);
 	m_pEnemyManager->AddItem(enemy2);
 	m_pEnemyManager->AddItem(enemy3);
+	m_pEnemyManager->AddItem(enemy4);
 }
 
 void Game::CheckAvatarCollison()

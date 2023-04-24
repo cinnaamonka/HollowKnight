@@ -6,7 +6,7 @@ class BaseMovingObject
 {
 public:
 
-	BaseMovingObject(const std::string &path);
+	BaseMovingObject(const std::string &path, int framesNumber);
 	BaseMovingObject(const BaseMovingObject& other) = delete;
 	BaseMovingObject& operator=(const BaseMovingObject& other) = delete;
 	BaseMovingObject(BaseMovingObject&& other) = delete;

@@ -7,14 +7,14 @@
 #include <Texture.h>
 
 Avatar::Avatar():
-	BaseMovingObject("Knight.png"),
+	BaseMovingObject("Knight.png",12),
 	m_ClipHeight(0), m_ClipWidth(0), m_HorSpeed(500.0f),
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
 	m_IsMovingRight{ true }, m_CanDoubleJump{ false },
 	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false },m_IsKilling{false}
 {
-	SetFramesNumber(12);
+
 
 	Rectf sourceRect{ 0,0,0,0 };
 

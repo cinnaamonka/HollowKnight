@@ -6,7 +6,7 @@ class BaseEnemy : public BaseMovingObject
 {
 public:
 
-	explicit BaseEnemy(const Point2f& position, const std::string &texture);
+	explicit BaseEnemy(const Point2f& position, const std::string &texture, int framesNumber);
 	explicit BaseEnemy();
 	virtual ~BaseEnemy();
 
@@ -23,7 +23,7 @@ public:
 
 protected:
 
-	void ChangeTexture();
+	void ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMoving, int amountOFFramesAtacking = 0);
 
 	void SetBoundaries(float width, float height);
 

@@ -6,8 +6,9 @@
 // EnemyCentipede
 
 EnemyCentipede::EnemyCentipede(const Point2f& position) :
-	BaseEnemy(position, "EnemyCentipede.png"), m_SpeedX(30.0f)
+	BaseEnemy(position, "EnemyCentipede.png",5), m_SpeedX(30.0f)
 {
+
 	SetBoundaries(600.0f, GetShape().height); // default
 }
 EnemyCentipede::~EnemyCentipede()
@@ -18,7 +19,7 @@ void EnemyCentipede::Update(float elapsedSec)
 {
 	UpdateFrame(elapsedSec,GetFramesNumber());
 
-	ChangeTexture();
+	ChangeTexture(1,4);
 
 	Rectf myShape = GetShape();
 	Rectf bounds = GetBoundaries();
