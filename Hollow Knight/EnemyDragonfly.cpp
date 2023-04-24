@@ -21,14 +21,27 @@ void EnemyDragonfly::Update(float elapsedSec)
 	Rectf myShape = GetShape();
 	Rectf bounds = GetBoundaries();
 
+
 	if (myShape.left + myShape.width >= bounds.left + bounds.width || myShape.left < bounds.left)
 	{
 		m_Velocity.x *= -1;
+
 	}
-	if (myShape.bottom + myShape.height >= bounds.bottom + bounds.height || myShape.bottom < bounds.bottom)
+	if (myShape.bottom + myShape.height >= bounds.bottom + bounds.height || myShape.bottom <= bounds.bottom + 10.0f)
 	{
 		m_Velocity.y *= -1;
 	}
+	if (GetCanSeeAvatar())
+	{
+		Vector2f directionVector = Vector2f(GetAvatarShape().left, GetAvatarShape().bottom) - Vector2f(myShape.left, myShape.bottom);
+
+		directionVector.Normalized();
+		Vector2f velocity = directionVector;
+
+		m_Velocity = velocity;
+
+	}
+
 	if (!IsKilled())
 	{
 		myShape.left += m_Velocity.x * elapsedSec;
@@ -40,7 +53,6 @@ void EnemyDragonfly::Update(float elapsedSec)
 
 void EnemyDragonfly::Draw() const
 {
-
 	if (m_Velocity.x < 0)
 	{
 		glPushMatrix();
@@ -56,8 +68,6 @@ void EnemyDragonfly::Draw() const
 	}
 	else
 	{
-
-
 		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}
 

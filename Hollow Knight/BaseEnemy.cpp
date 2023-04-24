@@ -6,7 +6,7 @@
 
 BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture, int framesNumber) :
 	BaseMovingObject(texture, framesNumber),
-	m_BoundariesBorder{ 0,0,0,0 }
+	m_BoundariesBorder{ 0,0,0,0 }, m_CanSeeAvatar{ false }
 {
 	SetFramesNumber(framesNumber);
 
@@ -88,4 +88,14 @@ bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
 	float distance = float(sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2)));
 
 	return distance <= 40.0f;
+}
+bool BaseEnemy::CanSeeAvatar(const Rectf& avatarRectf)const
+{
+	float distance = float(sqrt(pow(avatarRectf.left - GetShape().left, 2) + pow(avatarRectf.bottom - GetShape().bottom, 2)));
+
+	const float maxDistanceWithAvatar = 300.0f;
+
+	if (distance < maxDistanceWithAvatar) return true;
+
+	return false;
 }

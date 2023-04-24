@@ -80,3 +80,20 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 	}
 	return false;
 }
+
+void EnemyManager::Atack(const Rectf& actor, const Vector2f& velocity)
+{
+	for (auto& item : m_pItems)
+	{
+		if (item->CanSeeAvatar(actor))
+		{
+			item->SetCanSeeAvatar(true);
+			item->SetAvatarInfo(actor, velocity);
+		}
+		else
+		{
+			item->SetCanSeeAvatar(false);
+		}
+
+	}
+}

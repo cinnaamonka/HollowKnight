@@ -21,6 +21,32 @@ public:
 
 	bool IsOnCloseDistance(const Rectf& rect) const;
 
+	bool CanSeeAvatar(const Rectf& avatarRectf)const;
+
+	bool GetCanSeeAvatar()const
+	{
+		return m_CanSeeAvatar;
+	};
+
+	void SetCanSeeAvatar(bool canSeeAvatar)
+	{
+		m_CanSeeAvatar = canSeeAvatar;
+	}
+
+	Rectf GetAvatarShape() const
+	{
+		return m_AvatarShape;
+	}
+	Vector2f GetAvatarVelocity() const
+	{
+		return m_AvatarVelocity;
+	}
+	void SetAvatarInfo(const Rectf& shape,const Vector2f& velocity)
+	{
+		m_AvatarShape = shape;
+		m_AvatarVelocity = velocity;
+	}
+
 protected:
 
 	void ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMoving, int amountOFFramesAtacking = 0);
@@ -31,10 +57,15 @@ protected:
 		return m_BoundariesBorder;
 	}
 
+	
 private:
 
 	Rectf m_BoundariesBorder;
 
+	bool m_CanSeeAvatar;
+
+	Rectf m_AvatarShape;
+	Vector2f m_AvatarVelocity;
 };
 
 

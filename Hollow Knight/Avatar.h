@@ -22,6 +22,11 @@ public:
 	bool IsAtacking();
 	void Die();
 
+	Vector2f GetVelocity()
+	{
+		return m_Velocity;
+	}
+
 private:
 
 	void CheckState(const Level* pLevel);

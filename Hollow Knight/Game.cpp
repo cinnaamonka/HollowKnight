@@ -154,6 +154,8 @@ void Game::CheckAvatarCollison()
 {
 	const Rectf shapeRect = m_pAvatar->GetShape();
 
+	m_pEnemyManager->Atack(shapeRect, m_pAvatar->GetVelocity());
+
 	if (m_pAvatar->IsAtacking())
 	{
 		if (m_pEnemyManager->IsEnemyKilled(shapeRect))

@@ -18,5 +18,6 @@ public:
 private:
 
 	Vector2f m_Velocity;
+
 };
 
