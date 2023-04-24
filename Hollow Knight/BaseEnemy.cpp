@@ -30,10 +30,6 @@ BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture, int fr
 	SetBoundaries(300.0f, shape.height); // default
 	SetShape(shape);
 }
-BaseEnemy::BaseEnemy()
-{
-
-}
 BaseEnemy::~BaseEnemy()
 {
 

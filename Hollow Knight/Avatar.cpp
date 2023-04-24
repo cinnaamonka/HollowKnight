@@ -6,15 +6,14 @@
 #include <thread>
 #include <Texture.h>
 
-Avatar::Avatar():
-	BaseMovingObject("Knight.png",12),
+Avatar::Avatar() :
+	BaseMovingObject("Knight.png", 12),
 	m_ClipHeight(0), m_ClipWidth(0), m_HorSpeed(500.0f),
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
 	m_IsMovingRight{ true }, m_CanDoubleJump{ false },
-	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false },m_IsKilling{false}
+	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }, m_IsKilling{ false }
 {
-
 
 	Rectf sourceRect{ 0,0,0,0 };
 
@@ -26,7 +25,9 @@ Avatar::Avatar():
 	m_ClipWidth = GetTexture()->GetWidth() / GetFramesNumber();
 	m_ClipHeight = GetTexture()->GetHeight() / GetFramesNumber();
 
-	SetShape(Rectf(2162, 5500, m_ClipWidth, m_ClipHeight));
+	const Point2f avatar_Start_Position(2162.f, 5500.f);
+
+	SetShape(Rectf(avatar_Start_Position.x, avatar_Start_Position.y, m_ClipWidth, m_ClipHeight));
 }
 
 Avatar::~Avatar()
@@ -42,7 +43,9 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 	SetShape(currentShape);
 	CheckState(pLevel);
 
-	UpdateFrame(elapsedSec, 9);
+	const int movementFrames = 9;
+
+	UpdateFrame(elapsedSec, movementFrames);
 
 	ChangeTexture(pLevel);
 
@@ -51,7 +54,7 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 	if ((currentShape.left <= 0.0f && m_Velocity.x < 0) ||
 		(currentShape.left + currentShape.width >= bounds.left + bounds.width && m_Velocity.x > 0))
 	{
-	
+
 		SetShape(Rectf(bounds.left + bounds.width - currentShape.width, currentShape.bottom, currentShape.width, currentShape.height));
 	}
 
@@ -66,13 +69,13 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 	{
 		if (m_IsMovingRight)
 		{
-			m_Velocity.x = - 1.5f * m_HorSpeed;
+			m_Velocity.x = -m_HorSpeed;
 
 			SetShape(currentShape);
 		}
 		else
 		{
-			m_Velocity.x = 1.5f * m_HorSpeed;
+			m_Velocity.x = m_HorSpeed;
 		}
 
 		m_Velocity.y = m_JumpSpeed;
@@ -188,14 +191,15 @@ void Avatar::CheckState(const Level* pLevel)
 
 void Avatar::MoveAvatar(float elapsedSec)
 {
-	std::cout << GetShape().left << "," << GetShape().bottom << std::endl;
 	Rectf currentShape = GetShape();
+	const float maxGround_Offset = 70.0f;
+	const float groundOffset = 15.0f;
 
 	if (m_ActionState != ActionState::dying)
 	{
 		currentShape.bottom += m_Velocity.y * elapsedSec;
 	}
-	
+
 
 	if (m_ActionState == ActionState::moving)
 	{
@@ -212,13 +216,12 @@ void Avatar::MoveAvatar(float elapsedSec)
 	}
 	if (m_ActionState == ActionState::dying)
 	{
-		std::cout << m_Velocity.y << std::endl;
-	
-		if (currentShape.bottom - m_ShapeBeforeDying.bottom < 70.0f)
+
+		if (currentShape.bottom - m_ShapeBeforeDying.bottom < maxGround_Offset)
 		{
-			currentShape.bottom += 15.0f * elapsedSec;
+			currentShape.bottom += groundOffset * elapsedSec;
 		}
-		
+
 	}
 
 	SetShape(currentShape);
@@ -229,13 +232,20 @@ void Avatar::ChangeTexture(const Level* pLevel)
 	Rectf srcRect{ 0.0f, m_ClipHeight, m_ClipWidth, m_ClipHeight };
 	Rectf currentShape = GetShape();
 
+	const int dyingTextureHorizontalOffset = 3;
+	const int dyingTextureVerticalOffset = 12;
+	const int collidingEnemyTextureVerticalOffset = 11;
+	const int dyingTextureAmount = 1;
+	const int killingTextureVerticalOffset = 4;
+	const int jumpingTextureVerticalOffset = 10;
+
 	srcRect.left = GetAnimationFrame() * m_ClipWidth;
 
 	if (m_ActionState == ActionState::dying)
 	{
-		SetAnimationFrame(1);
-		srcRect.left = 3 * m_ClipWidth;
-		srcRect.bottom = 12 * m_ClipHeight;
+		SetAnimationFrame(dyingTextureAmount);
+		srcRect.left = dyingTextureHorizontalOffset * m_ClipWidth;
+		srcRect.bottom = dyingTextureVerticalOffset * m_ClipHeight;
 		SetSourceRect(srcRect);
 		return;
 	}
@@ -243,25 +253,25 @@ void Avatar::ChangeTexture(const Level* pLevel)
 	{
 		if (m_ActionState == ActionState::collidingEnemy)
 		{
-			srcRect.bottom = 11 * m_ClipHeight;
+			srcRect.bottom = collidingEnemyTextureVerticalOffset * m_ClipHeight;
 			SetSourceRect(srcRect);
 		}
 		else
 		{
-			srcRect.bottom = 10 * m_ClipHeight;
+			srcRect.bottom = (collidingEnemyTextureVerticalOffset - 1) * m_ClipHeight;
 			SetSourceRect(srcRect);
 		}
-		
+
 	}
 	else
 	{
 		if (m_IsKilling)
 		{
-			if (GetAnimationFrame() != 4)
+			if (GetAnimationFrame() != killingTextureVerticalOffset)
 			{
-				srcRect.bottom = 5 * m_ClipHeight;
+				srcRect.bottom = (killingTextureVerticalOffset + 1) * m_ClipHeight;
 			}
-			else 
+			else
 			{
 				m_IsKilling = false;
 			}
@@ -283,9 +293,9 @@ void Avatar::ChangeTexture(const Level* pLevel)
 		else if (m_ActionState == ActionState::begin || m_ActionState == ActionState::jumping)
 		{
 
-			srcRect.bottom = 10 * m_ClipHeight;
+			srcRect.bottom = jumpingTextureVerticalOffset * m_ClipHeight;
 		}
-		
+
 		SetSourceRect(srcRect);
 	}
 }

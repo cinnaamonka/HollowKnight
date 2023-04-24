@@ -35,7 +35,9 @@ void Game::Initialize()
 	m_pLevel = new Level();
 	m_Camera->SetLevelBoundaries(m_pLevel->GetBoundaries());
 
-	m_pSpikes =  new Spikes(Rectf(3150.f,3100.f,400.0f,100.0f));
+	const Rectf spikesRect(3150.f, 3100.f, 400.0f, 100.0f);
+
+	m_pSpikes =  new Spikes(spikesRect);
 
 }
 
@@ -77,7 +79,6 @@ void Game::Draw() const
 		m_pLevel->DrawBackground();
 	}
 	glPopMatrix();
-
 
 	glPushMatrix();
 	{

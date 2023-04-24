@@ -12,11 +12,6 @@ BaseMovingObject::BaseMovingObject(const std::string& path, int framesNumber) :
 {
 	m_pTexture = new Texture{ path };
 }
-BaseMovingObject::BaseMovingObject()
-{
-
-}
-
 BaseMovingObject::~BaseMovingObject()
 {
 	delete m_pTexture;

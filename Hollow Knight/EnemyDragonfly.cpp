@@ -16,17 +16,22 @@ void EnemyDragonfly::Update(float elapsedSec)
 {
 	UpdateFrame(elapsedSec, GetFramesNumber());
 
-	ChangeTexture(1, 6, 8);
+	const int killingTexturesAmount = 1;
+	const int movingTexturesAmount = 6;
+	const int atackingTexturesAmount = 8;
+
+	ChangeTexture(killingTexturesAmount, movingTexturesAmount, atackingTexturesAmount);
 
 	const float groundPos = 3200.f;
 	Rectf myShape = GetShape();
 	Rectf bounds = GetBoundaries();
+	const float fallingAfterDyingSpeed = 65.0f;
 
 	if (IsKilled())
 	{
 		if (myShape.bottom >= groundPos)
 		{
-			myShape.bottom -= 65.0f * elapsedSec;
+			myShape.bottom -= fallingAfterDyingSpeed * elapsedSec;
 		}
 		SetShape(myShape);
 		return;
@@ -37,10 +42,11 @@ void EnemyDragonfly::Update(float elapsedSec)
 		m_Velocity.x *= -1;
 
 	}
-	if (myShape.bottom + myShape.height >= bounds.bottom + bounds.height || myShape.bottom <= bounds.bottom + 10.0f)
+	if (myShape.bottom + myShape.height >= bounds.bottom + bounds.height || myShape.bottom <= bounds.bottom)
 	{
 		m_Velocity.y *= -1;
 	}
+
 	if (GetCanSeeAvatar())
 	{
 		Vector2f directionVector = Vector2f(GetAvatarShape().left, GetAvatarShape().bottom) - Vector2f(myShape.left, myShape.bottom);

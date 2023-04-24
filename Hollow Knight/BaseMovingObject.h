@@ -11,7 +11,6 @@ public:
 	BaseMovingObject& operator=(const BaseMovingObject& other) = delete;
 	BaseMovingObject(BaseMovingObject&& other) = delete;
 	BaseMovingObject& operator=(BaseMovingObject&& other) = delete;
-	BaseMovingObject();
 	virtual ~BaseMovingObject();
 
 	const Texture* GetTexture() const {

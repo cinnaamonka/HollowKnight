@@ -8,8 +8,6 @@ Platform::Platform(const Point2f& bottomLeft) :
 	GroundObject("platform.png")
 
 {
-
-
 	SVGParser::GetVerticesFromSvgFile("platform.svg", m_Vertices);
 
 	Rectf platfromRect
