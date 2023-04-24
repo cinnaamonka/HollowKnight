@@ -188,6 +188,7 @@ void Avatar::CheckState(const Level* pLevel)
 
 void Avatar::MoveAvatar(float elapsedSec)
 {
+	std::cout << GetShape().left << "," << GetShape().bottom << std::endl;
 	Rectf currentShape = GetShape();
 
 	if (m_ActionState != ActionState::dying)
