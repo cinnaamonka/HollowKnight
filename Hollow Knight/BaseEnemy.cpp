@@ -95,3 +95,25 @@ bool BaseEnemy::CanSeeAvatar(const Rectf& avatarRectf)const
 
 	return false;
 }
+void BaseEnemy::Draw() const
+{
+
+	if (m_Velocity.x < 0)
+	{
+		glPushMatrix();
+
+		glTranslatef(GetShape().left, GetShape().bottom, 0);
+		glRotatef(0, 0, 0, 1);
+		glScalef(-1, 1, 1);
+		glTranslatef(-GetShape().width, 0, 0);
+
+		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
+
+		glPopMatrix();
+	}
+	else
+	{
+		GetTexture()->Draw(GetShape(), GetSourceRect());
+	}
+	
+}

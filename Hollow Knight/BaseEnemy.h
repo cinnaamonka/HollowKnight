@@ -46,6 +46,7 @@ public:
 		m_AvatarVelocity = velocity;
 	}
 
+	void Draw() const;
 
 protected:
 
@@ -57,15 +58,25 @@ protected:
 		return m_BoundariesBorder;
 	}
 
-	
+	Vector2f GetVelocity()
+	{
+		return m_Velocity;
+	}
+
+	void SetVelocity(const Vector2f& velocity)
+	{
+		m_Velocity = velocity;
+	}
+
 private:
 
 	Rectf m_BoundariesBorder;
+	Rectf m_AvatarShape;
 
 	bool m_CanSeeAvatar;
 
-	Rectf m_AvatarShape;
 	Vector2f m_AvatarVelocity;
+	Vector2f m_Velocity;
 };
 
 

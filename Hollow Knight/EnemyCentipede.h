@@ -13,11 +13,6 @@ public:
 	EnemyCentipede& operator=(EnemyCentipede&& other) = delete;
 	~EnemyCentipede();
 	virtual void Update(float elapsedSec)override;
-	void Draw() const;
 
-private:
-
-	float m_SpeedX;
-	
 };
 

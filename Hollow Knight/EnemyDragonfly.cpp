@@ -4,8 +4,9 @@
 #include <Texture.h>
 
 EnemyDragonfly::EnemyDragonfly(const Point2f& position) :
-	BaseEnemy(position, "EnemyDragonfly.png", 15), m_Velocity{ 100.0f,100.0f }
+	BaseEnemy(position, "EnemyDragonfly.png", 15)
 {
+	SetVelocity(Vector2f(100.0f, 100.0f));
 	SetBoundaries(600.0f, GetShape().height * 10);
 }
 EnemyDragonfly::~EnemyDragonfly()
@@ -39,12 +40,12 @@ void EnemyDragonfly::Update(float elapsedSec)
 
 	if (myShape.left + myShape.width >= bounds.left + bounds.width || myShape.left < bounds.left)
 	{
-		m_Velocity.x *= -1;
+		SetVelocity(Vector2f(GetVelocity().x * (-1), GetVelocity().y));
 
 	}
 	if (myShape.bottom + myShape.height >= bounds.bottom + bounds.height || myShape.bottom <= bounds.bottom)
 	{
-		m_Velocity.y *= -1;
+		SetVelocity(Vector2f(GetVelocity().x, GetVelocity().y * (-1)));
 	}
 
 	if (GetCanSeeAvatar())
@@ -54,34 +55,13 @@ void EnemyDragonfly::Update(float elapsedSec)
 		directionVector.Normalized();
 		Vector2f velocity = directionVector;
 
-		m_Velocity = velocity;
+		SetVelocity(velocity);
 	}
-	
-	myShape.left += m_Velocity.x * elapsedSec;
-	myShape.bottom += m_Velocity.y * elapsedSec;
+
+	myShape.left += GetVelocity().x * elapsedSec;
+	myShape.bottom += GetVelocity().y * elapsedSec;
 
 
 	SetShape(myShape);
 }
 
-void EnemyDragonfly::Draw() const
-{
-	if (m_Velocity.x < 0)
-	{
-		glPushMatrix();
-
-		glTranslatef(GetShape().left, GetShape().bottom, 0);
-		glRotatef(0, 0, 0, 1);
-		glScalef(-1, 1, 1);
-		glTranslatef(-GetShape().width, 0, 0);
-
-		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
-
-		glPopMatrix();
-	}
-	else
-	{
-		GetTexture()->Draw(GetShape(), GetSourceRect());
-	}
-
-}

@@ -14,10 +14,6 @@ public:
 	~EnemyDragonfly();
 
 	virtual void Update(float elapsedSec)override;
-	void Draw() const;
-private:
-
-	Vector2f m_Velocity;
 
 };
 
