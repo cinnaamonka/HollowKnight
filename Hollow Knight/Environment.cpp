@@ -6,7 +6,8 @@
 #include "Platform.h"
 #include <SVGParser.h>
 
-Environment::Environment()
+Environment::Environment():
+	m_pDarkRect(2782, 3000, 1080, 1300)
 {
 	m_pPlatform = new Platform{ Point2f(8088.0f,2070.0f) };
 	m_pBackground = new Texture{ "Background Variation3.png" };
@@ -42,15 +43,17 @@ void Environment::DrawMiddleground() const
 	m_pGround->Draw(Point2f(0.0f,0.f));
 	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
 }
-void Environment::DrawStaticForeground() const
+void Environment::DrawStaticForeground(const Rectf& shape) const
 {
 	m_pStaticForeground->Draw(Point2f(0.0f, 0.f));
+	BlackRectDisappear(shape);
+	
 }
 void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 {
 	m_pPlatform->HandleCollision(shape, velocity);
 
-	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape))
+	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape,false))
 		return;
 
 	Point2f ray1(shape.left + shape.width / 2, shape.bottom);
@@ -83,11 +86,13 @@ void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 			break;
 		}
 	}
+
+	
 }
 
-bool Environment::IsOnGround(Rectf& actorShape) const
+bool Environment::IsOnGround(Rectf& actorShape,bool isKilled) const
 {
-	if (m_pPlatform->isCharacterOnPlatform())
+	if (m_pPlatform->isCharacterOnPlatform() && !isKilled)
 		return true;
 
 	utils::HitInfo hitInfo{};
@@ -97,7 +102,6 @@ bool Environment::IsOnGround(Rectf& actorShape) const
 
 	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[1], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[0], ray2, ray1, hitInfo);
 }
-
 Rectf Environment::GetBoundaries() const
 {
 	return m_Boundaries;
@@ -178,7 +182,23 @@ void Environment::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, u
 	actorShape.bottom = hitInfo.intersectPoint.y - actorShape.height - verticalOffset;
 	actorVelocity.y = 0.0f;
 	actorVelocity.x = 0.0f;
+}
+void Environment::BlackRectDisappear(const Rectf& actorShape) const
+{
+	float borderPointX = 4040.f;
+	float difference = borderPointX - actorShape.left;
 
-
-
+	if ((actorShape.left > borderPointX))
+	{
+		utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, 1.0f));
+	}
+	else {
+		if (difference > 0)
+		{
+			utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, 1.0f - difference/100));
+		}
+		
+	}
+	utils::FillRect(m_pDarkRect);
+	utils::FillRect(Rectf(m_pDarkRect.left + m_pDarkRect.width/2, m_pDarkRect.bottom + m_pDarkRect.height/2.1f, m_pDarkRect.width/1.5f, m_pDarkRect.height));
 }

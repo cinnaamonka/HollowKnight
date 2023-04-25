@@ -58,7 +58,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel)
 		SetShape(Rectf(bounds.left + bounds.width - currentShape.width, currentShape.bottom, currentShape.width, currentShape.height));
 	}
 
-	if (!pLevel->IsOnGround(currentShape))
+	if (!pLevel->IsOnGround(currentShape,false))
 	{
 		MoveAvatar(elapsedSec);
 
@@ -162,7 +162,7 @@ void Avatar::CheckState(const Environment* pLevel)
 	}
 
 	// handle single jump
-	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(currentShape))
+	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(currentShape,false))
 	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
@@ -250,7 +250,7 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 		SetSourceRect(srcRect);
 		return;
 	}
-	if (!pLevel->IsOnGround(currentShape))
+	if (!pLevel->IsOnGround(currentShape,false))
 	{
 		if (m_ActionState == ActionState::collidingEnemy)
 		{

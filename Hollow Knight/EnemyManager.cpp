@@ -39,7 +39,7 @@ void EnemyManager::Update(float elapsedSec, Environment* pLevel)
 		Rectf enemyShape = Rectf(Enemy->GetShape().left, Enemy->GetShape().bottom + Enemy->GetShape().width / 3, Enemy->GetShape().width, Enemy->GetShape().height);
 		Vector2f enemyVelocity = Enemy->GetVelocity();
 		
-		if (!pLevel->IsOnGround(enemyShape) && Enemy->IsKilled())
+		if (!pLevel->IsOnGround(enemyShape,true) && Enemy->IsKilled())
 		{
 			Enemy->Fall(elapsedSec);
 		}

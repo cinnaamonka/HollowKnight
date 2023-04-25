@@ -22,13 +22,13 @@ public:
 	void DrawBackground() const;
 	void DrawForeground() const;
 	void DrawMiddleground() const;
-	void DrawStaticForeground() const;
+	void DrawStaticForeground(const Rectf& shape) const;
 
 
 	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity);
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
 
-	bool IsOnGround(Rectf& actorShape) const;
+	bool IsOnGround(Rectf& actorShape,bool isKilled) const;
 	Rectf GetBoundaries() const;
 	bool HasReachedEnd(const Rectf& actorShape) const;
 
@@ -40,6 +40,8 @@ public:
 	static void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	static void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 
+	void BlackRectDisappear (const Rectf& actorShape) const;
+
 private:
 
 	std::vector<std::vector<Point2f>> m_Vertices;
@@ -49,6 +51,7 @@ private:
 
 	Rectf m_Boundaries ;
 	Rectf m_EndSignShape;
+	Rectf m_pDarkRect;
 
 	Platform* m_pPlatform;
 
@@ -57,5 +60,7 @@ private:
 	GroundObject* m_pForeground;
 
 	GroundObject* m_pStaticForeground;
+
+	
 };
 

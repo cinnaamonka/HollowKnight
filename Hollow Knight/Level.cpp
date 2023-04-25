@@ -96,7 +96,7 @@ void Level::Draw() const
 		m_pAvatar->Draw();
 		m_pEnemyManager->Draw();
 		m_pCoinManager->Draw();
-		m_pEnvironment->DrawStaticForeground();
+		m_pEnvironment->DrawStaticForeground(m_pAvatar->GetShape());
 	}
 	glPopMatrix();
 
