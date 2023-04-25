@@ -96,6 +96,7 @@ void Level::Draw() const
 		m_pAvatar->Draw();
 		m_pEnemyManager->Draw();
 		m_pCoinManager->Draw();
+		m_pEnvironment->DrawStaticForeground();
 	}
 	glPopMatrix();
 
@@ -151,11 +152,13 @@ void Level::AddEnemies()
 	BaseEnemy* enemy2 = new EnemyCentipede(Point2f{ 7932,1930 });
 	BaseEnemy* enemy3 = new EnemyCentipede(Point2f{ 4304,5269 });
 	BaseEnemy* enemy4 = new EnemyDragonfly(Point2f{ 5010,3261 });
+	BaseEnemy* enemy5 = new EnemyDragonfly(Point2f{ 8017,5434 });
 
 	m_pEnemyManager->AddItem(enemy1);
 	m_pEnemyManager->AddItem(enemy2);
 	m_pEnemyManager->AddItem(enemy3);
 	m_pEnemyManager->AddItem(enemy4);
+	m_pEnemyManager->AddItem(enemy5);
 }
 
 void Level::CheckAvatarCollison()

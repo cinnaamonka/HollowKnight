@@ -22,6 +22,8 @@ public:
 	void DrawBackground() const;
 	void DrawForeground() const;
 	void DrawMiddleground() const;
+	void DrawStaticForeground() const;
+
 
 	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity);
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
@@ -53,5 +55,7 @@ private:
 	GroundObject* m_pGround;
 
 	GroundObject* m_pForeground;
+
+	GroundObject* m_pStaticForeground;
 };
 

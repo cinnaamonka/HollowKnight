@@ -12,6 +12,7 @@ Environment::Environment()
 	m_pBackground = new Texture{ "Background Variation3.png" };
 	m_pGround = new GroundObject{ "HollowKnightLevel2.png" };
 	m_pForeground = new GroundObject{ "HollowKnight LevelForeground.png" };
+	m_pStaticForeground = new GroundObject{ "StaticForeground.png" };
 	m_Boundaries = Rectf(0, 0, m_pGround->GetShape().width, m_pGround->GetShape().height);
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
 	m_EndSignShape = Rectf(0.0f, 0.0f, 0.0f, 0.0f);
@@ -22,6 +23,7 @@ Environment::~Environment()
 	delete m_pBackground;
 	delete m_pGround;
 	delete m_pForeground;
+	delete m_pStaticForeground;
 }
 
 void Environment::DrawBackground() const
@@ -40,7 +42,10 @@ void Environment::DrawMiddleground() const
 	m_pGround->Draw(Point2f(0.0f,0.f));
 	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
 }
-
+void Environment::DrawStaticForeground() const
+{
+	m_pStaticForeground->Draw(Point2f(0.0f, 0.f));
+}
 void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 {
 	m_pPlatform->HandleCollision(shape, velocity);
