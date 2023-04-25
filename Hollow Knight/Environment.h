@@ -8,16 +8,16 @@ class Texture;
 class Platform;
 class GroundObject;
 
-class Level
+class Environment
 {
 public:
 
-	Level();
-	Level(const Level& other) = delete;
-	Level& operator=(const Level& other) = delete;
-	Level(Level&& other) = delete;
-	Level& operator=(Level&& other) = delete;
-	~Level();
+	Environment();
+	Environment(const Environment& other) = delete;
+	Environment& operator=(const Environment& other) = delete;
+	Environment(Environment&& other) = delete;
+	Environment& operator=(Environment&& other) = delete;
+	~Environment();
 
 	void DrawBackground() const;
 	void DrawForeground() const;
@@ -26,7 +26,7 @@ public:
 	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity);
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
 
-	bool IsOnGround(Rectf&  actorShape, Vector2f& actorVelocity) const;
+	bool IsOnGround(Rectf& actorShape) const;
 	Rectf GetBoundaries() const;
 	bool HasReachedEnd(const Rectf& actorShape) const;
 

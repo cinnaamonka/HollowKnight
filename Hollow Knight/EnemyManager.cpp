@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BaseEnemy.h"
 #include "EnemyManager.h"
+#include "Environment.h"
 
 EnemyManager::EnemyManager()
 {
@@ -29,11 +30,19 @@ void EnemyManager::Draw() const
 	}
 }
 
-void EnemyManager::Update(float elapsedSec)
+void EnemyManager::Update(float elapsedSec, Environment* pLevel)
 {
 	for (BaseEnemy* Enemy : m_pItems)
 	{
 		Enemy->Update(elapsedSec);
+
+		Rectf enemyShape = Rectf(Enemy->GetShape().left, Enemy->GetShape().bottom + Enemy->GetShape().width / 3, Enemy->GetShape().width, Enemy->GetShape().height);
+		Vector2f enemyVelocity = Enemy->GetVelocity();
+		
+		if (!pLevel->IsOnGround(enemyShape) && Enemy->IsKilled())
+		{
+			Enemy->Fall(elapsedSec);
+		}
 	}
 }
 

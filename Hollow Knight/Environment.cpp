@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "Level.h"
+#include "Environment.h"
 #include "GroundObject.h"
 
 #include <Texture.h>
 #include "Platform.h"
 #include <SVGParser.h>
 
-Level::Level()
+Environment::Environment()
 {
 	m_pPlatform = new Platform{ Point2f(8088.0f,2070.0f) };
 	m_pBackground = new Texture{ "Background Variation3.png" };
@@ -16,7 +16,7 @@ Level::Level()
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
 	m_EndSignShape = Rectf(0.0f, 0.0f, 0.0f, 0.0f);
 }
-Level::~Level()
+Environment::~Environment()
 {
 	delete m_pPlatform;
 	delete m_pBackground;
@@ -24,62 +24,63 @@ Level::~Level()
 	delete m_pForeground;
 }
 
-void Level::DrawBackground() const
+void Environment::DrawBackground() const
 {
 	m_pBackground->Draw(Point2f(0.0f, 0.f));
 }
 
-void Level::DrawForeground() const
+void Environment::DrawForeground() const
 {
+	
 	m_pForeground->Draw(Point2f(0.0f, 0.f));
 }
 
-void Level::DrawMiddleground() const
+void Environment::DrawMiddleground() const
 {
 	m_pGround->Draw(Point2f(0.0f,0.f));
 	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
 }
 
-void Level::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
+void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 {
-	m_pPlatform->HandleCollision(actorShape, actorVelocity);
+	m_pPlatform->HandleCollision(shape, velocity);
 
-	if (m_pPlatform->isCollidingCharacter() && IsOnGround(actorShape, actorVelocity))
+	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape))
 		return;
 
-	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom);
-	Point2f ray2(actorShape.left + actorShape.width / 2, actorShape.bottom + actorShape.height);
-	Point2f ray3(actorShape.left, actorShape.bottom + actorShape.height / 2);
-	Point2f ray4(actorShape.left + actorShape.width, actorShape.bottom + actorShape.height / 2);
+	Point2f ray1(shape.left + shape.width / 2, shape.bottom);
+	Point2f ray2(shape.left + shape.width / 2, shape.bottom + shape.height);
+	Point2f ray3(shape.left, shape.bottom + shape.height / 2);
+	Point2f ray4(shape.left + shape.width, shape.bottom + shape.height / 2);
 
 	utils::HitInfo hitInfo;
 
 	for (const std::vector<Point2f>& ver : m_Vertices)
 	{
-		if (isCollidingWalls(ver, actorShape, hitInfo))
+		if (isCollidingWalls(ver, shape, hitInfo))
 		{
-			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
-			if (isCollidingGround(ver, actorShape, hitInfo))
-				ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
+			ResetHorizontalPosition(velocity, shape, hitInfo);
+			if (isCollidingGround(ver, shape, hitInfo))
+				ResetVerticalPosition(velocity, shape, hitInfo);
 
 			break;
 		}
-		else if (isCollidingTop(ver, actorShape, hitInfo))
+		else if (isCollidingTop(ver, shape, hitInfo))
 		{
-			ResetTopPosition(actorVelocity, actorShape, hitInfo);
+			ResetTopPosition(velocity, shape, hitInfo);
 
 			break;
 		}
-		else if (isCollidingGround(ver, actorShape, hitInfo))
+		else if (isCollidingGround(ver, shape, hitInfo))
 		{
-			ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
+			ResetVerticalPosition(velocity, shape, hitInfo);
 
 			break;
 		}
 	}
 }
 
-bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity) const
+bool Environment::IsOnGround(Rectf& actorShape) const
 {
 	if (m_pPlatform->isCharacterOnPlatform())
 		return true;
@@ -92,24 +93,24 @@ bool Level::IsOnGround(Rectf& actorShape, Vector2f& actorVelocity) const
 	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[1], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[0], ray2, ray1, hitInfo);
 }
 
-Rectf Level::GetBoundaries() const
+Rectf Environment::GetBoundaries() const
 {
 	return m_Boundaries;
 }
 
-bool Level::HasReachedEnd(const Rectf& actorShape) const
+bool Environment::HasReachedEnd(const Rectf& actorShape) const
 {
 	return false;
 }
 
-bool Level::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	Point2f ray1(actorShape.left, actorShape.bottom + actorShape.height / 2);
 	Point2f ray2(actorShape.left + actorShape.width, actorShape.bottom + actorShape.height / 2);
 
 	return utils::Raycast(ver, ray1, ray2, hitInfo);
 }
-bool Level::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	float borderDist{ 5.f };
 
@@ -121,7 +122,7 @@ bool Level::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& acto
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
 }
 
-bool Level::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Environment::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	float borderDist{ 5.f };
 
@@ -136,7 +137,7 @@ bool Level::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorSh
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo) || utils::Raycast(ver, ray5, ray6, hitInfo);
 }
 
-void Level::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void Environment::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 
 	if (hitInfo.intersectPoint.x < actorShape.left + actorShape.width / 2)
@@ -150,7 +151,7 @@ void Level::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, 
 	actorVelocity.x = 0.0f;
 }
 
-void Level::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void Environment::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 
 	const float verticalOffset{ 2.0f };
@@ -162,7 +163,7 @@ void Level::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, ut
 	actorVelocity.y = 0.0f;
 }
 
-void Level::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void Environment::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	const float verticalOffset{ 2.0f };
 

@@ -23,18 +23,11 @@ void EnemyDragonfly::Update(float elapsedSec)
 
 	ChangeTexture(killingTexturesAmount, movingTexturesAmount, atackingTexturesAmount);
 
-	const float groundPos = 3200.f;
 	Rectf myShape = GetShape();
 	Rectf bounds = GetBoundaries();
-	const float fallingAfterDyingSpeed = 65.0f;
 
 	if (IsKilled())
 	{
-		if (myShape.bottom >= groundPos)
-		{
-			myShape.bottom -= fallingAfterDyingSpeed * elapsedSec;
-		}
-		SetShape(myShape);
 		return;
 	}
 

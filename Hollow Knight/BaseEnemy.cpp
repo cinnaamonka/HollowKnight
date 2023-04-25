@@ -97,7 +97,6 @@ bool BaseEnemy::CanSeeAvatar(const Rectf& avatarRectf)const
 }
 void BaseEnemy::Draw() const
 {
-
 	if (m_Velocity.x < 0)
 	{
 		glPushMatrix();
@@ -116,4 +115,13 @@ void BaseEnemy::Draw() const
 		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}
 	
+}
+void BaseEnemy::Fall(float elapsedSec)
+{
+	Rectf shape = GetShape();
+	const float fallingAfterDyingSpeed = -65.0f;
+
+	shape.bottom += fallingAfterDyingSpeed * elapsedSec;
+
+	SetShape(shape);
 }

@@ -76,7 +76,7 @@
     <ClCompile Include="GroundObject.cpp">
       <Filter>Source Files\GroundObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="Level.cpp">
+    <ClCompile Include="Environment.cpp">
       <Filter>Source Files\LevelClass</Filter>
     </ClCompile>
     <ClCompile Include="Platform.cpp">
@@ -120,7 +120,7 @@
     <ClInclude Include="GroundObject.h">
       <Filter>Source Files\GroundObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
+    <ClInclude Include="Environment.h">
       <Filter>Source Files\LevelClass</Filter>
     </ClInclude>
     <ClInclude Include="Platform.h">

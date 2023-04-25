@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Avatar.h"
 #include "EnemyManager.h"
-#include "Level.h"
+#include "Environment.h"
 #include "Camera.h"
 #include "EnemyCentipede.h"
 #include "EnemyDragonfly.h"
@@ -32,8 +32,8 @@ void Game::Initialize()
 	m_pAvatar = new Avatar();
 
 	m_Camera = new Camera{ GetViewPort().width,GetViewPort().height };
-	m_pLevel = new Level();
-	m_Camera->SetLevelBoundaries(m_pLevel->GetBoundaries());
+	m_pEnvironment = new Environment();
+	m_Camera->SetLevelBoundaries(m_pEnvironment->GetBoundaries());
 
 	const Rectf spikesRect(3150.f, 3100.f, 400.0f, 100.0f);
 
@@ -46,7 +46,7 @@ void Game::Cleanup()
 	delete m_pAvatar;
 	delete m_Camera;
 	delete m_pEnemyManager;
-	delete m_pLevel;
+	delete m_pEnvironment;
 	delete m_pCoinManager;
 	delete m_pSpikes;
 }
@@ -57,10 +57,11 @@ void Game::Update(float elapsedSec)
 		return;
 
 	m_pCoinManager->HandleCollection(m_pAvatar->GetShape());
-	m_pAvatar->Update(elapsedSec, m_pLevel);
-	m_pEnemyManager->Update(elapsedSec);
+	m_pCoinManager->Update(elapsedSec, m_pEnvironment);
+	m_pAvatar->Update(elapsedSec, m_pEnvironment);
+	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 
-	if (m_pLevel->HasReachedEnd(m_pAvatar->GetShape()))
+	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()))
 	{
 		m_EndReached = true;
 	}
@@ -70,21 +71,23 @@ void Game::Update(float elapsedSec)
 
 void Game::Draw() const
 {
+
 	ClearBackground();
 	
 	glPushMatrix();
 	{
 		glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.5f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 0.5f, 0.0f);
 
-		m_pLevel->DrawBackground();
+		m_pEnvironment->DrawBackground();
 	}
 	glPopMatrix();
+
 
 	glPushMatrix();
 	{
 		m_Camera->Transform(m_pAvatar->GetShape(), true);
 
-		m_pLevel->DrawMiddleground();
+		m_pEnvironment->DrawMiddleground();
 
 		m_pAvatar->Draw();
 		m_pEnemyManager->Draw();
@@ -97,7 +100,7 @@ void Game::Draw() const
 	{
 		glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 1.1f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 1.02f, 0.0f);
 
-		m_pLevel->DrawForeground();
+		m_pEnvironment->DrawForeground();
 
 	}
 	glPopMatrix();

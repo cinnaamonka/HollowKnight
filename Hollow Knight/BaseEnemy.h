@@ -48,6 +48,13 @@ public:
 
 	void Draw() const;
 
+	Vector2f GetVelocity()
+	{
+		return m_Velocity;
+	}
+
+	void Fall(float elapsedSec);
+
 protected:
 
 	void ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMoving, int amountOFFramesAtacking = 0);
@@ -56,11 +63,6 @@ protected:
 
 	Rectf GetBoundaries() const {
 		return m_BoundariesBorder;
-	}
-
-	Vector2f GetVelocity()
-	{
-		return m_Velocity;
 	}
 
 	void SetVelocity(const Vector2f& velocity)

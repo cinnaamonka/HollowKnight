@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Avatar.h"
-#include "Level.h"
+#include "Environment.h"
 
 #include <chrono>
 #include <thread>
@@ -35,7 +35,7 @@ Avatar::~Avatar()
 
 }
 
-void Avatar::Update(float elapsedSec, Level* pLevel)
+void Avatar::Update(float elapsedSec, Environment* pLevel)
 {
 	Rectf currentShape = GetShape();
 
@@ -58,7 +58,7 @@ void Avatar::Update(float elapsedSec, Level* pLevel)
 		SetShape(Rectf(bounds.left + bounds.width - currentShape.width, currentShape.bottom, currentShape.width, currentShape.height));
 	}
 
-	if (!pLevel->IsOnGround(currentShape, m_Velocity))
+	if (!pLevel->IsOnGround(currentShape))
 	{
 		MoveAvatar(elapsedSec);
 
@@ -136,7 +136,7 @@ bool Avatar::IsAtacking()const
 }
 
 
-void Avatar::CheckState(const Level* pLevel)
+void Avatar::CheckState(const Environment* pLevel)
 {
 	Rectf currentShape = GetShape();
 
@@ -161,7 +161,7 @@ void Avatar::CheckState(const Level* pLevel)
 	}
 
 	// handle single jump
-	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(currentShape, m_Velocity))
+	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(currentShape))
 	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
@@ -227,7 +227,7 @@ void Avatar::MoveAvatar(float elapsedSec)
 	SetShape(currentShape);
 }
 
-void Avatar::ChangeTexture(const Level* pLevel)
+void Avatar::ChangeTexture(const Environment* pLevel)
 {
 	Rectf srcRect{ 0.0f, m_ClipHeight, m_ClipWidth, m_ClipHeight };
 	Rectf currentShape = GetShape();
@@ -249,7 +249,7 @@ void Avatar::ChangeTexture(const Level* pLevel)
 		SetSourceRect(srcRect);
 		return;
 	}
-	if (!pLevel->IsOnGround(currentShape, m_Velocity))
+	if (!pLevel->IsOnGround(currentShape))
 	{
 		if (m_ActionState == ActionState::collidingEnemy)
 		{

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CoinManager.h"
 #include "Coin.h"
+#include "Environment.h"
 
 CoinManager::CoinManager()
 {
@@ -60,3 +61,16 @@ void CoinManager::SetPositions(const Rectf& rect) const
 		offset += offsetStep;
 	}
 }
+void CoinManager::Update(float elapsedSec, Environment* pLevel)
+{
+	for (Coin* pCoin : m_pCoins)
+	{
+		Rectf coinShape = pCoin->GetShape();
+
+		if (!pLevel->IsOnGround(coinShape))
+		{
+			pCoin->Fall(elapsedSec);
+		}
+	}
+}
+

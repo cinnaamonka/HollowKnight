@@ -19,6 +19,10 @@ public:
     {
         return m_Shape;
     }
+    void SetShape(const Rectf& rect)
+    {
+        m_Shape = rect;
+    }
 
     void SetPosition(const Point2f& pos)
     {
@@ -37,6 +41,9 @@ public:
     {
         m_IsCollected = isCollected;
     }
+
+    void Fall(float elapsedSec);
+
 
 private:
 

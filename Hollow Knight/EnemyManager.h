@@ -3,6 +3,7 @@
 #include <vector>
 
 class BaseEnemy;
+class Environment;
 
 class EnemyManager final
 {
@@ -17,7 +18,7 @@ public:
 
 	void AddItem(BaseEnemy *pEnemy);
 
-	void Update( float elapsedSec );
+	void Update( float elapsedSec, Environment* pLevel);
 	void Draw( ) const;
 
 	size_t Size( ) const;

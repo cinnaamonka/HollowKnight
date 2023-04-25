@@ -1,6 +1,6 @@
 #pragma once
 
-class Level;
+class Environment;
 
 #include "BaseMovingObject.h"
 
@@ -16,7 +16,7 @@ public:
 	Avatar(Avatar&& other) = delete;
 	Avatar& operator=(Avatar&& other) = delete;
 
-	void Update(float elapsedSec, Level* pLevel);
+	void Update(float elapsedSec, Environment* pLevel);
 	void Draw() const override;
 	void EnemyHit();
 	bool IsAtacking()const;
@@ -29,9 +29,9 @@ public:
 
 private:
 
-	void CheckState(const Level* pLevel);
+	void CheckState(const Environment* pLevel);
 	void MoveAvatar(float elapsedSec);
-	void ChangeTexture(const Level* pLevel);
+	void ChangeTexture(const Environment* pLevel);
 
 private:
 

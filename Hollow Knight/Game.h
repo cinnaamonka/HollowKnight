@@ -6,7 +6,7 @@
 class Camera;
 class Avatar;
 class EnemyManager;
-class Level;
+class Environment;
 class EnemyManager;
 class CoinManager;
 class Spikes;
@@ -50,7 +50,7 @@ private:
 
 	Avatar *m_pAvatar;
 	EnemyManager *m_pEnemyManager;
-	Level *m_pLevel;
+	Environment *m_pEnvironment;
 	Camera* m_Camera;
 	CoinManager* m_pCoinManager;
 	Spikes* m_pSpikes;

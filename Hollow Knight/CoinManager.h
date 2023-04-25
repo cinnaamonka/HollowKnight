@@ -1,6 +1,7 @@
 #pragma once
 
 class Coin;
+class Environment;
 
 class CoinManager final
 {
@@ -18,10 +19,11 @@ public:
 	void AddItem(Coin* pCoin);
 
 	void Draw() const;
+	void Update(float elapsedSec, Environment* pLevel);
 
 	size_t Size() const;
 
-	void HandleCollection(const Rectf& rect) const;
+	void HandleCollection(const Rectf& rect)const;
 
 	void SetPositions(const Rectf& rect) const;
 
