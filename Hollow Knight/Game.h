@@ -3,14 +3,7 @@
 #include <Vector2f.h>
 #include <BaseGame.h>
 
-class Camera;
-class Avatar;
-class EnemyManager;
-class Environment;
-class EnemyManager;
-class CoinManager;
-class Spikes;
-class EnemyDragonfly;
+class Level;
 
 class Game : public BaseGame
 {
@@ -40,20 +33,11 @@ private:
 	void Initialize();
 	void Cleanup();
 	void ClearBackground() const;
-	void AddEnemies();
-	void AddCoins();
-	void CheckAvatarCollison();
 
 private:
 
 	// DATA MEMBERS
 
-	Avatar *m_pAvatar;
-	EnemyManager *m_pEnemyManager;
-	Environment *m_pEnvironment;
-	Camera* m_Camera;
-	CoinManager* m_pCoinManager;
-	Spikes* m_pSpikes;
-	bool m_EndReached;
+	Level* m_plevel;
 	
 };

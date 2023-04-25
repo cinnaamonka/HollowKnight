@@ -23,9 +23,6 @@
     <Filter Include="Source Files\GroundObjectClass">
       <UniqueIdentifier>{e1e65e96-c26d-4598-a157-929bfed80d21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\LevelClass">
-      <UniqueIdentifier>{7bedad22-d1e4-4e2b-9717-19a155b65be8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\PlatformClass">
       <UniqueIdentifier>{afa41afc-0253-4cff-a6e2-4a667db5c3de}</UniqueIdentifier>
     </Filter>
@@ -46,6 +43,12 @@
     </Filter>
     <Filter Include="Source Files\EnemyDragonflyClass">
       <UniqueIdentifier>{ea9ba08b-67fd-47b0-a010-cf57b6fbf431}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EnvironmentClass">
+      <UniqueIdentifier>{7bedad22-d1e4-4e2b-9717-19a155b65be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LevelClass">
+      <UniqueIdentifier>{c8af07d2-9118-4026-82ef-3b3802eb96e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -77,7 +80,7 @@
       <Filter>Source Files\GroundObjectClass</Filter>
     </ClCompile>
     <ClCompile Include="Environment.cpp">
-      <Filter>Source Files\LevelClass</Filter>
+      <Filter>Source Files\EnvironmentClass</Filter>
     </ClCompile>
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files\PlatformClass</Filter>
@@ -96,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="EnemyDragonfly.cpp">
       <Filter>Source Files\EnemyDragonflyClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\LevelClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +127,7 @@
       <Filter>Source Files\GroundObjectClass</Filter>
     </ClInclude>
     <ClInclude Include="Environment.h">
-      <Filter>Source Files\LevelClass</Filter>
+      <Filter>Source Files\EnvironmentClass</Filter>
     </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Source Files\PlatformClass</Filter>
@@ -143,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="EnemyDragonfly.h">
       <Filter>Source Files\EnemyDragonflyClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Source Files\LevelClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
