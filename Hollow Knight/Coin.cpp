@@ -49,7 +49,7 @@ bool Coin::IsOverlapping(const Rectf& rect) const
 void Coin::Fall(float elapsedSec)
 {
 	Rectf shape = GetShape();
-	const float fallingAfterDyingSpeed = -400.0f;
+	const float fallingAfterDyingSpeed = -900.0f;
 
 	shape.bottom += fallingAfterDyingSpeed * elapsedSec;
 

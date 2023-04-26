@@ -15,5 +15,9 @@ public:
 
 	virtual void Update(float elapsedSec)override;
 
+private:
+
+	bool m_CanSeeAvatar;
+
 };
 

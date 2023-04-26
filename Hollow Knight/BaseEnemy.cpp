@@ -85,16 +85,18 @@ bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
 
 	return distance <= 40.0f;
 }
+
 bool BaseEnemy::CanSeeAvatar(const Rectf& avatarRectf)const
 {
 	float distance = float(sqrt(pow(avatarRectf.left - GetShape().left, 2) + pow(avatarRectf.bottom - GetShape().bottom, 2)));
 
-	const float maxDistanceWithAvatar = 300.0f;
+	const float maxDistanceWithAvatar = 400.0f;
 
 	if (distance < maxDistanceWithAvatar) return true;
 
 	return false;
 }
+
 void BaseEnemy::Draw() const
 {
 	if (m_Velocity.x < 0)

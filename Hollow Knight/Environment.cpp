@@ -185,8 +185,8 @@ void Environment::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, u
 }
 void Environment::BlackRectDisappear(const Rectf& actorShape) const
 {
-	float borderPointX = 4040.f;
-	float difference = borderPointX - actorShape.left;
+	const float borderPointX = 4040.f;
+    const float difference = borderPointX - actorShape.left;
 
 	if ((actorShape.left > borderPointX))
 	{

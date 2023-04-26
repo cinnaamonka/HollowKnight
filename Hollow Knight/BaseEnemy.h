@@ -56,12 +56,6 @@ public:
 	void Fall(float elapsedSec);
 
 
-	/*Rectf GetShape()const
-	{
-		return m_Shape;
-	}*/
-
-
 protected:
 
 	void ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMoving, int amountOFFramesAtacking = 0);
