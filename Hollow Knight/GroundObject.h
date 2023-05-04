@@ -34,6 +34,10 @@ protected:
 
 	void SetShape(const Rectf& rect);
 
+	const Texture* GetTexture() const {
+		return m_pTexture;
+	}
+
 private:
 
 	Texture* m_pTexture;

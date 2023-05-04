@@ -62,8 +62,6 @@ private:
 
 	GroundObject* m_pStaticForeground;
 
-	GroundObject* m_pDoor;
-
 	
 };
 

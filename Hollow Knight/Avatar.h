@@ -22,7 +22,7 @@ public:
 	bool IsAtacking()const;
 	void Die();
 
-	Vector2f GetVelocity()
+	Vector2f GetVelocity()const
 	{
 		return m_Velocity;
 	}

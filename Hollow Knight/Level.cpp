@@ -67,7 +67,8 @@ void Level::Update(float elapsedSec)
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 
 
-	m_pDoor->Update(elapsedSec);
+	m_pDoor->Update(elapsedSec, m_pAvatar);
+
 	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()))
 	{
 		m_EndReached = true;
@@ -96,10 +97,11 @@ void Level::Draw() const
 
 		m_pEnvironment->DrawMiddleground();
 
+		m_pDoor->Draw();
 		m_pAvatar->Draw();
 		m_pEnemyManager->Draw();
 		m_pCoinManager->Draw();
-		m_pDoor->Draw();
+		
 		m_pEnvironment->DrawStaticForeground(m_pAvatar->GetShape());
 		
 	}

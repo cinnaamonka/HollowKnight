@@ -44,7 +44,9 @@ public:
 	{
 		m_IsKilled = isKilled;
 	}
-	
+	void SetShape(const Rectf& shape) {
+		m_Shape = shape;
+	}
 
 protected:
 
@@ -77,10 +79,6 @@ protected:
 
 	void SetAnimationFrame(const int &currentFrame) {
 		m_AnimFrame = currentFrame;
-	}
-
-	void SetShape(const Rectf& shape) {
-		m_Shape = shape;
 	}
 	
 	void SetSourceRect(const Rectf& shape) {

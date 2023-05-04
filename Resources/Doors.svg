@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg2"
+   width="10000"
+   height="7000"
+   viewBox="0 0 10000 7000"
+   sodipodi:docname="Doors.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="0.53942857"
+     inkscape:cx="3290.5191"
+     inkscape:cy="4326.8009"
+     inkscape:window-width="2560"
+     inkscape:window-height="1494"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g8" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g8">
+    <image
+       width="10000"
+       height="7000"
+       preserveAspectRatio="none"
+       xlink:href="../../Hollow%20Knight%20Research/resources/level.png"
+       id="image10" />
+    <path
+       style="fill:#000000"
+       d="m 3898.5699,4706.8326 -7.4152,-339.2478 h 66.7373 l -7.4153,331.8326 z"
+       id="path469" />
+    <path
+       style="fill:#000000"
+       d="m 4708.6865,4386.1229 -1.8539,329.9788 57.4683,1.8538 -11.1229,-344.8093 z"
+       id="path471" />
+    <path
+       style="fill:#000000"
+       d="m 5850.6356,4706.8326 -9.2691,-378.1779 72.2988,-7.4153 5.5614,387.4471 z"
+       id="path473" />
+    <path
+       style="fill:#000000"
+       d="m 6796.0805,4703.125 -9.269,-417.108 63.0296,-5.5615 12.9767,439.3538 z"
+       id="path475" />
+  </g>
+</svg>
