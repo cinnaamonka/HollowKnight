@@ -1,9 +1,9 @@
 #pragma once
 
 class Texture;
+class Avatar;
 
 #include "GroundObject.h"
-class Avatar;
 
 class Door: public  GroundObject
 {
