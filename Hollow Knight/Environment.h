@@ -8,6 +8,7 @@ class Texture;
 class Platform;
 class GroundObject;
 
+
 class Environment
 {
 public:
@@ -60,6 +61,8 @@ private:
 	GroundObject* m_pForeground;
 
 	GroundObject* m_pStaticForeground;
+
+	GroundObject* m_pDoor;
 
 	
 };

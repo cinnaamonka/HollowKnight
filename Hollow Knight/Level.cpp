@@ -11,11 +11,11 @@
 #include "CoinManager.h"
 #include "Coin.h"
 #include "Spikes.h"
+#include "Door.h"
 
 Level::Level(const Rectf& viewPort) :
 	m_ViewPort{ viewPort }, m_EndReached{ false }
 {
-
 	Initialize();
 }
 
@@ -26,7 +26,6 @@ Level::~Level()
 
 void Level::Initialize()
 {
-
 	m_pEnemyManager = new EnemyManager();
 	AddEnemies();
 
@@ -42,6 +41,8 @@ void Level::Initialize()
 
 	m_pSpikes = new Spikes(spikesRect);
 
+	m_pDoor = new Door(Point2f(3720.0f, 2300.0f));
+
 }
 
 void Level::Cleanup()
@@ -52,7 +53,7 @@ void Level::Cleanup()
 	delete m_pEnvironment;
 	delete m_pCoinManager;
 	delete m_pSpikes;
-
+	delete m_pDoor;
 }
 
 void Level::Update(float elapsedSec)
@@ -65,6 +66,8 @@ void Level::Update(float elapsedSec)
 	m_pAvatar->Update(elapsedSec, m_pEnvironment);
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 
+
+	m_pDoor->Update(elapsedSec);
 	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()))
 	{
 		m_EndReached = true;
@@ -96,7 +99,9 @@ void Level::Draw() const
 		m_pAvatar->Draw();
 		m_pEnemyManager->Draw();
 		m_pCoinManager->Draw();
+		m_pDoor->Draw();
 		m_pEnvironment->DrawStaticForeground(m_pAvatar->GetShape());
+		
 	}
 	glPopMatrix();
 

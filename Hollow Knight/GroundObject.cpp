@@ -43,16 +43,16 @@ bool GroundObject::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& 
 
 void GroundObject::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-	
-    if (hitInfo.intersectPoint.x < actorShape.left + actorShape.width/2)
-    {
-        actorShape.left = hitInfo.intersectPoint.x;
-    }
-    else if (hitInfo.intersectPoint.x > actorShape.left + actorShape.width / 2)
-    {
-        actorShape.left = hitInfo.intersectPoint.x - actorShape.width;
-    }
-    actorVelocity.x = 0.0f;
+
+	if (hitInfo.intersectPoint.x < actorShape.left + actorShape.width / 2)
+	{
+		actorShape.left = hitInfo.intersectPoint.x;
+	}
+	else if (hitInfo.intersectPoint.x > actorShape.left + actorShape.width / 2)
+	{
+		actorShape.left = hitInfo.intersectPoint.x - actorShape.width;
+	}
+	actorVelocity.x = 0.0f;
 }
 
 void GroundObject::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)

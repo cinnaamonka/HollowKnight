@@ -53,7 +53,7 @@ void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 {
 	m_pPlatform->HandleCollision(shape, velocity);
 
-	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape,false))
+	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape, false))
 		return;
 
 	Point2f ray1(shape.left + shape.width / 2, shape.bottom);
@@ -87,7 +87,6 @@ void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 		}
 	}
 
-	
 }
 
 bool Environment::IsOnGround(Rectf& actorShape,bool isKilled) const

@@ -9,6 +9,7 @@ class Environment;
 class CoinManager;
 class Spikes;
 class EnemyDragonfly;
+class Door;
 
 class Level
 {
@@ -50,6 +51,7 @@ public:
 	bool m_EndReached;
 
 	Rectf m_ViewPort;
+	Door* m_pDoor;
 
 };
 

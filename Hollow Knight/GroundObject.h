@@ -14,10 +14,11 @@ public:
 
 	void Draw(const Point2f& pos) const;
 
-	Rectf GetShape()
+	const Rectf& GetShape()
 	{
 		return m_Shape;
 	}
+
 
 protected:
 
@@ -25,7 +26,7 @@ protected:
 
 	static bool isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
 	static bool isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
-	
+
 
 	static void ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	static void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
@@ -35,8 +36,8 @@ protected:
 
 private:
 
-	 Texture* m_pTexture;
+	Texture* m_pTexture;
 
-	 Rectf m_Shape;
+	Rectf m_Shape;
 };
 

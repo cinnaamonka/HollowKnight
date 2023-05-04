@@ -50,6 +50,9 @@
     <Filter Include="Source Files\LevelClass">
       <UniqueIdentifier>{c8af07d2-9118-4026-82ef-3b3802eb96e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Door Class">
+      <UniqueIdentifier>{f616fc2e-de26-4ff3-ae53-9bd12c27a85c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -103,6 +106,9 @@
     <ClCompile Include="Level.cpp">
       <Filter>Source Files\LevelClass</Filter>
     </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Source Files\Door Class</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -152,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Source Files\LevelClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Source Files\Door Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

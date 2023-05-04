@@ -25,9 +25,11 @@ Avatar::Avatar() :
 	m_ClipWidth = GetTexture()->GetWidth() / GetFramesNumber();
 	m_ClipHeight = GetTexture()->GetHeight() / GetFramesNumber();
 
-	const Point2f avatar_Start_Position(2162.f, 5500.f);
+	const Point2f avatarStartPosition(2162.f, 5500.f);
 
-	SetShape(Rectf(avatar_Start_Position.x, avatar_Start_Position.y, m_ClipWidth, m_ClipHeight));
+	SetShape(Rectf(avatarStartPosition.x, avatarStartPosition.y, m_ClipWidth, m_ClipHeight));
+
+	SetFramesPerSec(10);
 }
 
 Avatar::~Avatar()
@@ -101,7 +103,6 @@ void Avatar::Update(float elapsedSec, Environment* pLevel)
 
 void Avatar::Draw()const
 {
-	std::cout << GetShape().left << "," << GetShape().bottom << std::endl;
 	//to make the character flip during running to the left
 	if (!m_IsMovingRight)
 	{

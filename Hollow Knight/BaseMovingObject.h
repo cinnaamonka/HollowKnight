@@ -63,6 +63,13 @@ protected:
 	void SetAnimationTime(const float &time) {
 		m_AnimTime = time;
 	}
+	void SetFramesPerSec(const int time) {
+		m_NrFramesPerSec = time;
+	}
+	int GetFramesPerSec()
+	{
+		return m_NrFramesPerSec;
+	}
 
 	int GetAnimationFrame() const {
 		return m_AnimFrame;
