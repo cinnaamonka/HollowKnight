@@ -28,8 +28,8 @@ Door::~Door()
 void Door::Update(float elapsedSec, Avatar* actor)
 {
 	const int movingFrames = 8;
-	Rectf rectActor = actor->GetShape();
 
+	Rectf rectActor = actor->GetShape();
 	Vector2f vector = actor->GetVelocity();
 
 	
@@ -71,7 +71,6 @@ void Door::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAt
 }
 void Door::ChangeTexture()
 {
-
 	if (m_State == State::broken)return;
 	m_SourceRect.left = m_AnimFrame * m_SourceRect.width;
 
@@ -100,7 +99,6 @@ void Door::ChangeTexture()
 }
 void Door::Draw() const
 {
-	
 	GetTexture()->Draw(m_Shape, m_SourceRect);
 }
 bool Door::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const
