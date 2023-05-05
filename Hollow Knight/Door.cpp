@@ -6,13 +6,13 @@
 #include <SVGParser.h>
 
 Door::Door(const Point2f& doorPos) :
-	GroundObject{ "DoorNewTest.png"}, m_State{State::standing}, m_NrOfFrames(10), m_NrFramesPerSec(50)
+	GroundObject{ "DoorNewTest.png" }, m_State{ State::standing }, m_NrOfFrames(10), m_NrFramesPerSec(50)
 {
 	SVGParser::GetVerticesFromSvgFile("Doors.svg", m_Vertices);
 
 	m_Shape.left = doorPos.x;
 	m_Shape.bottom = doorPos.y;
-	m_Shape.width = GetTexture()->GetWidth()/ m_NrOfFrames;
+	m_Shape.width = GetTexture()->GetWidth() / m_NrOfFrames;
 	m_Shape.height = GetTexture()->GetHeight();
 
 	m_SourceRect.width = m_Shape.width;
@@ -25,23 +25,23 @@ Door::~Door()
 
 }
 
-void Door::Update(float elapsedSec, Avatar* actor)
+void Door::Update(float elapsedSec, Avatar* actor, const int index)
 {
 	const int movingFrames = 8;
 
 	Rectf rectActor = actor->GetShape();
 	Vector2f vector = actor->GetVelocity();
 
-	
-	if ( m_State != State::broken)
+
+	if (m_State != State::broken)
 	{
-		HandleCollision(rectActor, vector, actor->IsAtacking());
+		HandleCollision(rectActor, vector, actor->IsAtacking(), index);
 		actor->SetShape(rectActor);
 		UpdateFrame(elapsedSec, movingFrames);
 		ChangeTexture();
 	}
 }
-void Door::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAtacked)
+void Door::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAtacked, const int index)
 {
 	float borderDist{ 5.f };
 
@@ -53,20 +53,15 @@ void Door::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAt
 
 	utils::HitInfo hitInfo{};
 
-	
-	for (std::vector<Point2f>& ver : m_Vertices)
+	if (isCollidingWalls(m_Vertices[index], actorShape, hitInfo))
 	{
-		if (isCollidingWalls(ver, actorShape, hitInfo) )
+		if (isAtacked)
 		{
-			if (isAtacked)
-			{
-				m_State = State::breaking;
-			}
-			
-			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
-
-			break;
+			m_State = State::breaking;
 		}
+
+		ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
+
 	}
 }
 void Door::ChangeTexture()
@@ -82,8 +77,9 @@ void Door::ChangeTexture()
 		if (m_AnimFrame == breakingDoorTextureAmount - 1)
 		{
 			m_State = State::broken;
+
 		}
-		
+
 	}
 	if (m_State == State::broken)
 	{
@@ -91,10 +87,10 @@ void Door::ChangeTexture()
 		m_AnimFrame = 1;
 
 	}
-	if(m_State == State::standing)
+	if (m_State == State::standing)
 	{
 		m_SourceRect.left = 0.0f;
-		m_AnimFrame =1;
+		m_AnimFrame = 1;
 	}
 }
 void Door::Draw() const

@@ -53,6 +53,9 @@
     <Filter Include="Source Files\Door Class">
       <UniqueIdentifier>{f616fc2e-de26-4ff3-ae53-9bd12c27a85c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\DoorManagerClass">
+      <UniqueIdentifier>{98c8beb6-10ae-4e95-b26b-b3ae2b062dcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -109,6 +112,9 @@
     <ClCompile Include="Door.cpp">
       <Filter>Source Files\Door Class</Filter>
     </ClCompile>
+    <ClCompile Include="DoorManager.cpp">
+      <Filter>Source Files\DoorManagerClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -161,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>Source Files\Door Class</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorManager.h">
+      <Filter>Source Files\DoorManagerClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

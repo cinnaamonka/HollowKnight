@@ -11,6 +11,7 @@
 #include "CoinManager.h"
 #include "Coin.h"
 #include "Spikes.h"
+#include "DoorManager.h"
 #include "Door.h"
 
 Level::Level(const Rectf& viewPort) :
@@ -41,8 +42,8 @@ void Level::Initialize()
 
 	m_pSpikes = new Spikes(spikesRect);
 
-	m_pDoor = new Door(Point2f(3720.0f, 2300.0f));
-
+	m_pDoorManager = new DoorManager();
+	AddDoors();
 }
 
 void Level::Cleanup()
@@ -53,7 +54,7 @@ void Level::Cleanup()
 	delete m_pEnvironment;
 	delete m_pCoinManager;
 	delete m_pSpikes;
-	delete m_pDoor;
+	delete m_pDoorManager;
 }
 
 void Level::Update(float elapsedSec)
@@ -67,7 +68,7 @@ void Level::Update(float elapsedSec)
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 
 
-	m_pDoor->Update(elapsedSec, m_pAvatar);
+	m_pDoorManager->Update(elapsedSec, m_pAvatar);
 
 	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()))
 	{
@@ -97,7 +98,7 @@ void Level::Draw() const
 
 		m_pEnvironment->DrawMiddleground();
 
-		m_pDoor->Draw();
+		m_pDoorManager->Draw();
 		m_pAvatar->Draw();
 		m_pEnemyManager->Draw();
 		m_pCoinManager->Draw();
@@ -206,6 +207,19 @@ void Level::AddCoins()
 	m_pCoinManager->AddItem(coin2);
 	m_pCoinManager->AddItem(coin3);
 }
+void Level::AddDoors()
+{
+	Door* door1 = new Door(Point2f(3720.0f, 2294.0f));
+	Door* door2 = new Door(Point2f(4530.0f, 2294.0f));
+	Door* door3 = new Door(Point2f(5670.0f, 2294.0f));
+	Door* door4 = new Door(Point2f(6620.0f, 2294.0f));
+
+	m_pDoorManager->AddItem(door1);
+	m_pDoorManager->AddItem(door2);
+	m_pDoorManager->AddItem(door3);
+	m_pDoorManager->AddItem(door4);
+}
+
 
 
 

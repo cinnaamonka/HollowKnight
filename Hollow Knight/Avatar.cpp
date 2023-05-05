@@ -103,6 +103,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel)
 
 void Avatar::Draw()const
 {
+	std::cout << GetShape().left <<"," << GetShape().bottom << std::endl;
 	//to make the character flip during running to the left
 	if (!m_IsMovingRight)
 	{

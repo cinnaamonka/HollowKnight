@@ -9,7 +9,7 @@ class Environment;
 class CoinManager;
 class Spikes;
 class EnemyDragonfly;
-class Door;
+class DoorManager;
 
 class Level
 {
@@ -38,7 +38,9 @@ public:
 	void ClearBackground() const;
 	void AddEnemies();
 	void AddCoins();
+	void AddDoors();
 	void CheckAvatarCollison();
+
 
 	private:
 
@@ -47,12 +49,12 @@ public:
 	Environment* m_pEnvironment;
 	Camera* m_Camera;
 	CoinManager* m_pCoinManager;
+	DoorManager* m_pDoorManager;
 	Spikes* m_pSpikes;
+
 	bool m_EndReached;
 
 	Rectf m_ViewPort;
-	Door* m_pDoor;
-
 };
 
 

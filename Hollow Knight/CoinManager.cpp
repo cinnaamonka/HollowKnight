@@ -30,7 +30,6 @@ void CoinManager::Draw() const
 
 	}
 }
-
 size_t CoinManager::Size() const
 {
 	return m_pCoins.size();
