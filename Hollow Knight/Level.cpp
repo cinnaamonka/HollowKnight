@@ -235,9 +235,10 @@ void Level::AddDoors()
 void Level::AddCoinSources()
 {
 	CoinSource* coinSource1 = new CoinSource(Point2f{ 9698,2500 });
-	//CoinSource* enemy2 = new EnemyCentipede(Point2f{ 7932,1930 });
+	CoinSource* coinSource2 = new CoinSource(Point2f{ 3231,4319 });
 
 	m_pCoinSourceManager->AddItem(coinSource1);
+	m_pCoinSourceManager->AddItem(coinSource2);
 }
 
 
