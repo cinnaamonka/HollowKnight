@@ -192,6 +192,7 @@ void Level::CheckAvatarCollison()
 		}
 		if (m_pCoinSourceManager->IsCoinSourceDestroyed(shapeRect))
 		{
+			std::cout << "coin source destroyed" << std::endl;
 			AddCoins();
 			m_pCoinManager->SetPositions(shapeRect);
 
@@ -234,8 +235,8 @@ void Level::AddDoors()
 }
 void Level::AddCoinSources()
 {
-	CoinSource* coinSource1 = new CoinSource(Point2f{ 9698,2500 });
-	CoinSource* coinSource2 = new CoinSource(Point2f{ 3231,4319 });
+	CoinSource* coinSource1 = new CoinSource(Point2f{ 9698,2500 },0);
+	CoinSource* coinSource2 = new CoinSource(Point2f{ 3231,4319 },1);
 
 	m_pCoinSourceManager->AddItem(coinSource1);
 	m_pCoinSourceManager->AddItem(coinSource2);

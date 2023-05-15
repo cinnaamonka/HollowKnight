@@ -1,15 +1,19 @@
 #include "pch.h"
 #include "CoinSource.h"
 #include "Avatar.h"
+
 #include <Texture.h>
 #include <SVGParser.h>
 
-CoinSource::CoinSource(const Point2f& position) :
+CoinSource::CoinSource(const Point2f& position, const int index) :
 	GroundObject{ "stone.png" },
 	m_Position{ position }, m_IsDestroyed{ false }, m_Lifes{ 0 }, m_MaxLifes{ 5 }, m_SourceRect{ 0,0,0,0 }, m_IsAtacked{ false },
 	m_PassedFrames{ 0 }, m_MaxFramesAmount(70)
 {
-	SVGParser::GetVerticesFromSvgFile("coinSource.svg", m_Vertices);
+	std::vector<std::vector<Point2f>> m_TemporaryVertices;
+	
+	SVGParser::GetVerticesFromSvgFile("coinSource.svg", m_TemporaryVertices);
+	m_Vertices.push_back(m_TemporaryVertices[index]);
 
 	m_ClipWidth = GetTexture()->GetWidth() / 2;
 	m_ClipHeight = GetTexture()->GetHeight();
@@ -36,7 +40,14 @@ void CoinSource::Update(Avatar* actor)
 	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
 
 	utils::HitInfo hitInfo{};
-
+	std::cout << "is Destroyed " << m_IsDestroyed << std::endl;
+	if (m_IsDestroyed)
+	{
+		std::cout << "IS DESTROYED BUT WORKING" << std::endl;
+		return;
+	}
+	
+	std::cout << "starting check for collision\n";
 	for (std::vector<Point2f>& ver : m_Vertices)
 	{
 		if (isCollidingWalls(ver, actorShape, hitInfo))
@@ -44,9 +55,12 @@ void CoinSource::Update(Avatar* actor)
 			ResetHorizontalPosition(vector, actorShape, hitInfo);
 			break;
 		}
-		
+
 	}
+	std::cout << "end check\n";
 	actor->SetShape(actorShape);
+	
+	
 }
 
 void CoinSource::CheckIfDestroyed()

@@ -6,7 +6,7 @@ class CoinSource: public GroundObject
 {
 public:
 
-	CoinSource(const Point2f& position);
+	CoinSource(const Point2f& position, const int index);
 	CoinSource(const CoinSource& other) = delete;
 	CoinSource& operator=(const CoinSource& other) = delete;
 	CoinSource(CoinSource&& other) = delete;
@@ -43,5 +43,6 @@ private:
 	const int m_MaxFramesAmount;
 
 	std::vector<std::vector<Point2f>> m_Vertices;
+	
 };
 

@@ -18,16 +18,19 @@ void CoinSourceManager::Update(Avatar* pAvatar)
 }
 bool CoinSourceManager::IsCoinSourceDestroyed(const Rectf& avatar) const
 {
-	for (CoinSource* pSource : GetItems())
+	bool isDestroyed = false;
+
+	std::vector<CoinSource*> temp = GetItems();
+	for (CoinSource* pSource : temp)
 	{
 		if (pSource->IsOverlapping(avatar) && !pSource->IsDestroyed())
 		{
 			pSource->CheckIfDestroyed();
 			if (pSource->IsDestroyed())
 			{
-				return true;
+				isDestroyed =  true;
 			}
 		}
 	}
-	return false;
+	return isDestroyed;
 }
