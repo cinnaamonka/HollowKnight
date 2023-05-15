@@ -9,11 +9,11 @@ CoinSourceManager::~CoinSourceManager()
 {
 
 }
-void CoinSourceManager::Update()
+void CoinSourceManager::Update(Avatar* pAvatar)
 {
 	for (CoinSource* pSource : GetItems())
 	{
-		pSource->Update();
+		pSource->Update(pAvatar);
 	}
 }
 bool CoinSourceManager::IsCoinSourceDestroyed(const Rectf& avatar) const

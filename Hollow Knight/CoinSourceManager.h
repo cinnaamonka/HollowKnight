@@ -4,7 +4,7 @@
 #include "CoinSource.h"
 #include "BaseManager.h"
 class Environment;
-
+class Avatar;
 class CoinSourceManager:public BaseManager<CoinSource>
 {
 public:
@@ -16,7 +16,7 @@ public:
 	~CoinSourceManager();
 
 
-	virtual void Update() override;
+	void Update(Avatar* pAvatar);
 	bool IsCoinSourceDestroyed(const Rectf& avatar) const;
 
 };

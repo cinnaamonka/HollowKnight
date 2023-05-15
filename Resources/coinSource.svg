@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg442"
+   width="10000"
+   height="7000"
+   viewBox="0 0 10000 7000"
+   sodipodi:docname="coinSource.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs446" />
+  <sodipodi:namedview
+     id="namedview444"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="1.2066905"
+     inkscape:cx="9390.9747"
+     inkscape:cy="4332.0968"
+     inkscape:window-width="2414"
+     inkscape:window-height="1481"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g448" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g448">
+    <image
+       width="10000"
+       height="7000"
+       preserveAspectRatio="none"
+       xlink:href="..%5C..%5CHollow%20Knight%20Research%5Cresources%5C..%5Cresources%5CfindMe.png"
+       id="image450" />
+    <path
+       style="fill:#000000;stroke-width:0.777937"
+       d="m 9708.8728,4518.3684 -4.6445,-151.0514 h 100.4381 l 2.3223,152.4832 z"
+       id="path604" />
+  </g>
+</svg>

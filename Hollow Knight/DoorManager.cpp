@@ -13,10 +13,10 @@ DoorManager::~DoorManager()
 }
 
 
-void DoorManager::Update(float elapsedSec, Avatar* pLevel)
+void DoorManager::Update(float elapsedSec, Avatar* pAvatar)
 {
 	for (int i = 0; i < GetItems().size(); i++)
 	{
-		GetItems()[i]->Update(elapsedSec, pLevel, i);
+		GetItems()[i]->Update(elapsedSec, pAvatar, i);
 	}
 }

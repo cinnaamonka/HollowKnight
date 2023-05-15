@@ -1,7 +1,8 @@
 #pragma once
 class Texture;
-
-class CoinSource final
+class Avatar;
+#include "GroundObject.h"
+class CoinSource: public GroundObject
 {
 public:
 
@@ -13,8 +14,10 @@ public:
 	~CoinSource();
 
 	void Draw()const;
-	void Update();
+	void Update(Avatar* actor);
 	void CheckIfDestroyed();
+	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
+	
 	bool IsOverlapping(const Rectf& rect) const;
 
 	bool IsDestroyed()
@@ -25,8 +28,6 @@ private:
 	void Shake();
 	void ChangeTexture();
 private:
-
-	Texture* m_pTexture;
 	Point2f m_Position;
 	Rectf m_SourceRect;
 	float m_ClipWidth;
@@ -40,5 +41,7 @@ private:
 
 	int m_PassedFrames;
 	const int m_MaxFramesAmount;
+
+	std::vector<std::vector<Point2f>> m_Vertices;
 };
 

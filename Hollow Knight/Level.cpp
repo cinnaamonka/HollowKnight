@@ -71,7 +71,7 @@ void Level::Update(float elapsedSec)
 	m_pAvatar->Update(elapsedSec, m_pEnvironment);
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 
-	m_pCoinSourceManager->Update();
+	m_pCoinSourceManager->Update(m_pAvatar);
 	m_pDoorManager->Update(elapsedSec, m_pAvatar);
 
 	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()))
