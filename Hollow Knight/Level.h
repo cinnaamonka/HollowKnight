@@ -10,6 +10,8 @@ class CoinManager;
 class Spikes;
 class EnemyDragonfly;
 class DoorManager;
+class CoinSource;
+class CoinSourceManager;
 
 class Level
 {
@@ -39,6 +41,7 @@ public:
 	void AddEnemies();
 	void AddCoins();
 	void AddDoors();
+	void AddCoinSources();
 	void CheckAvatarCollison();
 
 
@@ -51,7 +54,8 @@ public:
 	CoinManager* m_pCoinManager;
 	DoorManager* m_pDoorManager;
 	Spikes* m_pSpikes;
-
+	CoinSource* m_pCoinSource;
+	CoinSourceManager* m_pCoinSourceManager;
 	bool m_EndReached;
 
 	Rectf m_ViewPort;

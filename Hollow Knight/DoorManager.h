@@ -1,8 +1,8 @@
 #pragma once
 class Avatar;
 class Door;
-
-class DoorManager final
+#include "BaseManager.h"
+class DoorManager : public BaseManager<Door>
 {
 
 public:
@@ -14,14 +14,8 @@ public:
 	DoorManager(DoorManager&&) = delete;
 	DoorManager& operator=(DoorManager&&) = delete;
 
-
 	void Update(float elapsedSec, Avatar* actor);
-	void Draw() const;
-	void AddItem(Door* door);
 
-private:
-
-	std::vector<Door*> m_pItems;
 
 };
 

@@ -2,8 +2,9 @@
 
 class Coin;
 class Environment;
+#include "BaseManager.h"
 
-class CoinManager final
+class CoinManager:public BaseManager<Coin>
 {
 
 public:
@@ -15,21 +16,15 @@ public:
 
 	~CoinManager();
 
-	
-	void AddItem(Coin* pCoin);
 
-	void Draw() const;
+	void Draw() const override;
+
 	void Update(float elapsedSec, Environment* pLevel);
 
-	size_t Size() const;
 
 	void HandleCollection(const Rectf& rect)const;
 
 	void SetPositions(const Rectf& rect) const;
-
-private:
-
-	std::vector<Coin*> m_pCoins;
 };
 
 

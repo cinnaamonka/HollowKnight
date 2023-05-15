@@ -155,6 +155,8 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinManager.cpp" />
+    <ClCompile Include="CoinSource.cpp" />
+    <ClCompile Include="CoinSourceManager.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DoorManager.cpp" />
     <ClCompile Include="EnemyCentipede.cpp" />
@@ -172,10 +174,13 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
   <ItemGroup>
     <ClInclude Include="Avatar.h" />
     <ClInclude Include="BaseEnemy.h" />
+    <ClInclude Include="BaseManager.h" />
     <ClInclude Include="BaseMovingObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinManager.h" />
+    <ClInclude Include="CoinSource.h" />
+    <ClInclude Include="CoinSourceManager.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="DoorManager.h" />
     <ClInclude Include="EnemyCentipede.h" />

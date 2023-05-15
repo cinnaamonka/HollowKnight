@@ -13,6 +13,8 @@
 #include "Spikes.h"
 #include "DoorManager.h"
 #include "Door.h"
+#include "CoinSource.h"
+#include "CoinSourceManager.h"
 
 Level::Level(const Rectf& viewPort) :
 	m_ViewPort{ viewPort }, m_EndReached{ false }
@@ -31,7 +33,8 @@ void Level::Initialize()
 	AddEnemies();
 
 	m_pCoinManager = new CoinManager();
-
+	m_pCoinSourceManager = new CoinSourceManager();
+	AddCoinSources();
 	m_pAvatar = new Avatar();
 
 	m_Camera = new Camera{ m_ViewPort.width,m_ViewPort.height };
@@ -55,6 +58,7 @@ void Level::Cleanup()
 	delete m_pCoinManager;
 	delete m_pSpikes;
 	delete m_pDoorManager;
+	delete m_pCoinSourceManager;
 }
 
 void Level::Update(float elapsedSec)
@@ -67,7 +71,7 @@ void Level::Update(float elapsedSec)
 	m_pAvatar->Update(elapsedSec, m_pEnvironment);
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 
-
+	m_pCoinSourceManager->Update();
 	m_pDoorManager->Update(elapsedSec, m_pAvatar);
 
 	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()))
@@ -100,11 +104,12 @@ void Level::Draw() const
 
 		m_pDoorManager->Draw();
 		m_pAvatar->Draw();
+		m_pCoinSourceManager->Draw();
 		m_pEnemyManager->Draw();
 		m_pCoinManager->Draw();
-		
+
 		m_pEnvironment->DrawStaticForeground(m_pAvatar->GetShape());
-		
+
 	}
 	glPopMatrix();
 
@@ -185,6 +190,13 @@ void Level::CheckAvatarCollison()
 
 			return;
 		}
+		if (m_pCoinSourceManager->IsCoinSourceDestroyed(shapeRect))
+		{
+			AddCoins();
+			m_pCoinManager->SetPositions(shapeRect);
+
+			return;
+		}
 	}
 	else if (m_pEnemyManager->HitItem(shapeRect))
 	{
@@ -203,6 +215,7 @@ void Level::AddCoins()
 	Coin* coin2 = new Coin();
 	Coin* coin3 = new Coin();
 
+
 	m_pCoinManager->AddItem(coin1);
 	m_pCoinManager->AddItem(coin2);
 	m_pCoinManager->AddItem(coin3);
@@ -218,6 +231,13 @@ void Level::AddDoors()
 	m_pDoorManager->AddItem(door2);
 	m_pDoorManager->AddItem(door3);
 	m_pDoorManager->AddItem(door4);
+}
+void Level::AddCoinSources()
+{
+	CoinSource* coinSource1 = new CoinSource(Point2f{ 9698,2500 });
+	//CoinSource* enemy2 = new EnemyCentipede(Point2f{ 7932,1930 });
+
+	m_pCoinSourceManager->AddItem(coinSource1);
 }
 
 

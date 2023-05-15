@@ -9,19 +9,13 @@ CoinManager::CoinManager()
 }
 CoinManager::~CoinManager()
 {
-	for (const Coin* pCoin : m_pCoins)
-	{
-		delete pCoin;
-	}
+
 }
-void CoinManager::AddItem(Coin* pCoin)
-{
-	m_pCoins.push_back(pCoin);
-}
+
 
 void CoinManager::Draw() const
 {
-	for (const Coin* pCoin : m_pCoins)
+	for (const Coin* pCoin : GetItems())
 	{
 		if (!pCoin->IsCollected())
 		{
@@ -30,14 +24,10 @@ void CoinManager::Draw() const
 
 	}
 }
-size_t CoinManager::Size() const
-{
-	return m_pCoins.size();
-}
 
 void CoinManager::HandleCollection(const Rectf& rect)const
 {
-	for (Coin* pCoin : m_pCoins)
+	for (Coin* pCoin : GetItems())
 	{
 		if (pCoin->IsOverlapping(rect))
 		{
@@ -54,15 +44,15 @@ void CoinManager::SetPositions(const Rectf& rect) const
 
 	int offset = coinsStartingOffset;
 
-	for (int i = m_pCoins.size() - coinsPerKill; i < m_pCoins.size(); i++) {
-		m_pCoins[i]->SetPosition(Point2f(rect.left + offset, rect.bottom));
+	for (int i = GetItems().size() - coinsPerKill; i < GetItems().size(); i++) {
+		GetItems()[i]->SetPosition(Point2f(rect.left + offset, rect.bottom));
 
 		offset += offsetStep;
 	}
 }
 void CoinManager::Update(float elapsedSec, Environment* pLevel)
 {
-	for (Coin* pCoin : m_pCoins)
+	for (Coin* pCoin : GetItems())
 	{
 		Rectf coinShape = pCoin->GetShape();
 

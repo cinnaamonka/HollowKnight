@@ -10,29 +10,11 @@ EnemyManager::EnemyManager()
 
 EnemyManager::~EnemyManager()
 {
-	for (const BaseEnemy* Enemy : m_pItems)
-	{
-		delete Enemy;
-	}
-
-}
-
-void EnemyManager::AddItem(BaseEnemy* enemy)
-{
-	m_pItems.push_back(enemy);
-}
-
-void EnemyManager::Draw() const
-{
-	for (const BaseEnemy* pEnemy : m_pItems)
-	{
-		pEnemy->Draw();
-	}
 }
 
 void EnemyManager::Update(float elapsedSec, Environment* pLevel)
 {
-	for (BaseEnemy* Enemy : m_pItems)
+	for (BaseEnemy* Enemy : GetItems())
 	{
 		Enemy->Update(elapsedSec);
 
@@ -46,21 +28,16 @@ void EnemyManager::Update(float elapsedSec, Environment* pLevel)
 	}
 }
 
-size_t EnemyManager::Size() const
-{
-	return m_pItems.size();
-}
-
 bool EnemyManager::HitItem(const Rectf& rect)
 {
-	if (m_pItems.empty())
+	if (GetItems().empty())
 		return false;
 
-	for (auto& item : m_pItems)
+	for (BaseEnemy* Enemy : GetItems())
 	{
-		if (item->IsOverlapping(rect) && !item->IsKilled())
+		if (Enemy->IsOverlapping(rect) && !Enemy->IsKilled())
 		{
-			std::swap(item, m_pItems.back());
+			std::swap(Enemy, GetItems().back());
 
 			return true;
 		}
@@ -70,17 +47,17 @@ bool EnemyManager::HitItem(const Rectf& rect)
 }
 bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 {
-	for (auto& item : m_pItems)
+	for (BaseEnemy* Enemy : GetItems())
 	{
-		if (item->IsOnCloseDistance(actor) && !item->IsKilled())
+		if (Enemy->IsOnCloseDistance(actor) && !Enemy->IsKilled())
 		{
-			if (item->GetLifesAmount() >= 1)
+			if (Enemy->GetLifesAmount() >= 1)
 			{
-				item->DecreaseLifesAmount();
+				Enemy->DecreaseLifesAmount();
 			}
 			else
 			{
-				item->SetKilled(true);
+				Enemy->SetKilled(true);
 				return true;
 			}
 			
@@ -92,16 +69,16 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 
 void EnemyManager::Atack(const Rectf& actor, const Vector2f& velocity)const
 {
-	for (auto& item : m_pItems)
+	for (BaseEnemy* Enemy : GetItems())
 	{
-		if (item->CanSeeAvatar(actor))
+		if (Enemy->CanSeeAvatar(actor))
 		{
-			item->SetCanSeeAvatar(true);
-			item->SetAvatarInfo(actor, velocity);
+			Enemy->SetCanSeeAvatar(true);
+			Enemy->SetAvatarInfo(actor, velocity);
 		}
 		else
 		{
-			item->SetCanSeeAvatar(false);
+			Enemy->SetCanSeeAvatar(false);
 		}
 
 	}

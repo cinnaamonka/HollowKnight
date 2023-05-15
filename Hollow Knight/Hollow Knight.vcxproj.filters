@@ -56,6 +56,15 @@
     <Filter Include="Source Files\DoorManagerClass">
       <UniqueIdentifier>{98c8beb6-10ae-4e95-b26b-b3ae2b062dcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\CoinSourceClass">
+      <UniqueIdentifier>{abeb11ec-ab9c-454a-bcec-911c20266a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CoinSourceManagerClass">
+      <UniqueIdentifier>{82134e01-1795-4242-8c22-eda823bc10c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BaseManagerClass">
+      <UniqueIdentifier>{19c3b7d6-40ef-484a-a4f9-b6c5abbf76bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -115,6 +124,12 @@
     <ClCompile Include="DoorManager.cpp">
       <Filter>Source Files\DoorManagerClass</Filter>
     </ClCompile>
+    <ClCompile Include="CoinSource.cpp">
+      <Filter>Source Files\CoinSourceClass</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinSourceManager.cpp">
+      <Filter>Source Files\CoinSourceManagerClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -170,6 +185,15 @@
     </ClInclude>
     <ClInclude Include="DoorManager.h">
       <Filter>Source Files\DoorManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinSource.h">
+      <Filter>Source Files\CoinSourceClass</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinSourceManager.h">
+      <Filter>Source Files\CoinSourceManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseManager.h">
+      <Filter>Source Files\BaseManagerClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

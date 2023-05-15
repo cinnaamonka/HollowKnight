@@ -23,7 +23,6 @@ public:
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
 
 private:
-
 	void UpdateFrame(float elapsedSec, int numberFrames);
 
 private:
