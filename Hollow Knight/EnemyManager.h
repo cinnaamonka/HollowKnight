@@ -5,7 +5,7 @@
 class BaseEnemy;
 class Environment;
 
-class EnemyManager:public BaseManager<BaseEnemy>
+class EnemyManager final :public BaseManager<BaseEnemy>
 {
 public:
 	EnemyManager( );

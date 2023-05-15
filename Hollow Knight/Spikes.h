@@ -1,5 +1,5 @@
 #pragma once
-class Spikes
+class Spikes final
 {
 public:
 	Spikes(const Rectf& spikesRect);

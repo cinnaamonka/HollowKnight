@@ -40,14 +40,11 @@ void CoinSource::Update(Avatar* actor)
 	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
 
 	utils::HitInfo hitInfo{};
-	std::cout << "is Destroyed " << m_IsDestroyed << std::endl;
 	if (m_IsDestroyed)
 	{
-		std::cout << "IS DESTROYED BUT WORKING" << std::endl;
 		return;
 	}
-	
-	std::cout << "starting check for collision\n";
+
 	for (std::vector<Point2f>& ver : m_Vertices)
 	{
 		if (isCollidingWalls(ver, actorShape, hitInfo))
@@ -57,7 +54,6 @@ void CoinSource::Update(Avatar* actor)
 		}
 
 	}
-	std::cout << "end check\n";
 	actor->SetShape(actorShape);
 	
 	

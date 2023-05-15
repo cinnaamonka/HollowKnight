@@ -5,7 +5,7 @@
 
 class Texture;
 
-class Platform:public GroundObject
+class Platform final :public GroundObject
 {
 public:
 

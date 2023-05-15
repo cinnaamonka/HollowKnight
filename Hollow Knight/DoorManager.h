@@ -2,7 +2,7 @@
 class Avatar;
 class Door;
 #include "BaseManager.h"
-class DoorManager : public BaseManager<Door>
+class DoorManager final : public BaseManager<Door>
 {
 
 public:

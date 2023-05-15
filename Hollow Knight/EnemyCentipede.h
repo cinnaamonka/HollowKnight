@@ -2,7 +2,7 @@
 
 #include "BaseEnemy.h"
 
-class EnemyCentipede : public BaseEnemy
+class EnemyCentipede final : public BaseEnemy
 {
 public:
 

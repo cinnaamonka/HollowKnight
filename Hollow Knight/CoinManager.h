@@ -4,7 +4,7 @@ class Coin;
 class Environment;
 #include "BaseManager.h"
 
-class CoinManager:public BaseManager<Coin>
+class CoinManager final :public BaseManager<Coin>
 {
 
 public:

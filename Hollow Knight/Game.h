@@ -5,7 +5,7 @@
 
 class Level;
 
-class Game : public BaseGame
+class Game final : public BaseGame
 {
 public:
 

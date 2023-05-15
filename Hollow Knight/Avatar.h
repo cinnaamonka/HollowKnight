@@ -4,7 +4,7 @@ class Environment;
 
 #include "BaseMovingObject.h"
 
-class Avatar : public BaseMovingObject
+class Avatar final : public BaseMovingObject 
 {
 public:
 

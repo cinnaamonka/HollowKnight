@@ -5,7 +5,7 @@ class Avatar;
 
 #include "GroundObject.h"
 
-class Door: public GroundObject
+class Door final : public GroundObject
 {
 public:
 

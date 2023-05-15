@@ -2,7 +2,7 @@
 
 #include "BaseEnemy.h"
 	
-class EnemyDragonfly : public BaseEnemy
+class EnemyDragonfly final: public BaseEnemy
 {
 public:
 	explicit EnemyDragonfly(const Point2f& position);

@@ -2,7 +2,7 @@
 class Texture;
 class Avatar;
 #include "GroundObject.h"
-class CoinSource: public GroundObject
+class CoinSource final: public GroundObject
 {
 public:
 

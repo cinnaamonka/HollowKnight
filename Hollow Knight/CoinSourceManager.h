@@ -5,7 +5,7 @@
 #include "BaseManager.h"
 class Environment;
 class Avatar;
-class CoinSourceManager:public BaseManager<CoinSource>
+class CoinSourceManager final :public BaseManager<CoinSource>
 {
 public:
 	CoinSourceManager();
