@@ -1,75 +1,57 @@
 #include "pch.h"
-#include "Hud.h"
+#include "HUD.h"
 
 #include <Texture.h>
 
-Hud::Hud(const Point2f& topLeft, int totalPowerUps) :
-	m_BottomLeft{ topLeft }, m_TotalPowerUps{ totalPowerUps }, m_HitPowerUps{ 0 }
+HUD::HUD(const Point2f& topLeft, int totalLifesAmount) :
+	m_BottomLeft{ topLeft }, m_TotalLifesAmount{ totalLifesAmount }, m_LeftLifes{ totalLifesAmount }
 {
-
+	m_pHUDTexture = new Texture{ "HUD.png" };
+	m_pLifeTexture = new Texture{ "Lifes.png" };
+	m_pEmptyLifeTexture = new Texture{ "EmptyLife.png" };
 }
 
-Hud::~Hud()
+HUD::~HUD()
 {
-
+	delete m_pHUDTexture;
+	delete m_pLifeTexture;
+	delete m_pEmptyLifeTexture;
 }
 
-void Hud::Draw()
+void HUD::Draw()
 {
-	m_pLeftTexture->Draw(m_BottomLeft);
+	m_pHUDTexture->Draw(m_BottomLeft);
 
-	for (int i = 0; i < m_TotalPowerUps; ++i)
+	const float offset = 50.0f;
+
+	for (int i = 0; i < m_TotalLifesAmount; ++i)
 	{
-		Rectf destRect
+		const Rectf destRect
 		{
-			m_BottomLeft.x + m_pLeftTexture->GetWidth() + i * m_pPowerUpTexture->GetWidth() / 2,
-			m_BottomLeft.y,
-			m_pPowerUpTexture->GetWidth() / 2,
-			m_pPowerUpTexture->GetHeight()
-		};
-		Rectf sourceRect
-		{
-			m_pPowerUpTexture->GetWidth() / 2,
-			0.0f,
-			m_pPowerUpTexture->GetWidth() / 2,
-			m_pPowerUpTexture->GetHeight()
+			2 * offset + m_BottomLeft.x + i * offset,
+			m_BottomLeft.y + offset,
+			m_pLifeTexture->GetWidth(),
+			m_pLifeTexture->GetHeight()
 		};
 
-		m_pPowerUpTexture->Draw(destRect, sourceRect);
-
+		m_pEmptyLifeTexture->Draw(destRect);
 	}
 
-	for (int i = 0; i < m_HitPowerUps; ++i)
+	for (int i = 0; i < m_LeftLifes; ++i)
 	{
-		Rectf destRect
+		const Rectf destRect
 		{
-			m_BottomLeft.x + m_pLeftTexture->GetWidth() + i * m_pPowerUpTexture->GetWidth() / 2,
-			m_BottomLeft.y,
-			m_pPowerUpTexture->GetWidth() / 2,
-			m_pPowerUpTexture->GetHeight()
+			2 * offset + m_BottomLeft.x + i * offset,
+			m_BottomLeft.y + offset,
+			m_pLifeTexture->GetWidth(),
+			m_pLifeTexture->GetHeight()
 		};
-		Rectf sourceRect
-		{
-			0.0f,
-			0.0f,
-			m_pPowerUpTexture->GetWidth() / 2,
-			m_pPowerUpTexture->GetHeight()
-		};
-		m_pPowerUpTexture->Draw(destRect, sourceRect);
+
+		m_pLifeTexture->Draw(destRect);
 	}
-
-	Rectf destRect
-	{
-		m_BottomLeft.x + m_pLeftTexture->GetWidth() + 3 * m_pPowerUpTexture->GetWidth() / 2,
-		m_BottomLeft.y,
-		m_pRightTexture->GetWidth(),
-		m_pRightTexture->GetHeight()
-	};
-
-	m_pRightTexture->Draw(destRect);
 }
 
-void Hud::PowerUpHit()
+void HUD::PowerUpHit()
 {
-	m_HitPowerUps += 1;
+	m_LeftLifes -= 1;
 }

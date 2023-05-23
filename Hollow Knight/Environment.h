@@ -9,7 +9,7 @@ class Platform;
 class GroundObject;
 
 
-class Environment
+class Environment final
 {
 public:
 

@@ -30,15 +30,13 @@ void EnemyManager::Update(float elapsedSec, Environment* pLevel)
 
 bool EnemyManager::HitItem(const Rectf& rect)
 {
-	if (GetItems().empty())
+	if (m_pItems.empty())
 		return false;
 
-	for (BaseEnemy* Enemy : GetItems())
+	for (BaseEnemy* Enemy : m_pItems)
 	{
 		if (Enemy->IsOverlapping(rect) && !Enemy->IsKilled())
 		{
-			std::swap(Enemy, GetItems().back());
-
 			return true;
 		}
 	}

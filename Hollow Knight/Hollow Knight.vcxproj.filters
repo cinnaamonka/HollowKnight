@@ -65,6 +65,9 @@
     <Filter Include="Source Files\BaseManagerClass">
       <UniqueIdentifier>{19c3b7d6-40ef-484a-a4f9-b6c5abbf76bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\HUD">
+      <UniqueIdentifier>{b370e456-d761-4175-9dfd-00666cec7f09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -130,6 +133,9 @@
     <ClCompile Include="CoinSourceManager.cpp">
       <Filter>Source Files\CoinSourceManagerClass</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Source Files\HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -194,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="BaseManager.h">
       <Filter>Source Files\BaseManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Source Files\HUD</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

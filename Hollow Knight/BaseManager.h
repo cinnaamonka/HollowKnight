@@ -13,7 +13,7 @@ public:
 	BaseManager& operator=(const BaseManager&) = delete;
 	BaseManager(BaseManager&&) = delete;
 	BaseManager& operator=(BaseManager&&) = delete;
-	~BaseManager()
+	virtual ~BaseManager()
 	{
 		for (const T* item : m_pItems)
 		{
@@ -23,8 +23,6 @@ public:
 
 	void AddItem(T* pItem)
 	{
-		std::cout << typeid(pItem).name() << std::endl;
-		std::cout << m_pItems.size() << std::endl;
 		m_pItems.push_back(pItem);
 	};
 
@@ -63,14 +61,14 @@ public:
 		return false;
 	};
 
-	std::vector<T*> GetItems() const
+	const std::vector<T*>& GetItems() const
 	{
 		return m_pItems;
 	}
-	private:
+protected:
 
 	std::vector<T*> m_pItems;
 
-	};
+};
 
 

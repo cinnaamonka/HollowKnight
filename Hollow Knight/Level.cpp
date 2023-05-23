@@ -15,16 +15,16 @@
 #include "Door.h"
 #include "CoinSource.h"
 #include "CoinSourceManager.h"
+#include "HUD.h"
 
 Level::Level(const Rectf& viewPort) :
 	m_ViewPort{ viewPort }, m_EndReached{ false }
 {
-	Initialize();
+
 }
 
 Level::~Level()
 {
-	Cleanup();
 }
 
 void Level::Initialize()
@@ -36,7 +36,9 @@ void Level::Initialize()
 	m_pCoinSourceManager = new CoinSourceManager();
 	AddCoinSources();
 	m_pAvatar = new Avatar();
-
+	const Point2f HUDPosition{ 46.0f,460.0f };
+	const int livesNumber = 5;
+	m_pHUD = new HUD(HUDPosition, livesNumber);
 	m_Camera = new Camera{ m_ViewPort.width,m_ViewPort.height };
 	m_pEnvironment = new Environment();
 	m_Camera->SetLevelBoundaries(m_pEnvironment->GetBoundaries());
@@ -47,6 +49,7 @@ void Level::Initialize()
 
 	m_pDoorManager = new DoorManager();
 	AddDoors();
+
 }
 
 void Level::Cleanup()
@@ -59,6 +62,7 @@ void Level::Cleanup()
 	delete m_pSpikes;
 	delete m_pDoorManager;
 	delete m_pCoinSourceManager;
+	delete m_pHUD;
 }
 
 void Level::Update(float elapsedSec)
@@ -109,6 +113,7 @@ void Level::Draw() const
 		m_pCoinManager->Draw();
 
 		m_pEnvironment->DrawStaticForeground(m_pAvatar->GetShape());
+		
 
 	}
 	glPopMatrix();
@@ -129,6 +134,7 @@ void Level::Draw() const
 		utils::SetColor(Color4f(0.5f, 0.5f, 0.5f, 0.3f));
 		utils::FillRect(m_ViewPort.left, m_ViewPort.bottom, m_ViewPort.width, m_ViewPort.height);
 	}
+	m_pHUD->Draw();
 }
 
 void Level::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
@@ -177,7 +183,7 @@ void Level::AddEnemies()
 void Level::CheckAvatarCollison()
 {
 	const Rectf shapeRect = m_pAvatar->GetShape();
-
+	
 	m_pEnemyManager->Atack(shapeRect, m_pAvatar->GetVelocity());
 
 	if (m_pAvatar->IsAtacking())
@@ -192,7 +198,6 @@ void Level::CheckAvatarCollison()
 		}
 		if (m_pCoinSourceManager->IsCoinSourceDestroyed(shapeRect))
 		{
-			std::cout << "coin source destroyed" << std::endl;
 			AddCoins();
 			m_pCoinManager->SetPositions(shapeRect);
 
@@ -201,14 +206,21 @@ void Level::CheckAvatarCollison()
 	}
 	else if (m_pEnemyManager->HitItem(shapeRect))
 	{
-		m_pAvatar->EnemyHit();
+		if (!m_pAvatar->IsKilled())
+		{
+			if (!m_pAvatar->isColliding())
+			{
+				m_pHUD->PowerUpHit();
+			}
+			m_pAvatar->EnemyHit();
+		}
 	}
-
-	if (m_pSpikes->IsOverlapping(m_pAvatar->GetShape()))
+	
+	if (m_pSpikes->IsOverlapping(m_pAvatar->GetShape()) || m_pHUD->GetLeftLifes() <= 0)
 	{
 		m_pAvatar->Die();
+		m_pAvatar->SetKilled(true);
 	}
-
 }
 void Level::AddCoins()
 {

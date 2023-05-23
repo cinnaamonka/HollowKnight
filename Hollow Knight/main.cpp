@@ -2,6 +2,7 @@
 #include <ctime>
 #include "Game.h"
 
+
 void StartHeapControl();
 void DumpMemoryLeaks();
 
@@ -11,12 +12,11 @@ int SDL_main(int argv, char** args)
 
 	StartHeapControl();
 
-	Game game{ Window{ "Hollow Knight, Parniuk Maryia - 1DAE12", 846.0f, 600.0f } };
-
-	game.Run(); 
+	Game* pGame{ new Game{ Window{ "Project name - Name, first name - 1DAEXX",846.0f, 600.0f } } };
+	pGame->Run();
+	delete pGame;
 
 	DumpMemoryLeaks();
-
 	return 0;
 }
 

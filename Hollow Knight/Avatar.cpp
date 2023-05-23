@@ -39,6 +39,12 @@ Avatar::~Avatar()
 
 void Avatar::Update(float elapsedSec, Environment* pLevel)
 {
+	if (m_ActionState == ActionState::dying)
+	{
+		ChangeTexture(pLevel);
+		MoveAvatar(elapsedSec);
+		return;
+	}
 	Rectf currentShape = GetShape();
 
 	pLevel->HandleCollision(currentShape, m_Velocity);
@@ -60,7 +66,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel)
 		SetShape(Rectf(bounds.left + bounds.width - currentShape.width, currentShape.bottom, currentShape.width, currentShape.height));
 	}
 
-	if (!pLevel->IsOnGround(currentShape,false))
+	if (!pLevel->IsOnGround(currentShape, false))
 	{
 		MoveAvatar(elapsedSec);
 
@@ -104,8 +110,8 @@ void Avatar::Update(float elapsedSec, Environment* pLevel)
 void Avatar::Draw()const
 {
 	/*utils::SetColor(Color4f(1.0f, 1.0f, 1.0f, 1.0f));
-	utils::DrawRect(GetShape());*/
-	//std::cout << GetShape().left <<"," << GetShape().bottom << std::endl;
+	utils::DrawRect(GetShape());
+	std::cout << GetShape().left <<"," << GetShape().bottom << std::endl;*/
 	//to make the character flip during running to the left
 	if (!m_IsMovingRight)
 	{
@@ -117,7 +123,7 @@ void Avatar::Draw()const
 		glTranslatef(-GetShape().width, 0, 0);
 		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
 		glPopMatrix();
-		
+
 	}
 	else
 	{
@@ -127,9 +133,7 @@ void Avatar::Draw()const
 
 void Avatar::EnemyHit()
 {
-
 	m_ActionState = ActionState::collidingEnemy;
-
 }
 void Avatar::Die()
 {
@@ -140,8 +144,6 @@ bool Avatar::IsAtacking()const
 {
 	return m_IsKilling;
 }
-
-
 void Avatar::CheckState(const Environment* pLevel)
 {
 	Rectf currentShape = GetShape();
@@ -167,7 +169,7 @@ void Avatar::CheckState(const Environment* pLevel)
 	}
 
 	// handle single jump
-	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(currentShape,false))
+	if (pStates[SDL_SCANCODE_UP] && !m_CanDoubleJump && pLevel->IsOnGround(currentShape, false))
 	{
 		m_ActionState = ActionState::jumping;
 		m_Velocity.y = m_JumpSpeed;
@@ -198,14 +200,20 @@ void Avatar::CheckState(const Environment* pLevel)
 void Avatar::MoveAvatar(float elapsedSec)
 {
 	Rectf currentShape = GetShape();
-	const float maxGround_Offset = 70.0f;
+	const float maxGround_Offset = 50.0f;
 	const float groundOffset = 15.0f;
-
-	if (m_ActionState != ActionState::dying)
+	if (m_ActionState == ActionState::dying)
 	{
-		currentShape.bottom += m_Velocity.y * elapsedSec;
+		float test = currentShape.bottom - m_ShapeBeforeDying.bottom;
+		if (currentShape.bottom - m_ShapeBeforeDying.bottom < maxGround_Offset)
+		{
+			currentShape.bottom += groundOffset * elapsedSec;
+		}
+		SetShape(currentShape);
+		return;
 	}
 
+	currentShape.bottom += m_Velocity.y * elapsedSec;
 
 	if (m_ActionState == ActionState::moving)
 	{
@@ -216,19 +224,11 @@ void Avatar::MoveAvatar(float elapsedSec)
 		currentShape.left += (m_Velocity.x) * elapsedSec;
 	}
 
-	if (m_Velocity.y >= m_Acceleration.y && m_ActionState != ActionState::dying)
+	if (m_Velocity.y >= m_Acceleration.y)
 	{
 		m_Velocity.y += m_Acceleration.y * elapsedSec;
 	}
-	if (m_ActionState == ActionState::dying)
-	{
 
-		if (currentShape.bottom - m_ShapeBeforeDying.bottom < maxGround_Offset)
-		{
-			currentShape.bottom += groundOffset * elapsedSec;
-		}
-
-	}
 
 	SetShape(currentShape);
 }
@@ -255,7 +255,7 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 		SetSourceRect(srcRect);
 		return;
 	}
-	if (!pLevel->IsOnGround(currentShape,false))
+	if (!pLevel->IsOnGround(currentShape, false))
 	{
 		if (m_ActionState == ActionState::collidingEnemy)
 		{

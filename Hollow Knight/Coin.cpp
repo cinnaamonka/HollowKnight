@@ -13,7 +13,7 @@ Coin::Coin() :
 }
 Coin::~Coin()
 {
-
+	delete m_pCoinTexture;
 }
 void Coin::Draw() const
 {

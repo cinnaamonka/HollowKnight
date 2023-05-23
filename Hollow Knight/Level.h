@@ -12,8 +12,9 @@ class EnemyDragonfly;
 class DoorManager;
 class CoinSource;
 class CoinSourceManager;
+class HUD;
 
-class Level
+class Level final
 {
 	
 public:
@@ -54,11 +55,13 @@ public:
 	CoinManager* m_pCoinManager;
 	DoorManager* m_pDoorManager;
 	Spikes* m_pSpikes;
-	CoinSource* m_pCoinSource;
 	CoinSourceManager* m_pCoinSourceManager;
+	HUD* m_pHUD;
 	bool m_EndReached;
 
 	Rectf m_ViewPort;
+	float m_ElapsedTime;
+	
 };
 
 

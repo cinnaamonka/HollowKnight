@@ -22,9 +22,17 @@ public:
 	bool IsAtacking()const;
 	void Die();
 
-	Vector2f GetVelocity()const
+	const Vector2f& GetVelocity()const
 	{
 		return m_Velocity;
+	}
+	int isColliding()
+	{
+		if (m_ActionState == ActionState::collidingEnemy)
+		{
+			return true;
+		}
+		return false;
 	}
 
 private:

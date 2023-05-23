@@ -6,7 +6,6 @@
 Game::Game(const Window& window)
 	:BaseGame{ window }
 {
-	m_plevel = new Level(GetViewPort());
 	Initialize();
 }
 
@@ -17,12 +16,14 @@ Game::~Game()
 
 void Game::Initialize()
 {
+	m_plevel = new Level(GetViewPort());
 	m_plevel->Initialize();
 }
 
 void Game::Cleanup()
 {
 	m_plevel->Cleanup();
+	delete m_plevel;
 }
 void Game::Update(float elapsedSec)
 {
