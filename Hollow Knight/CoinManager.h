@@ -22,9 +22,16 @@ public:
 	void Update(float elapsedSec, Environment* pLevel);
 
 
-	void HandleCollection(const Rectf& rect)const;
+	void HandleCollection(const Rectf& rect);
 
 	void SetPositions(const Rectf& rect) const;
+
+	int GetCoinsCollectedAmount()
+	{
+		return m_CoinsCollectedAmount;
+	}
+private:
+	int m_CoinsCollectedAmount;;
 };
 
 

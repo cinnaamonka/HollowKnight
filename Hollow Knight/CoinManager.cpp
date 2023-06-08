@@ -3,7 +3,7 @@
 #include "Coin.h"
 #include "Environment.h"
 
-CoinManager::CoinManager()
+CoinManager::CoinManager():m_CoinsCollectedAmount(0)
 {
 
 }
@@ -25,13 +25,14 @@ void CoinManager::Draw() const
 	}
 }
 
-void CoinManager::HandleCollection(const Rectf& rect)const
+void CoinManager::HandleCollection(const Rectf& rect)
 {
 	for (Coin* pCoin : GetItems())
 	{
-		if (pCoin->IsOverlapping(rect))
+		if (pCoin->IsOverlapping(rect) && !pCoin->IsCollected())
 		{
 			pCoin->SetIsCollected(true);
+			m_CoinsCollectedAmount += 1;
 			break;
 		}
 	}

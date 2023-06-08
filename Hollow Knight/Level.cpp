@@ -17,10 +17,16 @@
 #include "CoinSourceManager.h"
 #include "HUD.h"
 
+
+void test()
+{
+	std::cout << "masha" << std::endl;
+}
+
 Level::Level(const Rectf& viewPort) :
 	m_ViewPort{ viewPort }, m_EndReached{ false }
 {
-
+	emitter->on("mashasleeps", test);
 }
 
 Level::~Level()
@@ -71,6 +77,7 @@ void Level::Update(float elapsedSec)
 		return;
 
 	m_pCoinManager->HandleCollection(m_pAvatar->GetShape());
+	m_pHUD->SetCollectedCoinsAmount(m_pCoinManager->GetCoinsCollectedAmount());
 	m_pCoinManager->Update(elapsedSec, m_pEnvironment);
 	m_pAvatar->Update(elapsedSec, m_pEnvironment);
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
@@ -193,7 +200,7 @@ void Level::CheckAvatarCollison()
 			// pass as parameter into manager
 			AddCoins();
 			m_pCoinManager->SetPositions(shapeRect);
-
+	
 			return;
 		}
 		if (m_pCoinSourceManager->IsCoinSourceDestroyed(shapeRect))
