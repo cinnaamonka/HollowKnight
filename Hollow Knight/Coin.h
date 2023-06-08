@@ -52,5 +52,6 @@ private:
     Texture* m_pCoinTexture;
 
     bool m_IsCollected;
+    
 
 };

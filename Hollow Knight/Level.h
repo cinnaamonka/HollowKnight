@@ -14,6 +14,7 @@ class CoinSource;
 class CoinSourceManager;
 class HUD;
 
+
 class Level final
 {
 	
@@ -57,6 +58,8 @@ public:
 	Spikes* m_pSpikes;
 	CoinSourceManager* m_pCoinSourceManager;
 	HUD* m_pHUD;
+
+
 	bool m_EndReached;
 
 	Rectf m_ViewPort;

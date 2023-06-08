@@ -24,6 +24,10 @@ public:
 	{
 		m_LeftLifes = amount;
 	}
+	void SetCollectedCoinsAmount(const int coinsAmount)
+	{
+		m_CollectedCoins = coinsAmount;
+	}
 
 private:
 
@@ -34,5 +38,8 @@ private:
 	Texture* m_pHUDTexture;
 	Texture* m_pLifeTexture;
 	Texture* m_pEmptyLifeTexture;
+	Texture* m_CoinsNumberTexture;
+
+	int m_CollectedCoins;
 };
 

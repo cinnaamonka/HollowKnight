@@ -4,11 +4,13 @@
 #include <Texture.h>
 
 HUD::HUD(const Point2f& topLeft, int totalLifesAmount) :
-	m_BottomLeft{ topLeft }, m_TotalLifesAmount{ totalLifesAmount }, m_LeftLifes{ totalLifesAmount }
+	m_BottomLeft{ topLeft }, m_TotalLifesAmount{ totalLifesAmount }, m_LeftLifes{ totalLifesAmount }, m_CollectedCoins(0)
 {
 	m_pHUDTexture = new Texture{ "HUD.png" };
 	m_pLifeTexture = new Texture{ "Lifes.png" };
 	m_pEmptyLifeTexture = new Texture{ "EmptyLife.png" };
+	m_CoinsNumberTexture = nullptr;
+
 }
 
 HUD::~HUD()
@@ -16,6 +18,7 @@ HUD::~HUD()
 	delete m_pHUDTexture;
 	delete m_pLifeTexture;
 	delete m_pEmptyLifeTexture;
+	delete m_CoinsNumberTexture;
 }
 
 void HUD::Draw()
@@ -49,6 +52,15 @@ void HUD::Draw()
 
 		m_pLifeTexture->Draw(destRect);
 	}
+	if (m_CoinsNumberTexture)
+	{
+		delete m_CoinsNumberTexture;
+	}
+	
+	m_CoinsNumberTexture = new Texture(std::to_string(m_CollectedCoins), "DIN-Light.otf", 24, Color4f{ 1.0f,1.0f,1.0f,1.0f });
+	m_CoinsNumberTexture->Draw(Point2f(m_BottomLeft.x + 100.0f, m_BottomLeft.y + 10.0f));
+	
+
 }
 
 void HUD::PowerUpHit()
