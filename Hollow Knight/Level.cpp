@@ -17,16 +17,10 @@
 #include "CoinSourceManager.h"
 #include "HUD.h"
 
-
-void test()
-{
-	std::cout << "masha" << std::endl;
-}
-
 Level::Level(const Rectf& viewPort) :
 	m_ViewPort{ viewPort }, m_EndReached{ false }
 {
-	emitter->on("mashasleeps", test);
+
 }
 
 Level::~Level()

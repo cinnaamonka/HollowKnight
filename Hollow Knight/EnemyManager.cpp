@@ -67,7 +67,7 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 
 void EnemyManager::Atack(const Rectf& actor, const Vector2f& velocity)const
 {
-	emitter->emit("mashasleeps");
+	
 	for (BaseEnemy* Enemy : GetItems())
 	{
 		if (Enemy->CanSeeAvatar(actor))

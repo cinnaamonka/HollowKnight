@@ -68,9 +68,6 @@
     <Filter Include="Source Files\HUD">
       <UniqueIdentifier>{b370e456-d761-4175-9dfd-00666cec7f09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\EventEmittor">
-      <UniqueIdentifier>{8669478e-c66f-4458-9665-cfb76c3bc7f1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -139,9 +136,6 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Source Files\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="EventEmitter.cpp">
-      <Filter>Source Files\EventEmittor</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -209,9 +203,6 @@
     </ClInclude>
     <ClInclude Include="HUD.h">
       <Filter>Source Files\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="EventEmitter.h">
-      <Filter>Source Files\EventEmittor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

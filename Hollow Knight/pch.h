@@ -15,7 +15,7 @@
 #include <SDL_ttf.h> 
 #include <SDL_mixer.h> 
 #include <SDL_image.h>
-#include "EventEmitter.h"
+
 
 #pragma warning(default : 26812)
 #include "structs.h"
@@ -24,5 +24,3 @@
 #include <iostream>
 #include <string>
 
-
-extern EventEmitter* emitter;
