@@ -16,7 +16,7 @@ public:
 	Avatar(Avatar&& other) = delete;
 	Avatar& operator=(Avatar&& other) = delete;
 
-	void Update(float elapsedSec, Environment* pLevel);
+	void Update(float elapsedSec, Environment* pLevel, bool isFocusing);
 	void Draw() const override;
 	void EnemyHit();
 	bool IsAtacking()const;
@@ -26,7 +26,7 @@ public:
 	{
 		return m_Velocity;
 	}
-	int isColliding()
+	bool isColliding() const
 	{
 		if (m_ActionState == ActionState::collidingEnemy)
 		{
@@ -35,9 +35,14 @@ public:
 		return false;
 	}
 
+	bool isFocusing()
+	{
+		return m_IsFocusing;
+	}
+
 private:
 
-	void CheckState(const Environment* pLevel);
+	void CheckState(const Environment* pLevel, bool isFocusing);
 	void MoveAvatar(float elapsedSec);
 	void ChangeTexture(const Environment* pLevel);
 
@@ -59,6 +64,9 @@ private:
 	Vector2f m_Acceleration;
 
 	Rectf m_ShapeBeforeDying;
+	Rectf m_ParticlesShape;
+
+	Texture* m_pParticleTexture;
 
 	float m_HorSpeed;
 	float m_JumpSpeed;
@@ -72,4 +80,5 @@ private:
 	bool m_HasDoubleJumped;
 	bool m_IsNovingAfterCollision;
 	bool m_IsKilling;
+	bool m_IsFocusing;
 };

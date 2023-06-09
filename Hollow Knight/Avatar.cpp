@@ -12,7 +12,8 @@ Avatar::Avatar() :
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
 	m_IsMovingRight{ true }, m_CanDoubleJump{ false },
-	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }, m_IsKilling{ false }
+	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }, m_IsKilling{ false },m_IsFocusing(false)
+
 {
 
 	Rectf sourceRect{ 0,0,0,0 };
@@ -30,14 +31,18 @@ Avatar::Avatar() :
 	SetShape(Rectf(avatarStartPosition.x, avatarStartPosition.y, m_ClipWidth, m_ClipHeight));
 
 	SetFramesPerSec(10);
+
+	m_pParticleTexture = new Texture{ "ParticleEffect.png" };
+	m_ParticlesShape = Rectf(0, 0, m_pParticleTexture->GetWidth(), m_pParticleTexture->GetHeight());
 }
 
 Avatar::~Avatar()
 {
+	delete m_pParticleTexture;
 
 }
 
-void Avatar::Update(float elapsedSec, Environment* pLevel)
+void Avatar::Update(float elapsedSec, Environment* pLevel,bool isFocusing)
 {
 	if (m_ActionState == ActionState::dying)
 	{
@@ -49,7 +54,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel)
 
 	pLevel->HandleCollision(currentShape, m_Velocity);
 	SetShape(currentShape);
-	CheckState(pLevel);
+	CheckState(pLevel,isFocusing);
 
 	const int movementFrames = 9;
 
@@ -102,8 +107,8 @@ void Avatar::Update(float elapsedSec, Environment* pLevel)
 	{
 		m_IsNovingAfterCollision = false;
 	}
-
 	m_ActionState = ActionState::waiting;
+	
 
 }
 
@@ -128,6 +133,22 @@ void Avatar::Draw()const
 	else
 	{
 		GetTexture()->Draw(GetShape(), GetSourceRect());
+		
+		const Rectf particleShape
+		{
+			GetShape().left - GetShape().width/2,
+			GetShape().bottom - GetShape().height,
+			GetShape().width * 2,
+			GetShape().height * 2
+
+		};
+
+		if (m_IsFocusing)
+		{
+			m_pParticleTexture->Draw(particleShape, m_ParticlesShape);
+
+		}
+			
 	}
 }
 
@@ -144,7 +165,7 @@ bool Avatar::IsAtacking()const
 {
 	return m_IsKilling;
 }
-void Avatar::CheckState(const Environment* pLevel)
+void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 {
 	Rectf currentShape = GetShape();
 
@@ -160,7 +181,15 @@ void Avatar::CheckState(const Environment* pLevel)
 		m_IsMovingRight = true;
 		m_Velocity.x = m_HorSpeed;
 	}
-
+	if (pStates[SDL_SCANCODE_A] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision && isFocusing)
+	{
+		m_IsFocusing = true;
+	}
+	else
+	{
+		m_IsFocusing = false;
+	}
+	
 	if (pStates[SDL_SCANCODE_LEFT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
@@ -300,6 +329,12 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 		{
 
 			srcRect.bottom = jumpingTextureVerticalOffset * m_ClipHeight;
+		}
+		if (m_IsFocusing)
+		{
+			srcRect.left = 8 * m_ClipWidth;
+			srcRect.bottom = 5 * m_ClipHeight;
+			m_ParticlesShape.left = GetAnimationFrame() * m_ParticlesShape.width / 5;
 		}
 
 		SetSourceRect(srcRect);

@@ -18,7 +18,9 @@
 #include "HUD.h"
 
 Level::Level(const Rectf& viewPort) :
-	m_ViewPort{ viewPort }, m_EndReached{ false }
+	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f)
+
+
 {
 
 }
@@ -70,10 +72,20 @@ void Level::Update(float elapsedSec)
 	if (m_EndReached)
 		return;
 
+	if (m_pAvatar->isFocusing() && m_pHUD->CanAddLife() && !m_pAvatar->isColliding())
+	{
+		m_ZoomLevel += 0.001f;
+		m_pHUD->AddLife();
+	}
+
+	else
+	{
+		m_ZoomLevel = 1.0f;
+	}
 	m_pCoinManager->HandleCollection(m_pAvatar->GetShape());
 	m_pHUD->SetCollectedCoinsAmount(m_pCoinManager->GetCoinsCollectedAmount());
 	m_pCoinManager->Update(elapsedSec, m_pEnvironment);
-	m_pAvatar->Update(elapsedSec, m_pEnvironment);
+	m_pAvatar->Update(elapsedSec, m_pEnvironment, m_pHUD->CanAddLife());
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 
 	m_pCoinSourceManager->Update(m_pAvatar);
@@ -103,7 +115,15 @@ void Level::Draw() const
 
 	glPushMatrix();
 	{
+		
+		if (m_pAvatar->isFocusing())
+		{
+			glTranslatef(-m_pAvatar->GetShape().width, -m_pAvatar->GetShape().height, 0);
+			//glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.05f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 0.05f, 0.0f);
+			m_Camera->Scale(m_ZoomLevel, m_ZoomLevel);
+		}
 		m_Camera->Transform(m_pAvatar->GetShape(), true);
+		
 
 		m_pEnvironment->DrawMiddleground();
 

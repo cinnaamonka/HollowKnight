@@ -14,6 +14,8 @@ public:
 	void Transform(const Rectf& target, bool isShortDistance);
 	Point2f GetPosition(const Rectf& target) const;
 
+	void Scale(const float scaleX,const float scaleY);
+
 private:
 	
 	Point2f Track(const Rectf& target) const;

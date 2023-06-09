@@ -65,6 +65,7 @@ public:
 	Rectf m_ViewPort;
 	float m_ElapsedTime;
 	
+	float m_ZoomLevel;
 };
 
 
