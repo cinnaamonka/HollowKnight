@@ -51,6 +51,7 @@ void CoinManager::SetPositions(const Rectf& rect) const
 		offset += offsetStep;
 	}
 }
+
 void CoinManager::Update(float elapsedSec, Environment* pLevel)
 {
 	for (Coin* pCoin : GetItems())

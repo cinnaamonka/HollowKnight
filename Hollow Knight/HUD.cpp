@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "HUD.h"
 
+
 #include <Texture.h>
 
-HUD::HUD(const Point2f& topLeft, int totalLifesAmount) :
+HUD::HUD(const Point2f& topLeft, int totalLifesAmount):
 	m_BottomLeft{ topLeft }, m_TotalLifesAmount{ totalLifesAmount }, m_LeftLifes{ float(totalLifesAmount) }, m_CollectedCoins(0),
-	m_SavedCoins(0)
+	m_SavedCoins(0), m_PreviousLifes(totalLifesAmount)
 {
 	m_pHUDTexture = new Texture{ "HUD.png" };
 	m_pLifeTexture = new Texture{ "Lifes.png" };
 	m_pEmptyLifeTexture = new Texture{ "EmptyLife.png" };
 	m_CoinsNumberTexture = nullptr;
 	m_CoinTexture = new Texture{ "Coin.png" };
-
 }
 
 HUD::~HUD()
@@ -70,7 +70,6 @@ void HUD::Draw()
 		m_BottomLeft.x + 130.0f,
 		m_BottomLeft.y + 10.0f
 	};
-
 	m_CoinsNumberTexture = new Texture(std::to_string(m_CollectedCoins), "Supernatural_Knight.ttf", 20, Color4f{ 1.0f,1.0f,1.0f,1.0f });
 	m_CoinsNumberTexture->Draw(coinsAmountTexturePosition);
 
@@ -80,11 +79,21 @@ void HUD::Draw()
 void HUD::PowerUpHit()
 {
 	m_LeftLifes -= 1;
+	m_PreviousLifes -= 1;
 }
+
 void HUD::AddLife()
 {
 	const float leftLifesOffset = 0.005f;
+	m_PreviousLifes = int(m_LeftLifes);
 	m_LeftLifes += leftLifesOffset;
+
+	if (int(m_LeftLifes) - m_PreviousLifes)
+	{
+		const int coins = m_CollectedCoins - 6;
+	   /* m_pCoinManager->SetCollectedCoinsAmount(coins);*/
+		
+	}
 }
 bool HUD::CanAddLife()
 {
@@ -95,7 +104,6 @@ bool HUD::CanAddLife()
 			m_SavedCoins = m_CollectedCoins;
 			return true;
 		}
-
 	}
 
 	return false;

@@ -30,8 +30,10 @@ public:
 	{
 		return m_CoinsCollectedAmount;
 	}
+
+	
 private:
-	int m_CoinsCollectedAmount;;
+	int m_CoinsCollectedAmount;
 };
 
 

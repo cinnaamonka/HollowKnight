@@ -1,7 +1,6 @@
 #pragma once
 
 class Texture;
-
 class HUD
 {
 public:
@@ -16,7 +15,7 @@ public:
 	void Draw();
 	void PowerUpHit();
 
-	const int GetLeftLifes()
+	const int GetLeftLifes() const
 	{
 		return int(m_LeftLifes);
 	}
@@ -28,6 +27,8 @@ public:
 	{
 		m_CollectedCoins = coinsAmount;
 	}
+
+	
 	void AddLife();
 	bool CanAddLife();
 
@@ -45,5 +46,7 @@ private:
 
 	int m_CollectedCoins;
 	int m_SavedCoins;
+	int m_PreviousLifes;
+
 };
 

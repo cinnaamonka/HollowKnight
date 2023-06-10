@@ -44,13 +44,14 @@ void Level::Initialize()
 	m_Camera = new Camera{ m_ViewPort.width,m_ViewPort.height };
 	m_pEnvironment = new Environment();
 	m_Camera->SetLevelBoundaries(m_pEnvironment->GetBoundaries());
-
+	m_pBackgroundSound = new SoundStream("background_Sound.wav");
 	const Rectf spikesRect(3150.f, 3100.f, 400.0f, 100.0f);
 
 	m_pSpikes = new Spikes(spikesRect);
 
 	m_pDoorManager = new DoorManager();
 	AddDoors();
+	m_pBackgroundSound->Play(true);
 
 }
 
@@ -65,26 +66,31 @@ void Level::Cleanup()
 	delete m_pDoorManager;
 	delete m_pCoinSourceManager;
 	delete m_pHUD;
+	delete m_pBackgroundSound;
 }
 
 void Level::Update(float elapsedSec)
 {
 	if (m_EndReached)
 		return;
-
-	if (m_pAvatar->isFocusing() && m_pHUD->CanAddLife() && !m_pAvatar->isColliding())
+	if (!m_pAvatar->isColliding())
 	{
-		m_ZoomLevel += 0.001f;
-		m_pHUD->AddLife();
-	}
+		if (m_pAvatar->isFocusing() && m_pHUD->CanAddLife())
+		{
+			m_ZoomLevel += 0.001f;
+			m_pHUD->AddLife();
+		}
 
-	else
-	{
-		m_ZoomLevel = 1.0f;
+		else
+		{
+			m_ZoomLevel = 1.0f;
+		}
 	}
+	
 	m_pCoinManager->HandleCollection(m_pAvatar->GetShape());
 	m_pHUD->SetCollectedCoinsAmount(m_pCoinManager->GetCoinsCollectedAmount());
 	m_pCoinManager->Update(elapsedSec, m_pEnvironment);
+
 	m_pAvatar->Update(elapsedSec, m_pEnvironment, m_pHUD->CanAddLife());
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 

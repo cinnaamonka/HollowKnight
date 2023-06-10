@@ -1,6 +1,7 @@
 #pragma once
 
 #include <BaseGame.h>
+#include "SoundStream.h"
 
 class Camera;
 class Avatar;
@@ -58,7 +59,7 @@ public:
 	Spikes* m_pSpikes;
 	CoinSourceManager* m_pCoinSourceManager;
 	HUD* m_pHUD;
-
+	SoundStream* m_pBackgroundSound;
 
 	bool m_EndReached;
 
