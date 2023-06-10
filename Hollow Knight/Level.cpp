@@ -33,25 +33,39 @@ Level::~Level()
 void Level::Initialize()
 {
 	m_pEnemyManager = new EnemyManager();
+
 	AddEnemies();
 
 	m_pCoinManager = new CoinManager();
+
 	m_pCoinSourceManager = new CoinSourceManager();
+
 	AddCoinSources();
+
 	m_pAvatar = new Avatar();
+
 	const Point2f HUDPosition{ 46.0f,460.0f };
+
 	const int livesNumber = 5;
-	m_pHUD = new HUD(HUDPosition, livesNumber);
+
+	m_pHUD = new HUD(HUDPosition, livesNumber, m_pCoinManager);
+
 	m_Camera = new Camera{ m_ViewPort.width,m_ViewPort.height };
+
 	m_pEnvironment = new Environment();
+
 	m_Camera->SetLevelBoundaries(m_pEnvironment->GetBoundaries());
+
 	m_pBackgroundSound = new SoundStream("background_Sound.wav");
+
 	const Rectf spikesRect(3150.f, 3100.f, 400.0f, 100.0f);
 
 	m_pSpikes = new Spikes(spikesRect);
 
 	m_pDoorManager = new DoorManager();
+
 	AddDoors();
+
 	m_pBackgroundSound->Play(true);
 
 }
