@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <Texture.h>
+#include <SoundEffect.h>
 
 Avatar::Avatar() :
 	BaseMovingObject("Knight.png", 12),
@@ -12,10 +13,10 @@ Avatar::Avatar() :
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
 	m_IsMovingRight{ true }, m_CanDoubleJump{ false },
-	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }, m_IsKilling{ false },m_IsFocusing(false)
+	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }, m_IsKilling{ false }, m_IsFocusing(false),
+	isPlaying(false)
 
 {
-
 	Rectf sourceRect{ 0,0,0,0 };
 
 	sourceRect.width = GetTexture()->GetWidth() / GetFramesNumber();
@@ -34,15 +35,21 @@ Avatar::Avatar() :
 
 	m_pParticleTexture = new Texture{ "ParticleEffect.png" };
 	m_ParticlesShape = Rectf(0, 0, m_pParticleTexture->GetWidth(), m_pParticleTexture->GetHeight());
+
+	m_pCharacterWalkingSound = new SoundEffect("soundWalking.wav");
+	m_pKnifeInAir = new SoundEffect("KnightInAir.wav");
+	m_pCharacterWalkingSound->SetVolume(4);
+	
 }
 
 Avatar::~Avatar()
 {
 	delete m_pParticleTexture;
-
+	delete m_pCharacterWalkingSound;
+	delete m_pKnifeInAir;
 }
 
-void Avatar::Update(float elapsedSec, Environment* pLevel,bool isFocusing)
+void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 {
 	if (m_ActionState == ActionState::dying)
 	{
@@ -54,7 +61,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel,bool isFocusing)
 
 	pLevel->HandleCollision(currentShape, m_Velocity);
 	SetShape(currentShape);
-	CheckState(pLevel,isFocusing);
+	CheckState(pLevel, isFocusing);
 
 	const int movementFrames = 9;
 
@@ -108,7 +115,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel,bool isFocusing)
 		m_IsNovingAfterCollision = false;
 	}
 	m_ActionState = ActionState::waiting;
-	
+
 
 }
 
@@ -118,6 +125,19 @@ void Avatar::Draw()const
 	utils::DrawRect(GetShape());
 	std::cout << GetShape().left <<"," << GetShape().bottom << std::endl;*/
 	//to make the character flip during running to the left
+	const Rectf particleShape
+	{
+		GetShape().left - GetShape().width / 2,
+		GetShape().bottom - GetShape().height,
+		GetShape().width * 2,
+		GetShape().height * 2
+
+	};
+	if (m_IsFocusing)
+	{
+		m_pParticleTexture->Draw(particleShape, m_ParticlesShape);
+
+	}
 	if (!m_IsMovingRight)
 	{
 		glPushMatrix();
@@ -128,27 +148,10 @@ void Avatar::Draw()const
 		glTranslatef(-GetShape().width, 0, 0);
 		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
 		glPopMatrix();
-
 	}
 	else
 	{
 		GetTexture()->Draw(GetShape(), GetSourceRect());
-		
-		const Rectf particleShape
-		{
-			GetShape().left - GetShape().width/2,
-			GetShape().bottom - GetShape().height,
-			GetShape().width * 2,
-			GetShape().height * 2
-
-		};
-
-		if (m_IsFocusing)
-		{
-			m_pParticleTexture->Draw(particleShape, m_ParticlesShape);
-
-		}
-			
 	}
 }
 
@@ -175,12 +178,21 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 	if (m_ActionState == ActionState::begin || m_ActionState == ActionState::dying)
 		return;
 
+
 	if (pStates[SDL_SCANCODE_RIGHT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
 		m_IsMovingRight = true;
 		m_Velocity.x = m_HorSpeed;
+
+		m_pCharacterWalkingSound->Play(1);
 	}
+	if ((!pStates[SDL_SCANCODE_RIGHT] && !pStates[SDL_SCANCODE_LEFT]) || !pLevel->IsOnGround(currentShape, false))
+	{
+
+		m_pCharacterWalkingSound->StopAll();
+	}
+
 	if (pStates[SDL_SCANCODE_A] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision && isFocusing)
 	{
 		m_IsFocusing = true;
@@ -189,12 +201,15 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 	{
 		m_IsFocusing = false;
 	}
-	
+
 	if (pStates[SDL_SCANCODE_LEFT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
 		m_IsMovingRight = false;
 		m_Velocity.x = -m_HorSpeed;
+
+		m_pCharacterWalkingSound->Play(1);
+
 	}
 
 	// handle single jump
@@ -220,10 +235,17 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 		m_CanDoubleJump = false;
 	}
 
+
 	if (pStates[SDL_SCANCODE_X])
 	{
 		m_IsKilling = true;
+		m_pKnifeInAir->Play(1);
 	}
+	else
+	{
+		//m_pKnifeInAir->StopAll();
+	}
+
 }
 
 void Avatar::MoveAvatar(float elapsedSec)

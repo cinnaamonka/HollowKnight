@@ -3,7 +3,6 @@
 #include "CoinManager.h"
 #include "HUD.h"
 
-
 #include <Texture.h>
 
 HUD::HUD(const Point2f& topLeft, int totalLifesAmount, CoinManager* coinManager) :
@@ -93,7 +92,7 @@ void HUD::AddLife()
 	if (int(m_LeftLifes) - m_PreviousLifes)
 	{
 		const int coins = m_CollectedCoins - 6;
-		m_pCoinManager->setCoinsAmout(coins);
+		m_pCoinManager->setCoinsAmount(coins);
 	}
 }
 bool HUD::CanAddLife()

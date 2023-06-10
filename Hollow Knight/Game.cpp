@@ -38,6 +38,7 @@ void Game::Draw() const
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
+	m_plevel->ProcessKeyDownEvent(e);
 }
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)

@@ -1,4 +1,5 @@
 #include "pch.h"
+#include <chrono>
 
 #include "Level.h"
 #include "Game.h"
@@ -18,10 +19,9 @@
 #include "HUD.h"
 #include "SoundStream.h"
 
+
 Level::Level(const Rectf& viewPort) :
 	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f)
-
-
 {
 
 }
@@ -68,6 +68,7 @@ void Level::Initialize()
 
 	m_pBackgroundSound->Play(true);
 
+
 }
 
 void Level::Cleanup()
@@ -82,6 +83,7 @@ void Level::Cleanup()
 	delete m_pCoinSourceManager;
 	delete m_pHUD;
 	delete m_pBackgroundSound;
+
 }
 
 void Level::Update(float elapsedSec)
@@ -101,7 +103,7 @@ void Level::Update(float elapsedSec)
 			m_ZoomLevel = 1.0f;
 		}
 	}
-	
+
 	m_pCoinManager->HandleCollection(m_pAvatar->GetShape());
 	m_pHUD->SetCollectedCoinsAmount(m_pCoinManager->GetCoinsCollectedAmount());
 	m_pCoinManager->Update(elapsedSec, m_pEnvironment);
@@ -136,17 +138,14 @@ void Level::Draw() const
 
 	glPushMatrix();
 	{
-		
+
 		if (m_pAvatar->isFocusing())
 		{
-			glPushMatrix();
-			glTranslatef(-m_pAvatar->GetShape().left/2, -m_pAvatar->GetShape().bottom/2, 0);
-			m_Camera->Scale(m_ZoomLevel, m_ZoomLevel);
-			//glTranslatef(m_pAvatar->GetShape().left / 2, m_pAvatar->GetShape().bottom / 2, 0);
-			glPopMatrix();
+
+			m_Camera->Scale(m_ZoomLevel, m_ZoomLevel, m_pAvatar->GetShape());
 		}
 		m_Camera->Transform(m_pAvatar->GetShape(), true);
-		
+
 
 		m_pEnvironment->DrawMiddleground();
 
@@ -157,7 +156,7 @@ void Level::Draw() const
 		m_pCoinManager->Draw();
 
 		m_pEnvironment->DrawStaticForeground(m_pAvatar->GetShape());
-		
+
 
 	}
 	glPopMatrix();
@@ -183,8 +182,8 @@ void Level::Draw() const
 
 void Level::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
+	
 }
-
 void Level::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 {
 
@@ -227,7 +226,7 @@ void Level::AddEnemies()
 void Level::CheckAvatarCollison()
 {
 	const Rectf shapeRect = m_pAvatar->GetShape();
-	
+
 	m_pEnemyManager->Atack(shapeRect, m_pAvatar->GetVelocity());
 
 	if (m_pAvatar->IsAtacking())
@@ -237,7 +236,7 @@ void Level::CheckAvatarCollison()
 			// pass as parameter into manager
 			AddCoins();
 			m_pCoinManager->SetPositions(shapeRect);
-	
+
 			return;
 		}
 		if (m_pCoinSourceManager->IsCoinSourceDestroyed(shapeRect))
@@ -259,7 +258,7 @@ void Level::CheckAvatarCollison()
 			m_pAvatar->EnemyHit();
 		}
 	}
-	
+
 	if (m_pSpikes->IsOverlapping(m_pAvatar->GetShape()) || m_pHUD->GetLeftLifes() <= 0)
 	{
 		m_pAvatar->Die();
@@ -291,8 +290,8 @@ void Level::AddDoors()
 }
 void Level::AddCoinSources()
 {
-	CoinSource* coinSource1 = new CoinSource(Point2f{ 9698,2500 },0);
-	CoinSource* coinSource2 = new CoinSource(Point2f{ 3231,4319 },1);
+	CoinSource* coinSource1 = new CoinSource(Point2f{ 9698,2500 }, 0);
+	CoinSource* coinSource2 = new CoinSource(Point2f{ 3231,4319 }, 1);
 
 	m_pCoinSourceManager->AddItem(coinSource1);
 	m_pCoinSourceManager->AddItem(coinSource2);

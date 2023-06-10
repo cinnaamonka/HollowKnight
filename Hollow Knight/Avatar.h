@@ -1,6 +1,7 @@
 #pragma once
 
 class Environment;
+class SoundEffect;
 
 #include "BaseMovingObject.h"
 
@@ -35,11 +36,19 @@ public:
 		return false;
 	}
 
-	bool isFocusing()
+	bool isFocusing() const
 	{
 		return m_IsFocusing;
 	}
-
+	bool isMoving() const
+	{
+		std::cout << int(m_ActionState) << std::endl;
+		if (m_ActionState == ActionState::moving)
+		{
+			return true;
+		}
+		return false;
+	}
 private:
 
 	void CheckState(const Environment* pLevel, bool isFocusing);
@@ -81,4 +90,10 @@ private:
 	bool m_IsNovingAfterCollision;
 	bool m_IsKilling;
 	bool m_IsFocusing;
+
+	SoundEffect* m_pCharacterWalkingSound;
+	SoundEffect* m_pKnifeInAir;
+
+	bool isPlaying;
+
 };

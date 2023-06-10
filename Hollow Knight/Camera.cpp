@@ -42,8 +42,10 @@ Point2f Camera::GetPosition(const Rectf& target) const
 {
 	return Track(target);
 }
-void Camera::Scale(const float scaleX, const float scaleY)
+void Camera::Scale(const float scaleX, const float scaleY, const Rectf& target)
 {
-	glScalef(scaleX, scaleY, 0);
+	Point2f posCenter = Track(target);
+	Clamp(posCenter);
+	glScalef(scaleX, scaleY,0 );
 }
 
