@@ -1,7 +1,7 @@
 #pragma once
 
 #include <BaseGame.h>
-#include "SoundStream.h"
+
 
 class Camera;
 class Avatar;
@@ -14,7 +14,7 @@ class DoorManager;
 class CoinSource;
 class CoinSourceManager;
 class HUD;
-
+class SoundStream;
 
 class Level final
 {

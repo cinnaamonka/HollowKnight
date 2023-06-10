@@ -16,6 +16,7 @@
 #include "CoinSource.h"
 #include "CoinSourceManager.h"
 #include "HUD.h"
+#include "SoundStream.h"
 
 Level::Level(const Rectf& viewPort) :
 	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f)
@@ -124,9 +125,11 @@ void Level::Draw() const
 		
 		if (m_pAvatar->isFocusing())
 		{
-			glTranslatef(-m_pAvatar->GetShape().width, -m_pAvatar->GetShape().height, 0);
-			//glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.05f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 0.05f, 0.0f);
+			glPushMatrix();
+			glTranslatef(-m_pAvatar->GetShape().left/2, -m_pAvatar->GetShape().bottom/2, 0);
 			m_Camera->Scale(m_ZoomLevel, m_ZoomLevel);
+			//glTranslatef(m_pAvatar->GetShape().left / 2, m_pAvatar->GetShape().bottom / 2, 0);
+			glPopMatrix();
 		}
 		m_Camera->Transform(m_pAvatar->GetShape(), true);
 		
