@@ -5,7 +5,7 @@ class HUD
 {
 public:
 
-	HUD(const Point2f& topLeft, int totalLifesAmount);
+	HUD(const Point2f& topLeft, int totalLifesAmount, CoinManager* coinManager);
 	HUD(const HUD& other) = delete;
 	HUD& operator=(const HUD& other) = delete;
 	HUD(HUD&& other) = delete;
@@ -33,6 +33,7 @@ public:
 	bool CanAddLife();
 
 private:
+	CoinManager* m_pCoinManager;
 
 	Point2f m_BottomLeft;
 	int m_TotalLifesAmount;

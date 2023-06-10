@@ -31,6 +31,10 @@ public:
 		return m_CoinsCollectedAmount;
 	}
 
+	void setCoinsAmount(const int coins) {
+		m_CoinsCollectedAmount = coins;
+	}
+
 	
 private:
 	int m_CoinsCollectedAmount;
