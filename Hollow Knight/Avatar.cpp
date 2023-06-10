@@ -38,8 +38,8 @@ Avatar::Avatar() :
 
 	m_pCharacterWalkingSound = new SoundEffect("soundWalking.wav");
 	m_pKnifeInAir = new SoundEffect("KnightInAir.wav");
-	m_pCharacterWalkingSound->SetVolume(4);
-	
+	//m_pCharacterWalkingSound->SetVolume(1);
+
 }
 
 Avatar::~Avatar()
@@ -55,6 +55,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 	{
 		ChangeTexture(pLevel);
 		MoveAvatar(elapsedSec);
+
 		return;
 	}
 	Rectf currentShape = GetShape();
@@ -185,12 +186,32 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 		m_IsMovingRight = true;
 		m_Velocity.x = m_HorSpeed;
 
-		m_pCharacterWalkingSound->Play(1);
+		m_pCharacterWalkingSound->Play(-1);
+
 	}
+
+	if (pStates[SDL_SCANCODE_LEFT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
+	{
+		m_ActionState = ActionState::moving;
+		m_IsMovingRight = false;
+		m_Velocity.x = -m_HorSpeed;
+
+		m_pCharacterWalkingSound->Play(-1);
+	}
+
+	if (pStates[SDL_SCANCODE_X])
+	{
+		m_IsKilling = true;
+
+		m_pKnifeInAir->Play(-1);
+	}
+	else {
+		m_pKnifeInAir->Stop();
+	}
+
 	if ((!pStates[SDL_SCANCODE_RIGHT] && !pStates[SDL_SCANCODE_LEFT]) || !pLevel->IsOnGround(currentShape, false))
 	{
-
-		m_pCharacterWalkingSound->StopAll();
+		m_pCharacterWalkingSound->Stop();
 	}
 
 	if (pStates[SDL_SCANCODE_A] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision && isFocusing)
@@ -200,16 +221,6 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 	else
 	{
 		m_IsFocusing = false;
-	}
-
-	if (pStates[SDL_SCANCODE_LEFT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
-	{
-		m_ActionState = ActionState::moving;
-		m_IsMovingRight = false;
-		m_Velocity.x = -m_HorSpeed;
-
-		m_pCharacterWalkingSound->Play(1);
-
 	}
 
 	// handle single jump
@@ -233,17 +244,6 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 
 		m_HasDoubleJumped = true;
 		m_CanDoubleJump = false;
-	}
-
-
-	if (pStates[SDL_SCANCODE_X])
-	{
-		m_IsKilling = true;
-		m_pKnifeInAir->Play(1);
-	}
-	else
-	{
-		//m_pKnifeInAir->StopAll();
 	}
 
 }

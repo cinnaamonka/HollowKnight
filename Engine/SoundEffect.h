@@ -12,13 +12,16 @@ public:
 	SoundEffect& operator=( SoundEffect&& rhs) = delete;
 
 	bool IsLoaded( ) const;
-	bool Play( const int loops ) const;
+	bool Play( const int loops );
+	void Stop();
 	void SetVolume( const int value ); 
 	int GetVolume( ) const; 
 	static void StopAll( );
 	static void PauseAll( );
 	static void ResumeAll( );
 
+
 private:
 	Mix_Chunk* m_pMixChunk;
+	int m_channel;
 };
