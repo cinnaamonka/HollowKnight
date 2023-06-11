@@ -103,7 +103,7 @@ private:
 	Rectf m_Shape;
 	Rectf m_SourceRect;
 
-	int m_LifesAmount = 2;
+	int m_LifesAmount;
 	bool m_IsKilled;
 
 

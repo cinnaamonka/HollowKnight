@@ -171,6 +171,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Spikes.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Avatar.h" />
@@ -195,6 +196,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="Platform.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Spikes.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

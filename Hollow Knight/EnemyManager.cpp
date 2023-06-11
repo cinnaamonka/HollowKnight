@@ -2,14 +2,16 @@
 #include "BaseEnemy.h"
 #include "EnemyManager.h"
 #include "Environment.h"
+#include <SoundEffect.h>
 
 EnemyManager::EnemyManager()
 {
-
+	m_pDyingSound = new SoundEffect("EnemyDamage.wav");
 }
 
 EnemyManager::~EnemyManager()
 {
+	delete m_pDyingSound;
 }
 
 void EnemyManager::Update(float elapsedSec, Environment* pLevel)
@@ -37,7 +39,12 @@ bool EnemyManager::HitItem(const Rectf& rect)
 	{
 		if (Enemy->IsOverlapping(rect) && !Enemy->IsKilled())
 		{
+			
 			return true;
+		}
+		else if (Enemy->IsKilled())
+		{
+			m_pDyingSound->Stop();
 		}
 	}
 
@@ -49,8 +56,11 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 	{
 		if (Enemy->IsOnCloseDistance(actor) && !Enemy->IsKilled())
 		{
-			if (Enemy->GetLifesAmount() >= 1)
+			if (Enemy->GetLifesAmount() >= 0)
 			{
+				std::cout << Enemy->GetLifesAmount() << std::endl;
+				std::cout << "Played" << std::endl;
+				m_pDyingSound->Play(-1);
 				Enemy->DecreaseLifesAmount();
 			}
 			else
@@ -62,6 +72,7 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 		}
 		
 	}
+	
 	return false;
 }
 

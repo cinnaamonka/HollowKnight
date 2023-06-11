@@ -27,14 +27,7 @@ public:
 	{
 		return m_Velocity;
 	}
-	bool isColliding() const
-	{
-		if (m_ActionState == ActionState::collidingEnemy)
-		{
-			return true;
-		}
-		return false;
-	}
+	bool isColliding() const;
 
 	bool isFocusing() const
 	{
@@ -42,7 +35,6 @@ public:
 	}
 	bool isMoving() const
 	{
-		std::cout << int(m_ActionState) << std::endl;
 		if (m_ActionState == ActionState::moving)
 		{
 			return true;
@@ -90,9 +82,11 @@ private:
 	bool m_IsNovingAfterCollision;
 	bool m_IsKilling;
 	bool m_IsFocusing;
+	bool m_IsOnGround;
 
 	SoundEffect* m_pCharacterWalkingSound;
 	SoundEffect* m_pKnifeInAir;
+	SoundEffect* m_pCollidesEnemy;
 
 	bool isPlaying;
 

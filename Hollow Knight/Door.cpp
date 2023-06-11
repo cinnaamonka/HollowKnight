@@ -4,6 +4,7 @@
 
 #include <Texture.h>
 #include <SVGParser.h>
+#include <SoundEffect.h>
 
 Door::Door(const Point2f& doorPos) :
 	GroundObject{ "DoorNewTest.png" }, m_State{ State::standing }, m_NrOfFrames(10), m_NrFramesPerSec(50)
@@ -18,11 +19,12 @@ Door::Door(const Point2f& doorPos) :
 	m_SourceRect.width = m_Shape.width;
 	m_SourceRect.height = m_Shape.height;
 
+	m_pBreakingDoorSound = new SoundEffect("DoorBreaksSound.wav");
 }
 
 Door::~Door()
 {
-
+	delete m_pBreakingDoorSound;
 }
 
 void Door::Update(float elapsedSec, Avatar* actor, const int index)
@@ -80,6 +82,7 @@ void Door::ChangeTexture()
 
 		}
 
+		m_pBreakingDoorSound->Play(0);
 	}
 	if (m_State == State::broken)
 	{

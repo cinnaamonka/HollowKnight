@@ -68,6 +68,9 @@
     <Filter Include="Source Files\HUD">
       <UniqueIdentifier>{b370e456-d761-4175-9dfd-00666cec7f09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\UIClass">
+      <UniqueIdentifier>{fa67e5a1-f328-422f-8566-6d31d531c0bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -136,6 +139,9 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Source Files\HUD</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Source Files\UIClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -203,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="HUD.h">
       <Filter>Source Files\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Source Files\UIClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

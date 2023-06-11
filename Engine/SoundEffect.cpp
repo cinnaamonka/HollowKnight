@@ -4,7 +4,7 @@
 
 
 SoundEffect::SoundEffect(const std::string& path)
-	: m_pMixChunk{ Mix_LoadWAV(path.c_str()) }, m_channel(-1)
+	: m_pMixChunk{ Mix_LoadWAV(path.c_str()) }, m_Channel(-1)
 {
 	if (m_pMixChunk == nullptr)
 	{
@@ -29,11 +29,11 @@ bool SoundEffect::Play(const int loops)
 	if (m_pMixChunk != nullptr)
 	{
 		
-		if (m_channel != -1) return false;
+		if (m_Channel != -1) return false;
 
-		m_channel = Mix_PlayChannel(-1, m_pMixChunk, loops);
+		m_Channel = Mix_PlayChannel(-1, m_pMixChunk, loops);
 
-		return m_channel == -1 ? false : true;
+		return m_Channel == -1 ? false : true;
 	}
 	else
 	{
@@ -43,10 +43,10 @@ bool SoundEffect::Play(const int loops)
 
 void SoundEffect::Stop()
 {
-	if (m_channel != -1)
+	if (m_Channel != -1)
 	{
-		Mix_HaltChannel(m_channel);
-		m_channel = -1;
+		Mix_HaltChannel(m_Channel);
+		m_Channel = -1;
 	}
 }
 

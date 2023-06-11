@@ -5,7 +5,7 @@ class SoundEffect final
 {
 public:
 	explicit SoundEffect( const std::string& path );
-	~SoundEffect( );
+	~SoundEffect();
 	SoundEffect(const SoundEffect& other) = delete;
 	SoundEffect& operator=(const SoundEffect& rhs) = delete;
 	SoundEffect( SoundEffect&& other) = delete;
@@ -23,5 +23,5 @@ public:
 
 private:
 	Mix_Chunk* m_pMixChunk;
-	int m_channel;
+	int m_Channel;
 };

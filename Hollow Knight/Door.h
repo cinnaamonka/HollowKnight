@@ -2,6 +2,7 @@
 
 class Texture;
 class Avatar;
+class SoundEffect;
 
 #include "GroundObject.h"
 
@@ -46,5 +47,6 @@ private:
 
 	std::vector<std::vector<Point2f>> m_Vertices;
 
+	SoundEffect* m_pBreakingDoorSound;
 };
 

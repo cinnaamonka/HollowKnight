@@ -14,7 +14,7 @@ Avatar::Avatar() :
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
 	m_IsMovingRight{ true }, m_CanDoubleJump{ false },
 	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }, m_IsKilling{ false }, m_IsFocusing(false),
-	isPlaying(false)
+	isPlaying(false), m_IsOnGround(true)
 
 {
 	Rectf sourceRect{ 0,0,0,0 };
@@ -38,8 +38,8 @@ Avatar::Avatar() :
 
 	m_pCharacterWalkingSound = new SoundEffect("soundWalking.wav");
 	m_pKnifeInAir = new SoundEffect("KnightInAir.wav");
-	//m_pCharacterWalkingSound->SetVolume(1);
 
+	m_pCollidesEnemy = new SoundEffect("EnemyDamage.wav");
 }
 
 Avatar::~Avatar()
@@ -47,8 +47,16 @@ Avatar::~Avatar()
 	delete m_pParticleTexture;
 	delete m_pCharacterWalkingSound;
 	delete m_pKnifeInAir;
+	delete m_pCollidesEnemy;
 }
-
+bool Avatar::isColliding() const
+{
+	if (m_ActionState == ActionState::collidingEnemy)
+	{
+		return true;
+	}
+	return false;
+}
 void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 {
 	if (m_ActionState == ActionState::dying)
@@ -82,12 +90,17 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 	if (!pLevel->IsOnGround(currentShape, false))
 	{
 		MoveAvatar(elapsedSec);
-
+		m_IsOnGround = false;
 		return;
+	}
+	else
+	{
+		m_IsOnGround = true;
 	}
 
 	if (m_ActionState == ActionState::collidingEnemy && !m_IsNovingAfterCollision && !m_IsKilling)
 	{
+
 		if (m_IsMovingRight)
 		{
 			m_Velocity.x = -m_HorSpeed;
@@ -116,8 +129,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 		m_IsNovingAfterCollision = false;
 	}
 	m_ActionState = ActionState::waiting;
-
-
+	m_pCollidesEnemy->Stop();
 }
 
 void Avatar::Draw()const
@@ -159,6 +171,10 @@ void Avatar::Draw()const
 void Avatar::EnemyHit()
 {
 	m_ActionState = ActionState::collidingEnemy;
+
+	std::cout << "On ground" << std::endl;
+	m_pCollidesEnemy->Play(-1);
+
 }
 void Avatar::Die()
 {
@@ -279,7 +295,6 @@ void Avatar::MoveAvatar(float elapsedSec)
 	{
 		m_Velocity.y += m_Acceleration.y * elapsedSec;
 	}
-
 
 	SetShape(currentShape);
 }

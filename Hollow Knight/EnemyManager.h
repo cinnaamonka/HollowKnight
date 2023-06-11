@@ -4,6 +4,7 @@
 #include "BaseManager.h"
 class BaseEnemy;
 class Environment;
+class SoundEffect;
 
 class EnemyManager final :public BaseManager<BaseEnemy>
 {
@@ -25,4 +26,6 @@ public:
 
 	void Atack(const Rectf& actor, const Vector2f& velocity)const;
 
+private:
+	SoundEffect* m_pDyingSound;
 };

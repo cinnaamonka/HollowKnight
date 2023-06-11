@@ -4,7 +4,7 @@
 #include <BaseGame.h>
 
 class Level;
-
+class UI;
 class Game final : public BaseGame
 {
 public:
@@ -39,5 +39,6 @@ private:
 	// DATA MEMBERS
 
 	Level* m_plevel;
+	UI* m_pUI;
 	
 };
