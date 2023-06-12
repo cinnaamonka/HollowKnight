@@ -4,7 +4,7 @@
 #include "UI.h"
 UI::UI(const Rectf& viewPort):
 	m_ViewPort{ viewPort }, m_GameIsStarted(false), m_StartGameHovered(false), m_OptionsHovered(false), m_QuitGameHovered(false),
-	m_OptionsClicked(false)
+	m_OptionsClicked(false),m_GameIsQuit(false)
 {
 	m_pBackgroundTexture = new Texture("BackgroundMenu.png");
 	m_pCursorTexture = new Texture("Cursor.png");

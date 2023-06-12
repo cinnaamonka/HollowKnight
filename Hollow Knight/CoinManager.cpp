@@ -3,13 +3,15 @@
 #include "Coin.h"
 #include "Environment.h"
 
+#include <SoundEffect.h>
+
 CoinManager::CoinManager():m_CoinsCollectedAmount(0)
 {
-
+	m_pCoinCollectedSound = new SoundEffect("CoinCollect.wav");
 }
 CoinManager::~CoinManager()
 {
-
+	delete m_pCoinCollectedSound;
 }
 
 
@@ -32,6 +34,12 @@ void CoinManager::HandleCollection(const Rectf& rect)
 		if (pCoin->IsOverlapping(rect) && !pCoin->IsCollected())
 		{
 			pCoin->SetIsCollected(true);
+			if (m_pCoinCollectedSound->Play(0) == -1)
+			{
+				m_pCoinCollectedSound->Stop();
+				m_pCoinCollectedSound->Play(0);
+			}
+		
 			m_CoinsCollectedAmount += 1;
 			break;
 		}

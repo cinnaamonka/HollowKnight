@@ -2,6 +2,8 @@
 
 class Coin;
 class Environment;
+class SoundEffect;
+
 #include "BaseManager.h"
 
 class CoinManager final :public BaseManager<Coin>
@@ -37,7 +39,10 @@ public:
 
 	
 private:
+
 	int m_CoinsCollectedAmount;
+
+	SoundEffect* m_pCoinCollectedSound;
 };
 
 
