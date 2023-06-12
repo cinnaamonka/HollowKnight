@@ -31,6 +31,11 @@ private:
 	Texture* m_SoundAdjustmentTexture;
 	Texture* m_pHoveredTextureLeft;
 	Texture* m_pHoveredTextureRight;
+	Texture* m_pAudioTexture;
+	Texture* m_pDecorationTexture;
+	Texture* m_pMusicAdjustmentTexture;
+	Texture* m_pSoundAdjustmentTexture;
+
 
 	Rectf m_ViewPort;
 
@@ -41,5 +46,6 @@ private:
 	bool m_OptionsHovered;
 	bool m_QuitGameHovered;
 	bool m_GameIsQuit;
+	bool m_OptionsClicked;
 };
 
