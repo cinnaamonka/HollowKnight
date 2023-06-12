@@ -58,9 +58,8 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 		{
 			if (Enemy->GetLifesAmount() >= 0)
 			{
-				std::cout << Enemy->GetLifesAmount() << std::endl;
-				std::cout << "Played" << std::endl;
-				m_pDyingSound->Play(-1);
+				m_pDyingSound->Play(0);
+
 				Enemy->DecreaseLifesAmount();
 			}
 			else

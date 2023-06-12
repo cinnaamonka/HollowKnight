@@ -121,5 +121,5 @@ bool operator!=( const Matrix2x3& lhs, const Matrix2x3& rhs );
 // Matrix2x3 matProduct {mat1 * mat2};
 Matrix2x3 operator*( const Matrix2x3& lhs, const Matrix2x3& rhs );
 // Send matrix to output stream
-// std::cout << mat;
+
 std::ostream& operator<<( std::ostream& os, const Matrix2x3& matrix );

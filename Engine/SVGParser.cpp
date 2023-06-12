@@ -75,7 +75,7 @@ void SVGParser::RemoveSpaces( std::string& svgString )
 	{
 		svgString.replace( foundPos, 2, "=" );
 	}
-	//std::cout << svgString.size( ) << "\n";
+	
 	
 	// Remove spaces before and > chars
 	while ( ( foundPos = svgString.find( " >" ) ) != std::string::npos )
@@ -87,7 +87,7 @@ void SVGParser::RemoveSpaces( std::string& svgString )
 	{
 		svgString.replace( foundPos, 2, "<" );
 	}
-	//std::cout << svgString << "\n";
+	
 
 }
 
@@ -129,13 +129,6 @@ bool SVGParser::GetVerticesFromSvgString(std::string& svgString, std::vector<std
 			return false;
 		}
 
-		// DEBUG: Read vertices of current vector
-		//for (Point2f& p : verticesVector)
-		//{
-		//	std::cout << p.x << " " << p.y << std::endl;
-		//}
-
-		// Add the vector to the vector array
 		vertices.push_back(verticesVector);
 	}
 
@@ -309,7 +302,7 @@ bool SVGParser::GetAttributeValue( const std::string& svgText, const std::string
 	}
 
 	attributeValue = svgText.substr( openingDoubleQuotePos + 1, closingDoubleQuotePos - openingDoubleQuotePos  - 1);
-	//std::cout << attributeName << ":" << attributeValue << "\n";
+	
 	return true;
 }
 
@@ -372,7 +365,6 @@ float SVGParser::ReadSvgValue( std::stringstream& svgStream, bool separatorRequi
 // Reads a single point
 Point2f SVGParser::ReadSvgPoint( std::stringstream& svgStream )
 {
-	//std::cout << "ReadSvgPoint: "  << svgStream.str() << "\n";
 	Point2f p{};
 	p.x = ReadSvgValue( svgStream, true );
 	p.y = ReadSvgValue( svgStream, false );

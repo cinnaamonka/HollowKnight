@@ -13,7 +13,7 @@ EnemyCentipede::EnemyCentipede(const Point2f& position) :
 }
 EnemyCentipede::~EnemyCentipede()
 {
-	std::cout << "clear" << std::endl;
+
 }
 void EnemyCentipede::Update(float elapsedSec)
 {
