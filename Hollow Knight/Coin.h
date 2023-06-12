@@ -1,6 +1,7 @@
 #pragma once
 
 class Texture;
+class SoundEffect;
 
 class Coin final
 {
@@ -44,6 +45,8 @@ public:
 
     void Fall(float elapsedSec);
 
+    void PlaySound();
+
 
 private:
 
@@ -53,5 +56,5 @@ private:
 
     bool m_IsCollected;
     
-
+    SoundEffect* m_pCoinCollectedSound;
 };

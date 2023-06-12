@@ -2,6 +2,7 @@
 #include "Coin.h"
 
 #include <Texture.h>
+#include <SoundEffect.h>
 
 Coin::Coin() :
 	m_IsCollected{ false }
@@ -10,10 +11,13 @@ Coin::Coin() :
 
 	m_Shape.width = m_pCoinTexture->GetWidth();
 	m_Shape.height = m_pCoinTexture->GetHeight();
+
+	m_pCoinCollectedSound = new SoundEffect("CoinCollect.wav");
 }
 Coin::~Coin()
 {
 	delete m_pCoinTexture;
+	delete m_pCoinCollectedSound;
 }
 void Coin::Draw() const
 {
@@ -54,4 +58,9 @@ void Coin::Fall(float elapsedSec)
 	shape.bottom += fallingAfterDyingSpeed * elapsedSec;
 
 	SetShape(shape);
+}
+
+void Coin::PlaySound()
+{
+	m_pCoinCollectedSound->Play(0);
 }

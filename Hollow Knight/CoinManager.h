@@ -41,8 +41,6 @@ public:
 private:
 
 	int m_CoinsCollectedAmount;
-
-	SoundEffect* m_pCoinCollectedSound;
 };
 
 
