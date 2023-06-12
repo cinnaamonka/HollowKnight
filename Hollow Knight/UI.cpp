@@ -3,7 +3,7 @@
 
 #include "UI.h"
 UI::UI(const Rectf& viewPort):
-	m_ViewPort{ viewPort }, m_GameIsStarted(false), m_StartGameHovered(false)
+	m_ViewPort{ viewPort }, m_GameIsStarted(false), m_StartGameHovered(false), m_OptionsHovered(false), m_QuitGameHovered(false)
 {
 	m_pBackgroundTexture = new Texture("BackgroundMenu.png");
 	m_pCursorTexture = new Texture("Cursor.png");
@@ -39,8 +39,24 @@ void UI::Draw()
 	
 	if (m_StartGameHovered)
 	{
-		m_pHoveredTextureLeft->Draw(Point2f(m_ViewPort.left + m_ViewPort.width/2 - m_StartGameTexture->GetWidth()/2 - horizontalOffsetHoveredText, m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset));
-		m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_StartGameTexture->GetWidth() / 2 + horizontalOffsetHoveredText/5, m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset));
+		m_pHoveredTextureLeft->Draw(Point2f(m_ViewPort.left + m_ViewPort.width/2 - m_StartGameTexture->GetWidth()/2 - horizontalOffsetHoveredText, 
+											m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset));
+		m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_StartGameTexture->GetWidth() / 2 + horizontalOffsetHoveredText/5, 
+										     m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset));
+	}
+	if (m_OptionsHovered)
+	{
+		m_pHoveredTextureLeft->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_OptionsTexture->GetWidth() + horizontalOffsetHoveredText, 
+											m_ViewPort.bottom + m_ViewPort.height / 2 - 1.5f * m_OptionsTexture->GetHeight() - verticalOffset));
+		m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_OptionsTexture->GetWidth() / 2 + horizontalOffsetHoveredText/6, 
+											 m_ViewPort.bottom + m_ViewPort.height / 2 - 1.5f * m_OptionsTexture->GetHeight() - verticalOffset));
+	}
+	if(m_QuitGameHovered)
+	{
+		m_pHoveredTextureLeft->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_QuitGameTexture->GetWidth()/2 - verticalOffset/1.5f,
+											m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset));
+		m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_QuitGameTexture->GetWidth() / 2 + verticalOffset/6,
+											 m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset));
 	}
 }
 void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
@@ -51,17 +67,31 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 
 	const float verticalOffset = 50.0f;
 
-	Rectf startGameTextPos
+	Rectf startGameTextShape
 	{
 		m_ViewPort.left + m_ViewPort.width / 2 - m_StartGameTexture->GetWidth() / 2,
 		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset,
 		m_StartGameTexture->GetWidth(),
 		m_StartGameTexture->GetHeight()
 	};
-
-	if (mousePos.x > startGameTextPos.left && mousePos.y > startGameTextPos.bottom &&
-		mousePos.x < startGameTextPos.left + startGameTextPos.width &&
-		mousePos.y < startGameTextPos.bottom + startGameTextPos.height)
+	Rectf optionsTextShape
+	{
+		m_ViewPort.left + m_ViewPort.width / 2 - m_OptionsTexture->GetWidth() / 2,
+		m_ViewPort.bottom + m_ViewPort.height / 2 - 1.5f * m_OptionsTexture->GetHeight() - verticalOffset,
+		m_OptionsTexture->GetWidth(),
+		m_OptionsTexture->GetHeight()
+	};
+	Rectf quitTextShape
+	{
+		m_ViewPort.left + m_ViewPort.width / 2 - m_QuitGameTexture->GetWidth() / 2, 
+		m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset,
+		m_QuitGameTexture->GetWidth(),
+		m_QuitGameTexture->GetHeight()
+	};
+	//Check is clicked StartGame
+	if (mousePos.x > startGameTextShape.left && mousePos.y > startGameTextShape.bottom &&
+		mousePos.x < startGameTextShape.left + startGameTextShape.width &&
+		mousePos.y < startGameTextShape.bottom + startGameTextShape.height)
 	{
 		m_StartGameHovered = true;
 	}
@@ -69,6 +99,29 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 	{
 		m_StartGameHovered = false;
 	}
+	//Check is clicked Options
+	if (mousePos.x > optionsTextShape.left && mousePos.y > optionsTextShape.bottom &&
+		mousePos.x < optionsTextShape.left + optionsTextShape.width &&
+		mousePos.y < optionsTextShape.bottom + optionsTextShape.height)
+	{
+		m_OptionsHovered = true;
+	}
+	else
+	{
+		m_OptionsHovered = false;
+	}
+	//Check is clicked QuitGame
+	if (mousePos.x > quitTextShape.left && mousePos.y > quitTextShape.bottom &&
+		mousePos.x < quitTextShape.left + quitTextShape.width &&
+		mousePos.y < quitTextShape.bottom + quitTextShape.height)
+	{
+		m_QuitGameHovered = true;
+	}
+	else
+	{
+		m_QuitGameHovered = false;
+	}
+
 }
 
 void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
@@ -87,14 +140,39 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		m_StartGameTexture->GetHeight()
 	};
 
+	Rectf quitTextShape
+	{
+		m_ViewPort.left + m_ViewPort.width / 2 - m_QuitGameTexture->GetWidth() / 2,
+		m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset,
+		m_QuitGameTexture->GetWidth(),
+		m_QuitGameTexture->GetHeight()
+	};
+
+	//Check if startGame clicked
 	if (mousePos.x > startGameTextPos.left && mousePos.y > startGameTextPos.bottom &&
 		mousePos.x < startGameTextPos.left + startGameTextPos.width &&
 		mousePos.y < startGameTextPos.bottom + startGameTextPos.height)
 	{
 		m_GameIsStarted = true;
 	}
+
+	if (mousePos.x > quitTextShape.left && mousePos.y > quitTextShape.bottom &&
+		mousePos.x < quitTextShape.left + quitTextShape.width &&
+		mousePos.y < quitTextShape.bottom + quitTextShape.height)
+	{
+		m_GameIsQuit = true;
+		
+	}
+	else
+	{
+		m_GameIsQuit = false;
+	}
 }
 bool UI::IsGameStarted() const
 {
 	return m_GameIsStarted;
+}
+bool UI::IsGameQuit() const
+{
+	return m_GameIsQuit;
 }

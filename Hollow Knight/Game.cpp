@@ -37,6 +37,10 @@ void Game::Update(float elapsedSec)
 	{
 		m_plevel->Update(elapsedSec);
 	}
+	if (m_pUI->IsGameQuit() ==  true)
+	{
+		BaseGame::SetQuit(true);
+	}
 }
 
 void Game::Draw() const

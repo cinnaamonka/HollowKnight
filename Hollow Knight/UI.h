@@ -18,6 +18,7 @@ public:
 	void ProcessMouseDownEvent(const SDL_MouseButtonEvent& e);
 
 	bool IsGameStarted() const;
+	bool IsGameQuit() const;
 
 private:
 
@@ -37,5 +38,8 @@ private:
 
 	bool m_GameIsStarted;
 	bool m_StartGameHovered;
+	bool m_OptionsHovered;
+	bool m_QuitGameHovered;
+	bool m_GameIsQuit;
 };
 

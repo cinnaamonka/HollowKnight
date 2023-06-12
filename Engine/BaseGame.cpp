@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include "BaseGame.h"
+bool BaseGame::m_IsQuit{ false };
 
 BaseGame::BaseGame(const Window& window)
 	: m_Window{ window }
@@ -22,6 +23,7 @@ BaseGame::~BaseGame()
 
 void BaseGame::InitializeGameEngine()
 {
+	
 	// disable console close window button
 #ifdef _WIN32
 	HWND hwnd = GetConsoleWindow();
@@ -136,13 +138,13 @@ void BaseGame::Run()
 
 	// Main loop flag
 	bool quit{ false };
-
+	
 	// Set start time
 	std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
 
 	//The event loop
 	SDL_Event e{};
-	while (!quit)
+	while (!m_IsQuit)
 	{
 		// Poll next event from queue
 		while (SDL_PollEvent(&e) != 0)
@@ -151,7 +153,7 @@ void BaseGame::Run()
 			switch (e.type)
 			{
 			case SDL_QUIT:
-				quit = true;
+				m_IsQuit = true;
 				break;
 			case SDL_KEYDOWN:
 				this->ProcessKeyDownEvent(e.key);
@@ -174,7 +176,7 @@ void BaseGame::Run()
 			}
 		}
 
-		if (!quit)
+		if (!m_IsQuit)
 		{
 			// Get current time
 			std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();

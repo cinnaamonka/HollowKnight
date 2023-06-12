@@ -52,6 +52,13 @@ public:
 		return m_Viewport;
 	}
 
+protected:
+
+	static const void SetQuit(const bool quit)
+	{
+		m_IsQuit = quit;
+	}
+
 private:
 	// DATA MEMBERS
 	// The window properties
@@ -69,4 +76,7 @@ private:
 	// FUNCTIONS
 	void InitializeGameEngine( );
 	void CleanupGameEngine( );
+
+	static bool m_IsQuit;
 };
+
