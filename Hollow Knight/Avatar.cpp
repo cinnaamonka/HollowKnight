@@ -134,10 +134,6 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 
 void Avatar::Draw()const
 {
-	/*utils::SetColor(Color4f(1.0f, 1.0f, 1.0f, 1.0f));
-	utils::DrawRect(GetShape());
-	std::cout << GetShape().left <<"," << GetShape().bottom << std::endl;*/
-	//to make the character flip during running to the left
 	const Rectf particleShape
 	{
 		GetShape().left - GetShape().width / 2,
@@ -172,14 +168,14 @@ void Avatar::EnemyHit()
 {
 	m_ActionState = ActionState::collidingEnemy;
 
-	std::cout << "On ground" << std::endl;
-	m_pCollidesEnemy->Play(-1);
+	m_pCollidesEnemy->Play(0);
 
 }
 void Avatar::Die()
 {
 	m_ActionState = ActionState::dying;
 	m_ShapeBeforeDying = GetShape();
+	m_pCollidesEnemy->StopAll();
 }
 bool Avatar::IsAtacking()const
 {
