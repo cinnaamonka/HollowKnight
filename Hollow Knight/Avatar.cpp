@@ -373,3 +373,9 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 		SetSourceRect(srcRect);
 	}
 }
+void Avatar::SetSoundVolume(const int soundVolume)
+{
+	m_pCharacterWalkingSound->SetVolume(soundVolume);
+	m_pKnifeInAir->SetVolume(soundVolume);
+	m_pCollidesEnemy->SetVolume(soundVolume);
+}

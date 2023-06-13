@@ -41,6 +41,9 @@ public:
 		}
 		return false;
 	}
+
+	void SetSoundVolume(const int soundVolume);
+
 private:
 
 	void CheckState(const Environment* pLevel, bool isFocusing);

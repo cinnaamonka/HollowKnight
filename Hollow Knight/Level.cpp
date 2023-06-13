@@ -192,9 +192,11 @@ void Level::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 
 void Level::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 {
-	//std::cout << 10 + UI::GetMusicVolume() << std::endl;
 	m_pBackgroundSound->SetVolume(UI::GetMusicVolume());
-	std::cout << m_pBackgroundSound->GetVolume() << std::endl;
+	m_pEnemyManager->SetSoundVolume(UI::GetSoundVolume());
+	m_pAvatar->SetSoundVolume(UI::GetSoundVolume());
+	m_pCoinManager->SetSoundVolume(UI::GetSoundVolume());
+	m_pDoorManager->SetSoundVolume(UI::GetSoundVolume());
 }
 
 void Level::ProcessMouseUpEvent(const SDL_MouseButtonEvent& e)

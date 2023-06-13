@@ -26,6 +26,10 @@ public:
 	{
 		return m_MusicVolume;
 	}
+	static const int GetSoundVolume()
+	{
+		return m_SoundVolume;
+	}
 	
 
 private:
@@ -65,6 +69,7 @@ private:
 	bool m_BackHovered;
 
 	static int m_MusicVolume;
+	static int m_SoundVolume;
 
 };
 

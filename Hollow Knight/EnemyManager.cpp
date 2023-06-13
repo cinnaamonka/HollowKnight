@@ -58,6 +58,7 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 		{
 			if (Enemy->GetLifesAmount() >= 0)
 			{
+				m_pDyingSound->SetVolume(m_SoundVolume);
 				m_pDyingSound->Play(0);
 
 				Enemy->DecreaseLifesAmount();
@@ -92,3 +93,4 @@ void EnemyManager::Atack(const Rectf& actor, const Vector2f& velocity)const
 
 	}
 }
+

@@ -2,7 +2,7 @@
 
 class Coin;
 class Environment;
-class SoundEffect;
+
 
 #include "BaseManager.h"
 
@@ -36,11 +36,12 @@ public:
 	void setCoinsAmount(const int coins) {
 		m_CoinsCollectedAmount = coins;
 	}
-
+	
 	
 private:
 
 	int m_CoinsCollectedAmount;
+	
 };
 
 

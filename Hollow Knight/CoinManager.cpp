@@ -33,8 +33,9 @@ void CoinManager::HandleCollection(const Rectf& rect)
 		{
 			pCoin->SetIsCollected(true);
 
+			pCoin->SetSoundVolume(m_SoundVolume);
 			pCoin->PlaySound();
-
+			
 			m_CoinsCollectedAmount += 1;
 			break;
 		}

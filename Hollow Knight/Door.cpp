@@ -127,3 +127,8 @@ void Door::UpdateFrame(float elapsedSec, int numberFrames)
 		m_AnimTime = 0.0f;
 	}
 }
+void Door::SetSoundVolume(const int soundVolume)
+{
+	m_pBreakingDoorSound->SetVolume(soundVolume);
+
+}

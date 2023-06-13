@@ -64,3 +64,7 @@ void Coin::PlaySound() const
 {
 	m_pCoinCollectedSound->Play(0);
 }
+void Coin::SetSoundVolume(const int soundVolume)
+{
+	m_pCoinCollectedSound->SetVolume(soundVolume);
+}

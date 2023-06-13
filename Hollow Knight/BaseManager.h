@@ -1,12 +1,13 @@
 #pragma once
 #include <vector>
 #include <typeinfo>
+
 template <typename T>
 class BaseManager
 {
 
 public:
-	BaseManager()
+	BaseManager():m_SoundVolume(1)
 	{
 	};
 	BaseManager(const BaseManager&) = delete;
@@ -65,9 +66,15 @@ public:
 	{
 		return m_pItems;
 	}
+	void SetSoundVolume(const int soundVolume)
+	{
+		m_SoundVolume = soundVolume;
+	}
 protected:
 
 	std::vector<T*> m_pItems;
+	int m_SoundVolume;
+	
 
 };
 
