@@ -21,7 +21,7 @@
 
 
 Level::Level(const Rectf& viewPort) :
-	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f)
+	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f), m_MusicVolume(100)
 {
 
 }
@@ -90,6 +90,9 @@ void Level::Update(float elapsedSec)
 {
 	if (m_EndReached)
 		return;
+	
+	m_pBackgroundSound->SetVolume(m_MusicVolume);
+
 	if (!m_pAvatar->isColliding())
 	{
 		if (m_pAvatar->isFocusing() && m_pHUD->CanAddLife())
@@ -120,6 +123,9 @@ void Level::Update(float elapsedSec)
 	}
 
 	CheckAvatarCollison();
+
+	
+	
 }
 
 void Level::Draw() const

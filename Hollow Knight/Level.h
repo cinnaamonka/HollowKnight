@@ -48,8 +48,12 @@ public:
 	void AddCoinSources();
 	void CheckAvatarCollison();
 
-
-	private:
+	void SetMusicVolume(const int volume)
+	{
+		m_MusicVolume = volume;
+	}
+	
+private:
 
 	Avatar* m_pAvatar;
 	EnemyManager* m_pEnemyManager;
@@ -68,6 +72,8 @@ public:
 	float m_ElapsedTime;
 	
 	float m_ZoomLevel;
+
+	int m_MusicVolume;
 };
 
 

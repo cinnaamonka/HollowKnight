@@ -60,7 +60,7 @@ void Coin::Fall(float elapsedSec)
 	SetShape(shape);
 }
 
-void Coin::PlaySound()
+void Coin::PlaySound() const
 {
 	m_pCoinCollectedSound->Play(0);
 }

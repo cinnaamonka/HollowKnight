@@ -45,7 +45,7 @@ public:
 
     void Fall(float elapsedSec);
 
-    void PlaySound();
+    void PlaySound()const;
 
 
 private:

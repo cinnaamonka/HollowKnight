@@ -1,5 +1,6 @@
 #pragma once
 class Texture;
+class SoundEffect;
 
 class UI
 {
@@ -16,9 +17,18 @@ public:
 
 	void ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e);
 	void ProcessMouseDownEvent(const SDL_MouseButtonEvent& e);
+	void ProcessKeyDownEvent(const SDL_KeyboardEvent& e);
 
 	bool IsGameStarted() const;
 	bool IsGameQuit() const;
+	int GetMusicVolume()
+	{
+		return m_MusicVolume;
+	}
+private:
+	void DrawSoundMusicBars(const float verticalOffset,const float horizontalOffset);
+	void DrawFirstScreen(const float verticalOffset, const float horizontalOffset);
+	void DrawAudioScreen(const float verticalOffset, const float horizontalOffset);
 
 private:
 
@@ -28,14 +38,16 @@ private:
 	Texture* m_OptionsTexture;
 	Texture* m_QuitGameTexture;
 	Texture* m_LogoTexture;
-	Texture* m_SoundAdjustmentTexture;
+	Texture* m_SoundBar;
 	Texture* m_pHoveredTextureLeft;
 	Texture* m_pHoveredTextureRight;
 	Texture* m_pAudioTexture;
 	Texture* m_pDecorationTexture;
 	Texture* m_pMusicAdjustmentTexture;
 	Texture* m_pSoundAdjustmentTexture;
-
+	SoundEffect* m_pSelectSound;
+	Texture* m_pBackTexture;
+	
 
 	Rectf m_ViewPort;
 
@@ -47,5 +59,9 @@ private:
 	bool m_QuitGameHovered;
 	bool m_GameIsQuit;
 	bool m_OptionsClicked;
+	bool m_BackHovered;
+
+	int m_MusicVolume;
+
 };
 

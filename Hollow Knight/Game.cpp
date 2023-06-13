@@ -41,6 +41,7 @@ void Game::Update(float elapsedSec)
 	{
 		BaseGame::SetQuit(true);
 	}
+	m_plevel->SetMusicVolume(m_pUI->GetMusicVolume());
 }
 
 void Game::Draw() const
@@ -64,6 +65,7 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 	{
 		m_plevel->ProcessKeyDownEvent(e);
 	}
+	m_pUI->ProcessKeyDownEvent(e);
 
 }
 
