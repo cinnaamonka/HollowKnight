@@ -1,5 +1,7 @@
 #include "pch.h"
 #include <chrono>
+#include <SoundStream.h>
+#include <SoundEffect.h>
 
 #include "Level.h"
 #include "Game.h"
@@ -17,14 +19,24 @@
 #include "CoinSource.h"
 #include "CoinSourceManager.h"
 #include "HUD.h"
-#include "SoundStream.h"
+
 #include "UI.h"
 
 
 Level::Level(const Rectf& viewPort) :
 	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f), m_MusicVolume(100)
 {
-
+	m_pAvatar = nullptr;
+	m_pEnemyManager = nullptr;
+	m_pEnvironment = nullptr;
+	m_Camera = nullptr;
+	m_pCoinManager = nullptr;
+	m_pDoorManager = nullptr;
+	m_pSpikes = nullptr;
+	m_pCoinSourceManager = nullptr;
+	m_pHUD = nullptr;
+	m_pBackgroundSound = nullptr;
+	m_pDeathSound = nullptr;
 }
 
 Level::~Level()
@@ -58,6 +70,7 @@ void Level::Initialize()
 	m_Camera->SetLevelBoundaries(m_pEnvironment->GetBoundaries());
 
 	m_pBackgroundSound = new SoundStream("background_Sound.wav");
+	m_pDeathSound = new SoundEffect("DeathSound.wav");
 
 	const Rectf spikesRect(3150.f, 3100.f, 400.0f, 100.0f);
 
@@ -82,6 +95,7 @@ void Level::Cleanup()
 	delete m_pCoinSourceManager;
 	delete m_pHUD;
 	delete m_pBackgroundSound;
+	delete m_pDeathSound;
 }
 
 void Level::Update(float elapsedSec)
@@ -235,7 +249,6 @@ void Level::CheckAvatarCollison()
 	{
 		if (m_pEnemyManager->IsEnemyKilled(shapeRect))
 		{
-			// pass as parameter into manager
 			AddCoins();
 			m_pCoinManager->SetPositions(shapeRect);
 
@@ -266,7 +279,7 @@ void Level::CheckAvatarCollison()
 		m_pHUD->SetLeftLifesAmount(0);
 		m_pAvatar->Die();
 		m_pAvatar->SetKilled(true);
-		
+		m_pDeathSound->Play(-1);
 	}
 }
 void Level::AddCoins()

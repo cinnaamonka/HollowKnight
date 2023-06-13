@@ -21,7 +21,7 @@ public:
 	}
 	void SetLeftLifesAmount(const int amount)
 	{
-		m_LeftLifes = amount;
+		m_LeftLifes = float(amount);
 	}
 	void SetCollectedCoinsAmount(const int coinsAmount)
 	{

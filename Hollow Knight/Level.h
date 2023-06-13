@@ -15,6 +15,7 @@ class CoinSource;
 class CoinSourceManager;
 class HUD;
 class SoundStream;
+class SoundEffect;
 class UI;
 
 
@@ -62,11 +63,11 @@ private:
 	CoinSourceManager* m_pCoinSourceManager;
 	HUD* m_pHUD;
 	SoundStream* m_pBackgroundSound;
+	SoundEffect* m_pDeathSound;;
 
 	bool m_EndReached;
 
 	Rectf m_ViewPort;
-	float m_ElapsedTime;
 	
 	float m_ZoomLevel;
 
