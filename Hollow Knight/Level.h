@@ -15,6 +15,7 @@ class CoinSource;
 class CoinSourceManager;
 class HUD;
 class SoundStream;
+class UI;
 
 
 class Level final
@@ -48,11 +49,7 @@ public:
 	void AddCoinSources();
 	void CheckAvatarCollison();
 
-	void SetMusicVolume(const int volume)
-	{
-		m_MusicVolume = volume;
-	}
-	
+	void PlaySound();
 private:
 
 	Avatar* m_pAvatar;

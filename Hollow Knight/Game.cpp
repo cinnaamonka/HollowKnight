@@ -41,7 +41,7 @@ void Game::Update(float elapsedSec)
 	{
 		BaseGame::SetQuit(true);
 	}
-	m_plevel->SetMusicVolume(m_pUI->GetMusicVolume());
+	
 }
 
 void Game::Draw() const
@@ -82,6 +82,7 @@ void Game::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 {
 	m_pUI->ProcessMouseDownEvent(e);
+	m_plevel->ProcessMouseDownEvent(e);
 }
 
 void Game::ProcessMouseUpEvent(const SDL_MouseButtonEvent& e)

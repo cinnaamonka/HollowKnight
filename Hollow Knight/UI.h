@@ -21,10 +21,13 @@ public:
 
 	bool IsGameStarted() const;
 	bool IsGameQuit() const;
-	int GetMusicVolume()
+
+	static const int GetMusicVolume()
 	{
 		return m_MusicVolume;
 	}
+	
+
 private:
 	void DrawSoundMusicBars(const float verticalOffset,const float horizontalOffset);
 	void DrawFirstScreen(const float verticalOffset, const float horizontalOffset);
@@ -61,7 +64,7 @@ private:
 	bool m_OptionsClicked;
 	bool m_BackHovered;
 
-	int m_MusicVolume;
+	static int m_MusicVolume;
 
 };
 

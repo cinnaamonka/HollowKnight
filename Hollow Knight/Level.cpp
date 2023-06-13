@@ -18,6 +18,7 @@
 #include "CoinSourceManager.h"
 #include "HUD.h"
 #include "SoundStream.h"
+#include "UI.h"
 
 
 Level::Level(const Rectf& viewPort) :
@@ -66,9 +67,7 @@ void Level::Initialize()
 
 	AddDoors();
 
-	m_pBackgroundSound->Play(true);
-
-
+	PlaySound();
 }
 
 void Level::Cleanup()
@@ -83,7 +82,6 @@ void Level::Cleanup()
 	delete m_pCoinSourceManager;
 	delete m_pHUD;
 	delete m_pBackgroundSound;
-
 }
 
 void Level::Update(float elapsedSec)
@@ -91,8 +89,6 @@ void Level::Update(float elapsedSec)
 	if (m_EndReached)
 		return;
 	
-	m_pBackgroundSound->SetVolume(m_MusicVolume);
-
 	if (!m_pAvatar->isColliding())
 	{
 		if (m_pAvatar->isFocusing() && m_pHUD->CanAddLife())
@@ -123,9 +119,6 @@ void Level::Update(float elapsedSec)
 	}
 
 	CheckAvatarCollison();
-
-	
-	
 }
 
 void Level::Draw() const
@@ -162,8 +155,6 @@ void Level::Draw() const
 		m_pCoinManager->Draw();
 
 		m_pEnvironment->DrawStaticForeground(m_pAvatar->GetShape());
-
-
 	}
 	glPopMatrix();
 
@@ -201,6 +192,9 @@ void Level::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 
 void Level::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 {
+	//std::cout << 10 + UI::GetMusicVolume() << std::endl;
+	m_pBackgroundSound->SetVolume(UI::GetMusicVolume());
+	std::cout << m_pBackgroundSound->GetVolume() << std::endl;
 }
 
 void Level::ProcessMouseUpEvent(const SDL_MouseButtonEvent& e)
@@ -302,7 +296,11 @@ void Level::AddCoinSources()
 	m_pCoinSourceManager->AddItem(coinSource1);
 	m_pCoinSourceManager->AddItem(coinSource2);
 }
+void Level::PlaySound()
+{
+	m_pBackgroundSound->Play(true);
 
+}
 
 
 
