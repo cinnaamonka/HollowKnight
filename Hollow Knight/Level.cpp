@@ -263,8 +263,10 @@ void Level::CheckAvatarCollison()
 
 	if (m_pSpikes->IsOverlapping(m_pAvatar->GetShape()) || m_pHUD->GetLeftLifes() <= 0)
 	{
+		m_pHUD->SetLeftLifesAmount(0);
 		m_pAvatar->Die();
 		m_pAvatar->SetKilled(true);
+		
 	}
 }
 void Level::AddCoins()
