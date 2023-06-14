@@ -44,8 +44,6 @@ public:
 
 	void SetSoundVolume(const int soundVolume);
 
-	void PlayDeathSound() const;
-
 private:
 
 	void CheckState(const Environment* pLevel, bool isFocusing);

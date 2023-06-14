@@ -187,7 +187,8 @@ void Avatar::Die()
 	m_pCollidesEnemy->Stop();
 	m_pCharacterWalkingSound->Stop();
 
-	PlayDeathSound();
+	m_pDeathSound->Play(0);
+	
 }
 bool Avatar::IsAtacking()const
 {
@@ -392,9 +393,4 @@ void Avatar::SetSoundVolume(const int soundVolume)
 	m_pCharacterWalkingSound->SetVolume(soundVolume);
 	m_pKnifeInAir->SetVolume(soundVolume);
 	m_pCollidesEnemy->SetVolume(soundVolume);
-}
-
-void Avatar::PlayDeathSound() const
-{
-	m_pDeathSound->Play(0);
 }
