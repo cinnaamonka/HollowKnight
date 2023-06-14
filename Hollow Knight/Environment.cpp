@@ -48,8 +48,9 @@ void Environment::DrawMiddleground() const
 	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
 	m_pBaseBold->Draw(Point2f(6600.f, 3600.f));
 	m_pBold->Draw(Point2f(6670.f, 3600.f));
+	std::cout << m_BoldOpacity << std::endl;
 	utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, m_BoldOpacity));
-	utils::FillEllipse(Point2f(6750.f, 3750.f), 123.f, 180);
+	utils::FillEllipse(Point2f(6815.f, 3770.f), 100.f, 150);
 }
 void Environment::DrawStaticForeground(const Rectf& shape) const
 {
@@ -215,14 +216,16 @@ void Environment::ChangeBoldCapacity(const Rectf shapeActor)
 
 	const float distance = abs(shapeActor.left - boldPos.x);
 
-	if (distance < 500.0f)
+	
+	if (distance < 200.0f && m_BoldOpacity > 0)
 	{
-		m_BoldOpacity -= distance / 1000;
+		m_BoldOpacity -= distance / 10000;
 	
 	}
-	else
+	else if(distance > 200.f && m_BoldOpacity < 1)
 	{
-		m_BoldOpacity += distance / 1000;
+		m_BoldOpacity += distance / 10000;
 	}
+
 
 }

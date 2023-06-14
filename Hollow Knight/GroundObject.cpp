@@ -8,13 +8,10 @@ GroundObject::GroundObject(const std::string& texture)
 	m_pTexture = new Texture(texture);
 	texturefilename = texture;
 
-	std::cout << "Creation " << texturefilename << std::endl;
-
 	SetShape(Rectf(0.0f, 0.0f, m_pTexture->GetWidth(), m_pTexture->GetHeight()));
 }
 GroundObject::~GroundObject()
 {
-	std::cout << "Deletion " << texturefilename << std::endl;
 	delete m_pTexture;
 }
 

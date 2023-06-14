@@ -34,6 +34,7 @@ Avatar::Avatar() :
 	SetFramesPerSec(10);
 
 	m_pParticleTexture = new Texture{ "ParticleEffect.png" };
+
 	m_ParticlesShape = Rectf(0, 0, m_pParticleTexture->GetWidth(), m_pParticleTexture->GetHeight());
 
 	m_pCharacterWalkingSound = new SoundEffect("soundWalking.wav");
@@ -149,8 +150,8 @@ void Avatar::Draw()const
 	if (m_IsFocusing)
 	{
 		m_pParticleTexture->Draw(particleShape, m_ParticlesShape);
-
 	}
+	
 	if (!m_IsMovingRight)
 	{
 		glPushMatrix();

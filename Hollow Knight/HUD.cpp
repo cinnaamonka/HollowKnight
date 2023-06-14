@@ -46,10 +46,6 @@ void HUD::Draw()
 
 	for (int i = 0; i < int(m_LeftLifes); ++i)
 	{
-		if (i == 0)
-		{
-			
-		}
 		const Rectf destRect
 		{
 			2 * offset + m_BottomLeft.x + i * offset,
