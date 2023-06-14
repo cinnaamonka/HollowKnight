@@ -134,6 +134,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 
 void Avatar::Draw()const
 {
+	//std::cout << GetShape().left << "," << GetShape().bottom << std::endl;
 	const Rectf particleShape
 	{
 		GetShape().left - GetShape().width / 2,
@@ -174,7 +175,11 @@ void Avatar::EnemyHit()
 void Avatar::Die()
 {
 	m_ActionState = ActionState::dying;
-	m_ShapeBeforeDying = GetShape();
+	if (m_ShapeBeforeDying.left == 0)
+	{
+		m_ShapeBeforeDying = GetShape();
+	}
+	
 	m_pCollidesEnemy->StopAll();
 }
 bool Avatar::IsAtacking()const
@@ -270,6 +275,8 @@ void Avatar::MoveAvatar(float elapsedSec)
 		float test = currentShape.bottom - m_ShapeBeforeDying.bottom;
 		if (currentShape.bottom - m_ShapeBeforeDying.bottom < maxGround_Offset)
 		{
+			std::cout << currentShape.bottom << std::endl;
+			std::cout << m_ShapeBeforeDying.bottom << std::endl;
 			currentShape.bottom += groundOffset * elapsedSec;
 		}
 		SetShape(currentShape);
@@ -309,6 +316,21 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 
 	srcRect.left = GetAnimationFrame() * m_ClipWidth;
 
+	if (m_IsKilling)
+	{
+		if (GetAnimationFrame() != killingTextureVerticalOffset)
+		{
+			srcRect.bottom = (killingTextureVerticalOffset + 1) * m_ClipHeight;
+		}
+		else
+		{
+			m_IsKilling = false;
+		}
+
+		SetSourceRect(srcRect);
+		return;
+	}
+
 	if (m_ActionState == ActionState::dying)
 	{
 		SetAnimationFrame(dyingTextureAmount);
@@ -333,20 +355,7 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 	}
 	else
 	{
-		if (m_IsKilling)
-		{
-			if (GetAnimationFrame() != killingTextureVerticalOffset)
-			{
-				srcRect.bottom = (killingTextureVerticalOffset + 1) * m_ClipHeight;
-			}
-			else
-			{
-				m_IsKilling = false;
-			}
-
-			SetSourceRect(srcRect);
-			return;
-		}
+		
 
 		if (m_ActionState == ActionState::waiting)
 		{

@@ -45,10 +45,15 @@ public:
 
 private:
 
+	void ChangeBoldCapacity(const Rectf shapeActor);
+
+private:
+
 	std::vector<std::vector<Point2f>> m_Vertices;
 
 	Texture* m_EndSignTexture;
 	Texture* m_pBackground;
+	
 
 	Rectf m_Boundaries ;
 	Rectf m_EndSignShape;
@@ -62,6 +67,10 @@ private:
 
 	GroundObject* m_pStaticForeground;
 
+	GroundObject* m_pBaseBold;
+	GroundObject* m_pBold;
+
+	float m_BoldOpacity;
 	
 };
 

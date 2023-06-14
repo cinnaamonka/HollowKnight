@@ -6,8 +6,8 @@
 #include "Platform.h"
 #include <SVGParser.h>
 
-Environment::Environment():
-	m_pDarkRect(2782, 3000, 1080, 1300)
+Environment::Environment() :
+	m_pDarkRect(2782, 3000, 1080, 1300), m_BoldOpacity(1)
 {
 	m_pPlatform = new Platform{ Point2f(8088.0f,2070.0f) };
 	m_pBackground = new Texture{ "Background Variation3.png" };
@@ -16,6 +16,8 @@ Environment::Environment():
 	m_pStaticForeground = new GroundObject{ "StaticForeground.png" };
 	m_Boundaries = Rectf(0, 0, m_pGround->GetShape().width, m_pGround->GetShape().height);
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
+	m_pBaseBold = new GroundObject("BoldBase.png");
+	m_pBold = new GroundObject("Bold.png");
 	m_EndSignShape = Rectf(0.0f, 0.0f, 0.0f, 0.0f);
 }
 Environment::~Environment()
@@ -25,6 +27,8 @@ Environment::~Environment()
 	delete m_pGround;
 	delete m_pForeground;
 	delete m_pStaticForeground;
+	delete m_pBaseBold;
+	delete m_pBold;
 }
 
 void Environment::DrawBackground() const
@@ -34,25 +38,29 @@ void Environment::DrawBackground() const
 
 void Environment::DrawForeground() const
 {
-	
+
 	m_pForeground->Draw(Point2f(0.0f, 0.f));
 }
 
 void Environment::DrawMiddleground() const
 {
-	m_pGround->Draw(Point2f(0.0f,0.f));
+	m_pGround->Draw(Point2f(0.0f, 0.f));
 	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
+	m_pBaseBold->Draw(Point2f(6600.f, 3600.f));
+	m_pBold->Draw(Point2f(6670.f, 3600.f));
+	utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, m_BoldOpacity));
+	utils::FillEllipse(Point2f(6750.f, 3750.f), 123.f, 180);
 }
 void Environment::DrawStaticForeground(const Rectf& shape) const
 {
 	m_pStaticForeground->Draw(Point2f(0.0f, 0.f));
 	BlackRectDisappear(shape);
-	
+
 }
 void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 {
 	m_pPlatform->HandleCollision(shape, velocity);
-
+	ChangeBoldCapacity(shape);
 	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape, false))
 		return;
 
@@ -89,7 +97,7 @@ void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 
 }
 
-bool Environment::IsOnGround(Rectf& actorShape,bool isKilled) const
+bool Environment::IsOnGround(Rectf& actorShape, bool isKilled) const
 {
 	if (m_pPlatform->isCharacterOnPlatform() && !isKilled)
 		return true;
@@ -185,7 +193,7 @@ void Environment::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, u
 void Environment::BlackRectDisappear(const Rectf& actorShape) const
 {
 	const float borderPointX = 4040.f;
-    const float difference = borderPointX - actorShape.left;
+	const float difference = borderPointX - actorShape.left;
 
 	if ((actorShape.left > borderPointX))
 	{
@@ -194,10 +202,27 @@ void Environment::BlackRectDisappear(const Rectf& actorShape) const
 	else {
 		if (difference > 0)
 		{
-			utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, 1.0f - difference/100));
+			utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, 1.0f - difference / 100));
 		}
-		
+
 	}
 	utils::FillRect(m_pDarkRect);
-	utils::FillRect(Rectf(m_pDarkRect.left + m_pDarkRect.width/2, m_pDarkRect.bottom + m_pDarkRect.height/2.1f, m_pDarkRect.width/1.5f, m_pDarkRect.height));
+	utils::FillRect(Rectf(m_pDarkRect.left + m_pDarkRect.width / 2, m_pDarkRect.bottom + m_pDarkRect.height / 2.1f, m_pDarkRect.width / 1.5f, m_pDarkRect.height));
+}
+void Environment::ChangeBoldCapacity(const Rectf shapeActor)
+{
+	const Point2f boldPos(6670.f, 3600.f);
+
+	const float distance = abs(shapeActor.left - boldPos.x);
+
+	if (distance < 500.0f)
+	{
+		m_BoldOpacity -= distance / 1000;
+	
+	}
+	else
+	{
+		m_BoldOpacity += distance / 1000;
+	}
+
 }
