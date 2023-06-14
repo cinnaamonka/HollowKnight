@@ -70,7 +70,9 @@ private:
 	Rectf m_ShapeBeforeDying;
 	Rectf m_ParticlesShape;
 
+
 	Texture* m_pParticleTexture;
+	
 
 	float m_HorSpeed;
 	float m_JumpSpeed;
