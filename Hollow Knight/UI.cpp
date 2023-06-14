@@ -45,6 +45,7 @@ UI::~UI()
 	delete m_pSoundAdjustmentTexture;
 	delete m_pBackTexture;
 	delete m_SoundBar;
+	delete m_pSelectSound;
 }
 void UI::Draw()
 {

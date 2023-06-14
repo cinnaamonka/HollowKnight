@@ -275,8 +275,6 @@ void Avatar::MoveAvatar(float elapsedSec)
 		float test = currentShape.bottom - m_ShapeBeforeDying.bottom;
 		if (currentShape.bottom - m_ShapeBeforeDying.bottom < maxGround_Offset)
 		{
-			std::cout << currentShape.bottom << std::endl;
-			std::cout << m_ShapeBeforeDying.bottom << std::endl;
 			currentShape.bottom += groundOffset * elapsedSec;
 		}
 		SetShape(currentShape);
