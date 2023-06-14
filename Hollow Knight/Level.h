@@ -63,7 +63,6 @@ private:
 	CoinSourceManager* m_pCoinSourceManager;
 	HUD* m_pHUD;
 	SoundStream* m_pBackgroundSound;
-	SoundEffect* m_pDeathSound;;
 
 	bool m_EndReached;
 

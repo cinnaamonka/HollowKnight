@@ -40,6 +40,8 @@ Avatar::Avatar() :
 	m_pKnifeInAir = new SoundEffect("KnightInAir.wav");
 
 	m_pCollidesEnemy = new SoundEffect("EnemyDamage.wav");
+
+	m_pDeathSound = new SoundEffect("DeathSound.wav");
 }
 
 Avatar::~Avatar()
@@ -48,6 +50,7 @@ Avatar::~Avatar()
 	delete m_pCharacterWalkingSound;
 	delete m_pKnifeInAir;
 	delete m_pCollidesEnemy;
+	delete m_pDeathSound;
 }
 bool Avatar::isColliding() const
 {
@@ -180,7 +183,10 @@ void Avatar::Die()
 		m_ShapeBeforeDying = GetShape();
 	}
 	
-	m_pCollidesEnemy->StopAll();
+	m_pCollidesEnemy->Stop();
+	m_pCharacterWalkingSound->Stop();
+
+	PlayDeathSound();
 }
 bool Avatar::IsAtacking()const
 {
@@ -275,8 +281,6 @@ void Avatar::MoveAvatar(float elapsedSec)
 		float test = currentShape.bottom - m_ShapeBeforeDying.bottom;
 		if (currentShape.bottom - m_ShapeBeforeDying.bottom < maxGround_Offset)
 		{
-			std::cout << currentShape.bottom << std::endl;
-			std::cout << m_ShapeBeforeDying.bottom << std::endl;
 			currentShape.bottom += groundOffset * elapsedSec;
 		}
 		SetShape(currentShape);
@@ -387,4 +391,9 @@ void Avatar::SetSoundVolume(const int soundVolume)
 	m_pCharacterWalkingSound->SetVolume(soundVolume);
 	m_pKnifeInAir->SetVolume(soundVolume);
 	m_pCollidesEnemy->SetVolume(soundVolume);
+}
+
+void Avatar::PlayDeathSound() const
+{
+	m_pDeathSound->Play(0);
 }

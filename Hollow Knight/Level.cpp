@@ -36,7 +36,6 @@ Level::Level(const Rectf& viewPort) :
 	m_pCoinSourceManager = nullptr;
 	m_pHUD = nullptr;
 	m_pBackgroundSound = nullptr;
-	m_pDeathSound = nullptr;
 }
 
 Level::~Level()
@@ -70,7 +69,6 @@ void Level::Initialize()
 	m_Camera->SetLevelBoundaries(m_pEnvironment->GetBoundaries());
 
 	m_pBackgroundSound = new SoundStream("background_Sound.wav");
-	m_pDeathSound = new SoundEffect("DeathSound.wav");
 
 	const Rectf spikesRect(3150.f, 3100.f, 400.0f, 100.0f);
 
@@ -95,14 +93,13 @@ void Level::Cleanup()
 	delete m_pCoinSourceManager;
 	delete m_pHUD;
 	delete m_pBackgroundSound;
-	delete m_pDeathSound;
 }
 
 void Level::Update(float elapsedSec)
 {
 	if (m_EndReached)
 		return;
-	
+
 	if (!m_pAvatar->isColliding())
 	{
 		if (m_pAvatar->isFocusing() && m_pHUD->CanAddLife())
@@ -193,7 +190,7 @@ void Level::Draw() const
 
 void Level::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
-	
+
 }
 void Level::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 {
@@ -277,9 +274,11 @@ void Level::CheckAvatarCollison()
 	if (m_pSpikes->IsOverlapping(m_pAvatar->GetShape()) || m_pHUD->GetLeftLifes() <= 0)
 	{
 		m_pHUD->SetLeftLifesAmount(0);
+
 		m_pAvatar->Die();
+
 		m_pAvatar->SetKilled(true);
-		m_pDeathSound->Play(-1);
+
 	}
 }
 void Level::AddCoins()

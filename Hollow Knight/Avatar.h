@@ -44,6 +44,8 @@ public:
 
 	void SetSoundVolume(const int soundVolume);
 
+	void PlayDeathSound() const;
+
 private:
 
 	void CheckState(const Environment* pLevel, bool isFocusing);
@@ -90,6 +92,7 @@ private:
 	SoundEffect* m_pCharacterWalkingSound;
 	SoundEffect* m_pKnifeInAir;
 	SoundEffect* m_pCollidesEnemy;
+	SoundEffect* m_pDeathSound;
 
 	bool isPlaying;
 

@@ -48,7 +48,7 @@ void HUD::Draw()
 	{
 		if (i == 0)
 		{
-			std::cout << m_LeftLifes << std::endl;
+			
 		}
 		const Rectf destRect
 		{
