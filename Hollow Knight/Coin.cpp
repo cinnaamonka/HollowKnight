@@ -5,9 +5,9 @@
 #include <SoundEffect.h>
 
 Coin::Coin() :
-	m_IsCollected{ false }
+	m_IsCollected( false )
 {
-	m_pCoinTexture = new Texture{ "Coin.png" };
+	m_pCoinTexture = new Texture( "Coin.png" );
 
 	m_Shape.width = m_pCoinTexture->GetWidth();
 	m_Shape.height = m_pCoinTexture->GetHeight();

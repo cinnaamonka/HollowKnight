@@ -2,7 +2,7 @@
 class Texture;
 class SoundEffect;
 
-class UI
+class UI final
 {
 public:
 	UI(const Rectf& viewPort);
@@ -13,7 +13,7 @@ public:
 	UI(UI&&) = delete;
 	UI& operator=(UI&&) = delete;
 
-	void Draw();
+	void Draw() const;
 
 	void ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e);
 	void ProcessMouseDownEvent(const SDL_MouseButtonEvent& e);
@@ -22,20 +22,20 @@ public:
 	bool IsGameStarted() const;
 	bool IsGameQuit() const;
 
-	static const int GetMusicVolume()
+	static const int GetMusicVolume() 
 	{
 		return m_MusicVolume;
 	}
-	static const int GetSoundVolume()
+	static const int GetSoundVolume() 
 	{
 		return m_SoundVolume;
 	}
 	
 
 private:
-	void DrawSoundMusicBars(const float verticalOffset,const float horizontalOffset);
-	void DrawFirstScreen(const float verticalOffset, const float horizontalOffset);
-	void DrawAudioScreen(const float verticalOffset, const float horizontalOffset);
+	void DrawSoundMusicBars(const float verticalOffset,const float horizontalOffset) const;
+	void DrawFirstScreen(const float verticalOffset, const float horizontalOffset) const;
+	void DrawAudioScreen(const float verticalOffset, const float horizontalOffset) const;
 
 private:
 

@@ -70,12 +70,11 @@ private:
 	bool m_EndReached;
 
 	Rectf m_ViewPort;
+	Color4f m_FadingScreenColor;
 	
 	float m_ZoomLevel;
 
 	int m_MusicVolume;
-
-	Color4f m_FadingScreenColor;
 };
 
 

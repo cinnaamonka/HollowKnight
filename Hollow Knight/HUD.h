@@ -1,7 +1,7 @@
 #pragma once
 
 class Texture;
-class HUD
+class HUD final
 {
 public:
 
@@ -30,7 +30,7 @@ public:
 
 	
 	void AddLife();
-	bool CanAddLife();
+	bool CanAddLife() const;
 
 private:
 	CoinManager* m_pCoinManager;

@@ -23,7 +23,7 @@ public:
 	bool IsAtacking()const;
 	void Die();
 
-	const Vector2f& GetVelocity()const
+	const Vector2f& GetVelocity() const
 	{
 		return m_Velocity;
 	}
@@ -33,17 +33,10 @@ public:
 	{
 		return m_IsFocusing;
 	}
-	bool isMoving() const
-	{
-		if (m_ActionState == ActionState::moving)
-		{
-			return true;
-		}
-		return false;
-	}
+	bool isMoving() const;
 
-	void SetSoundVolume(const int soundVolume);
-	void StopAllSounds();
+	void SetSoundVolume(const int soundVolume) const;
+	void StopAllSounds()const;
 
 private:
 

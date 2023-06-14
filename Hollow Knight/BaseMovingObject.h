@@ -7,13 +7,16 @@ class BaseMovingObject
 public:
 
 	BaseMovingObject(const std::string &path, int framesNumber);
+
 	BaseMovingObject(const BaseMovingObject& other) = delete;
 	BaseMovingObject& operator=(const BaseMovingObject& other) = delete;
 	BaseMovingObject(BaseMovingObject&& other) = delete;
 	BaseMovingObject& operator=(BaseMovingObject&& other) = delete;
+
 	virtual ~BaseMovingObject();
 
-	const Texture* GetTexture() const {
+	const Texture* GetTexture() const 
+	{
 		return m_pTexture;
 	}
 
@@ -26,16 +29,16 @@ public:
 	
 	void UpdateFrame(float elapsedSec, int numberFrames);
 
-	int GetLifesAmount()
+	int GetLifesAmount() const
 	{
 		return m_LifesAmount;
 	}
-	void DecreaseLifesAmount()
+	void DecreaseLifesAmount() 
 	{
 		m_LifesAmount--;
 	}
 
-	bool IsKilled()
+	bool IsKilled() const
 	{
 		return m_IsKilled;
 	}
@@ -68,7 +71,7 @@ protected:
 	void SetFramesPerSec(const int time) {
 		m_NrFramesPerSec = time;
 	}
-	int GetFramesPerSec()
+	int GetFramesPerSec() const
 	{
 		return m_NrFramesPerSec;
 	}

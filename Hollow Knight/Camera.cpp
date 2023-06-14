@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 Camera::Camera(float width, float height) :
-	m_Width{ width }, m_Height{ height }, m_LevelBoundaries{ 0.0f, 0.0f, width, height }
+	m_Width( width ), m_Height( height ), m_LevelBoundaries{ 0.0f, 0.0f, width, height }
 {
 
 }
@@ -38,14 +38,9 @@ void Camera::Clamp(Point2f& bottomLeftPos)
 		std::min(bottomLeftPos.y, m_LevelBoundaries.bottom + m_LevelBoundaries.height - m_Height));
 }
 
-Point2f Camera::GetPosition(const Rectf& target) const
-{
-	return Track(target);
-}
+
 void Camera::Scale(const float scaleX, const float scaleY, const Rectf& target)
 {
-	Point2f posCenter = Track(target);
-	Clamp(posCenter);
 	glScalef(scaleX, scaleY,0 );
 }
 

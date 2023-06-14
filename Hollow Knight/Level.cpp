@@ -20,12 +20,11 @@
 #include "CoinSource.h"
 #include "CoinSourceManager.h"
 #include "HUD.h"
-
 #include "UI.h"
 
 
 Level::Level(const Rectf& viewPort) :
-	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f), m_MusicVolume(100), m_FadingScreenColor(0,0,0,0)
+	m_ViewPort(viewPort), m_EndReached(false), m_ZoomLevel(1.0f), m_MusicVolume(100), m_FadingScreenColor{ 0,0,0,0 }
 {
 	m_pAvatar = nullptr;
 	m_pEnemyManager = nullptr;

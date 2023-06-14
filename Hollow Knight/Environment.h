@@ -27,7 +27,7 @@ public:
 
 
 	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity);
-	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo);
+	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
 
 	bool IsOnGround(Rectf& actorShape,bool isKilled) const;
 	Rectf GetBoundaries() const;
@@ -54,7 +54,6 @@ private:
 	Texture* m_EndSignTexture;
 	Texture* m_pBackground;
 	
-
 	Rectf m_Boundaries ;
 	Rectf m_EndSignShape;
 	Rectf m_pDarkRect;
@@ -62,11 +61,8 @@ private:
 	Platform* m_pPlatform;
 
 	GroundObject* m_pGround;
-
 	GroundObject* m_pForeground;
-
 	GroundObject* m_pStaticForeground;
-
 	GroundObject* m_pBaseBold;
 	GroundObject* m_pBold;
 

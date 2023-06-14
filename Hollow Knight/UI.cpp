@@ -47,7 +47,7 @@ UI::~UI()
 	delete m_SoundBar;
 	delete m_pSelectSound;
 }
-void UI::Draw()
+void UI::Draw() const
 {
 	const float verticalOffset = 50.0f;
 	const float horizontalOffsetHoveredText = 30.0f;
@@ -315,7 +315,7 @@ void UI::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 	}
 
 }
-void UI::DrawSoundMusicBars(const float verticalOffset, const float horizontalOffset)
+void UI::DrawSoundMusicBars(const float verticalOffset, const float horizontalOffset) const
 {
 
 	m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
@@ -334,7 +334,7 @@ void UI::DrawSoundMusicBars(const float verticalOffset, const float horizontalOf
 
 
 }
-void UI::DrawFirstScreen(const float verticalOffset, const float horizontalOffset)
+void UI::DrawFirstScreen(const float verticalOffset, const float horizontalOffset) const
 {
 	m_StartGameTexture->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_StartGameTexture->GetWidth() / 2, m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset));
 	m_OptionsTexture->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_OptionsTexture->GetWidth() / 2, m_ViewPort.bottom + m_ViewPort.height / 2 - 1.5f * m_OptionsTexture->GetHeight() - verticalOffset));
@@ -365,7 +365,7 @@ void UI::DrawFirstScreen(const float verticalOffset, const float horizontalOffse
 			m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset));
 	}
 }
-void UI::DrawAudioScreen(const float verticalOffset, const float horizontalOffset)
+void UI::DrawAudioScreen(const float verticalOffset, const float horizontalOffset) const
 {
 	if (m_OptionsClicked)
 	{

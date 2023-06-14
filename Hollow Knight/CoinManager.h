@@ -28,15 +28,12 @@ public:
 
 	void SetPositions(const Rectf& rect) const;
 
-	int GetCoinsCollectedAmount()
+	int GetCoinsCollectedAmount() const
 	{
 		return m_CoinsCollectedAmount;
 	}
 
-	void setCoinsAmount(const int coins) {
-		m_CoinsCollectedAmount = coins;
-	}
-	
+	void SetCoinsAmount(const int coins);
 	
 private:
 

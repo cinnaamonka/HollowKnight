@@ -2,6 +2,7 @@
 #include "BaseEnemy.h"
 #include "EnemyManager.h"
 #include "Environment.h"
+
 #include <SoundEffect.h>
 
 EnemyManager::EnemyManager()
@@ -68,11 +69,8 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 				Enemy->SetKilled(true);
 				return true;
 			}
-			
 		}
-		
 	}
-	
 	return false;
 }
 

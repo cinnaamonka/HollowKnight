@@ -48,7 +48,7 @@ public:
 
 	void Draw() const;
 
-	Vector2f GetVelocity()
+	Vector2f GetVelocity() const
 	{
 		return m_Velocity;
 	}
@@ -76,10 +76,10 @@ private:
 	Rectf m_BoundariesBorder;
 	Rectf m_AvatarShape;
 
-	bool m_CanSeeAvatar;
-
 	Vector2f m_AvatarVelocity;
 	Vector2f m_Velocity;
+
+	bool m_CanSeeAvatar;
 };
 
 

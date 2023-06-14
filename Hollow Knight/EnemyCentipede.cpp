@@ -9,7 +9,7 @@ EnemyCentipede::EnemyCentipede(const Point2f& position) :
 	BaseEnemy(position, "EnemyCentipede.png",5)
 {
 	SetVelocity(Vector2f(30.f, 0.0f));
-	SetBoundaries(600.0f, GetShape().height); // default
+	SetBoundaries(600.0f, GetShape().height); 
 }
 EnemyCentipede::~EnemyCentipede()
 {

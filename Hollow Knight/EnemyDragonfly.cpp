@@ -4,7 +4,7 @@
 #include <Texture.h>
 
 EnemyDragonfly::EnemyDragonfly(const Point2f& position) :
-	BaseEnemy(position, "EnemyDragonfly.png", 15), m_CanSeeAvatar{false}
+	BaseEnemy(position, "EnemyDragonfly.png", 15), m_CanSeeAvatar(false)
 {
 	SetVelocity(Vector2f(100.0f, 100.0f));
 	SetBoundaries(600.0f, GetShape().height * 10);

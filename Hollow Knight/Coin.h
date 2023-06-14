@@ -45,7 +45,7 @@ public:
 
     void Fall(float elapsedSec);
 
-    void PlaySound()const;
+    void PlaySound() const;
 
     void SetSoundVolume(const int soundVolume);
 

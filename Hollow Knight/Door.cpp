@@ -7,7 +7,8 @@
 #include <SoundEffect.h>
 
 Door::Door(const Point2f& doorPos) :
-	GroundObject{ "DoorNewTest.png" }, m_State{ State::standing }, m_NrOfFrames(10), m_NrFramesPerSec(50)
+	GroundObject( "DoorNewTest.png" ), m_State(State::standing), m_NrOfFrames(10), m_NrFramesPerSec(50),
+	m_AnimTime(0.0f), m_AnimFrame(0)
 {
 	SVGParser::GetVerticesFromSvgFile("Doors.svg", m_Vertices);
 

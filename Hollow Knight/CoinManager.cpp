@@ -68,4 +68,7 @@ void CoinManager::Update(float elapsedSec, Environment* pLevel)
 		}
 	}
 }
+void CoinManager::SetCoinsAmount(const int coins) {
+	m_CoinsCollectedAmount = coins;
+}
 

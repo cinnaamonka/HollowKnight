@@ -9,10 +9,16 @@ public:
 	Camera& operator=(const Camera&) = delete;
 	Camera(Camera&&) = delete;
 	Camera& operator=(Camera&&) = delete;
+
 	~Camera();
+
 	void SetLevelBoundaries(const Rectf& levelBoundaries);
 	void Transform(const Rectf& target, bool isShortDistance);
-	Point2f GetPosition(const Rectf& target) const;
+
+	Point2f GetPosition(const Rectf& target) const
+	{
+		return Track(target);
+	}
 
 	void Scale(const float scaleX, const float scaleY, const Rectf& target);
 

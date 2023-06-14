@@ -7,19 +7,19 @@
 #include <SVGParser.h>
 
 Environment::Environment() :
-	m_pDarkRect(2782, 3000, 1080, 1300), m_BoldOpacity(1)
+	m_pDarkRect{ 2782, 3000, 1080, 1300 }, m_BoldOpacity(1)
 {
-	m_pPlatform = new Platform{ Point2f(8088.0f,2070.0f) };
-	m_pBackground = new Texture{ "Background Variation3.png" };
-	m_pGround = new GroundObject{ "HollowKnightLevel2.png" };
-	m_pForeground = new GroundObject{ "HollowKnight LevelForeground.png" };
-	m_pStaticForeground = new GroundObject{ "StaticForeground.png" };
+	m_pPlatform = new Platform( Point2f{8088.0f,2070.0f} );
+	m_pBackground = new Texture( "Background Variation3.png" );
+	m_pGround = new GroundObject( "HollowKnightLevel2.png" );
+	m_pForeground = new GroundObject("HollowKnight LevelForeground.png" );
+	m_pStaticForeground = new GroundObject( "StaticForeground.png" );
 	m_Boundaries = Rectf(0, 0, m_pGround->GetShape().width, m_pGround->GetShape().height);
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
 	m_pBaseBold = new GroundObject("BoldBase.png");
 	m_pBold = new GroundObject("Bold.png");
 	m_EndSignTexture = new Texture("EndSign.png");
-	m_EndSignShape = Rectf(9600.0f, 5324.0f, m_EndSignTexture->GetWidth(), m_EndSignTexture->GetHeight());
+	m_EndSignShape = Rectf{ 9600.0f, 5324.0f, m_EndSignTexture->GetWidth(), m_EndSignTexture->GetHeight() };
 	
 }
 Environment::~Environment()
@@ -132,16 +132,16 @@ bool Environment::HasReachedEnd(const Rectf& actorShape) const
 
 }
 
-bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	Point2f ray1(actorShape.left, actorShape.bottom + actorShape.height / 2);
 	Point2f ray2(actorShape.left + actorShape.width, actorShape.bottom + actorShape.height / 2);
 
 	return utils::Raycast(ver, ray1, ray2, hitInfo);
 }
-bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) 
 {
-	float borderDist{ 5.f };
+	float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -153,7 +153,7 @@ bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf
 
 bool Environment::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-	float borderDist{ 5.f };
+	float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom + actorShape.height / 2 };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -183,7 +183,7 @@ void Environment::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorS
 void Environment::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 
-	const float verticalOffset{ 2.0f };
+	const float verticalOffset = 2.0f;
 
 	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset)
 		return;
@@ -194,7 +194,7 @@ void Environment::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorSha
 
 void Environment::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-	const float verticalOffset{ 2.0f };
+	const float verticalOffset = 2.0f;
 
 	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height + verticalOffset)
 		return;
@@ -224,7 +224,7 @@ void Environment::BlackRectDisappear(const Rectf& actorShape) const
 }
 void Environment::ChangeBoldCapacity(const Rectf shapeActor)
 {
-	const Point2f boldPos(6670.f, 3600.f);
+	const Point2f boldPos{ 6670.f, 3600.f };
 
 	const float distance = abs(shapeActor.left - boldPos.x);
 

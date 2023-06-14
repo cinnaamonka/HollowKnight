@@ -1,6 +1,4 @@
 #pragma once
-
-#include <vector>
 #include "BaseManager.h"
 class BaseEnemy;
 class Environment;

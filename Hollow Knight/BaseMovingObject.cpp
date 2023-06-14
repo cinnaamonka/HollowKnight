@@ -7,7 +7,7 @@ BaseMovingObject::BaseMovingObject(const std::string& path, int framesNumber) :
 	m_AnimTime(0),
 	m_NrOfFrames(framesNumber),
 	m_NrFramesPerSec(10),
-	m_AnimFrame(0), m_IsKilled{ false }, m_LifesAmount(2)
+	m_AnimFrame(0), m_IsKilled( false ), m_LifesAmount(2)
 
 {
 	m_pTexture = new Texture{ path };

@@ -18,6 +18,7 @@ public:
 
 	void HandleCollision(Rectf& actorShape,Vector2f& actorVelocity);
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
+
 	bool isCollidingCharacter() const 
 	{
 		return m_IsCollidingCharacter;
@@ -39,8 +40,8 @@ public:
 	}
 private:
 	
-	bool m_isCharacterOnPlatform = false;
-	bool m_IsCollidingCharacter = false;
+	bool m_isCharacterOnPlatform;
+	bool m_IsCollidingCharacter;
 
 	Point2f m_Position;
 };

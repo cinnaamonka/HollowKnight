@@ -12,6 +12,7 @@ public:
 	EnemyCentipede(EnemyCentipede&& other) = delete;
 	EnemyCentipede& operator=(EnemyCentipede&& other) = delete;
 	~EnemyCentipede();
+
 	virtual void Update(float elapsedSec)override;
 
 };

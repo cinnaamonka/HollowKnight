@@ -38,11 +38,11 @@ private:
 	};
 	State m_State;
 
-	float m_AnimTime = 0.0f;
+	float m_AnimTime;
 
-	int m_NrOfFrames = 0;
-	int m_NrFramesPerSec = 1;
-	int m_AnimFrame = 0;
+	int m_NrOfFrames;
+	int m_NrFramesPerSec;
+	int m_AnimFrame;
 
 	Rectf m_Shape;
 	Rectf m_SourceRect;

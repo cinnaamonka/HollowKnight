@@ -6,9 +6,9 @@
 #include <SVGParser.h>
 
 CoinSource::CoinSource(const Point2f& position, const int index) :
-	GroundObject{ "stone.png" },
-	m_Position{ position }, m_IsDestroyed{ false }, m_Lifes{ 0 }, m_MaxLifes{ 5 }, m_SourceRect{ 0,0,0,0 }, m_IsAtacked{ false },
-	m_PassedFrames{ 0 }, m_MaxFramesAmount(70)
+	GroundObject( "stone.png" ),
+	m_Position(position), m_IsDestroyed(false), m_Lifes(0), m_MaxLifes(5), m_SourceRect{ 0,0,0,0 },
+	m_IsAtacked( false ), m_PassedFrames( 0 ), m_MaxFramesAmount(70)
 {
 	std::vector<std::vector<Point2f>> m_TemporaryVertices;
 	
@@ -81,14 +81,6 @@ void CoinSource::CheckIfDestroyed()
 		m_IsAtacked = false;
 	}
 }
-void CoinSource::Shake()
-{
-	const float shakingOffset = 10.0f;
-
-
-	m_Position.x += shakingOffset;
-
-}
 void CoinSource::ChangeTexture()
 {
 	if (m_IsDestroyed)
@@ -120,7 +112,7 @@ bool CoinSource::IsOverlapping(const Rectf& rect) const
 	
 	return isColliding;
 }
-bool CoinSource::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const
+bool CoinSource::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	float borderDist{ 5.f };
 

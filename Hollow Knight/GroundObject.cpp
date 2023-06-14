@@ -8,7 +8,7 @@ GroundObject::GroundObject(const std::string& texture)
 	m_pTexture = new Texture(texture);
 	texturefilename = texture;
 
-	SetShape(Rectf(0.0f, 0.0f, m_pTexture->GetWidth(), m_pTexture->GetHeight()));
+	SetShape(Rectf{ 0.0f, 0.0f, m_pTexture->GetWidth(), m_pTexture->GetHeight() });
 }
 GroundObject::~GroundObject()
 {
@@ -17,7 +17,7 @@ GroundObject::~GroundObject()
 
 bool GroundObject::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-	float borderDist{ 5.f };
+	float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -29,7 +29,7 @@ bool GroundObject::isCollidingGround(const std::vector<Point2f>& ver, const Rect
 
 bool GroundObject::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-	float borderDist{ 5.f };
+	float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom + actorShape.height / 2 };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -59,7 +59,7 @@ void GroundObject::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actor
 void GroundObject::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 
-	const float verticalOffset{ 2.0f };
+	const float verticalOffset = 2.0f;
 
 	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset)
 		return;
@@ -70,7 +70,7 @@ void GroundObject::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorSh
 
 void GroundObject::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-	const float verticalOffset{ 2.0f };
+	const float verticalOffset = 2.0f;
 
 	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height + verticalOffset)
 		return;

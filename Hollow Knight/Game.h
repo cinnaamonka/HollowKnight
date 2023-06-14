@@ -5,6 +5,7 @@
 
 class Level;
 class UI;
+
 class Game final : public BaseGame
 {
 public:

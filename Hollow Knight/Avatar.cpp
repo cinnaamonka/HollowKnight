@@ -11,9 +11,9 @@ Avatar::Avatar() :
 	BaseMovingObject("Knight.png", 12),
 	m_ClipHeight(0), m_ClipWidth(0), m_HorSpeed(500.0f),
 	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
-	m_ActionState{ ActionState::begin }, m_AccuTransformSec{ 0.0f }, m_MaxTransformSec{ 1.0f },
-	m_IsMovingRight{ true }, m_CanDoubleJump{ false },
-	m_HasDoubleJumped{ false }, m_IsNovingAfterCollision{ false }, m_IsKilling{ false }, m_IsFocusing(false),
+	m_ActionState{ ActionState::begin }, m_AccuTransformSec( 0.0f ), m_MaxTransformSec(1.0f ),
+	m_IsMovingRight( true ), m_CanDoubleJump( false ),
+	m_HasDoubleJumped( false ), m_IsNovingAfterCollision( false ), m_IsKilling( false ), m_IsFocusing(false),
 	isPlaying(false), m_IsOnGround(true)
 
 {
@@ -33,7 +33,7 @@ Avatar::Avatar() :
 
 	SetFramesPerSec(10);
 
-	m_pParticleTexture = new Texture{ "ParticleEffect.png" };
+	m_pParticleTexture = new Texture( "ParticleEffect.png" );
 
 	m_ParticlesShape = Rectf(0, 0, m_pParticleTexture->GetWidth(), m_pParticleTexture->GetHeight());
 
@@ -135,7 +135,7 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 	m_ActionState = ActionState::waiting;
 	m_pCollidesEnemy->Stop();
 }
-void Avatar::StopAllSounds()
+void Avatar::StopAllSounds() const
 {
 	m_pCharacterWalkingSound->Stop();
 	m_pKnifeInAir->Stop();
@@ -144,7 +144,6 @@ void Avatar::StopAllSounds()
 }
 void Avatar::Draw()const
 {
-	//std::cout << GetShape().left << "," << GetShape().bottom << std::endl;
 	const Rectf particleShape
 	{
 		GetShape().left - GetShape().width / 2,
@@ -394,9 +393,17 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 		SetSourceRect(srcRect);
 	}
 }
-void Avatar::SetSoundVolume(const int soundVolume)
+void Avatar::SetSoundVolume(const int soundVolume)const
 {
 	m_pCharacterWalkingSound->SetVolume(soundVolume);
 	m_pKnifeInAir->SetVolume(soundVolume);
 	m_pCollidesEnemy->SetVolume(soundVolume);
+}
+bool Avatar::isMoving() const
+{
+	if (m_ActionState == ActionState::moving)
+	{
+		return true;
+	}
+	return false;
 }

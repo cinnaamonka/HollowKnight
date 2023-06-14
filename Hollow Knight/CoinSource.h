@@ -20,14 +20,16 @@ public:
 	
 	bool IsOverlapping(const Rectf& rect) const;
 
-	bool IsDestroyed()
+	bool IsDestroyed() const
 	{
 		return m_IsDestroyed;
 	}
 private:
-	void Shake();
+
 	void ChangeTexture();
+
 private:
+
 	Point2f m_Position;
 	Rectf m_SourceRect;
 	float m_ClipWidth;
@@ -35,12 +37,11 @@ private:
 
 	bool m_IsDestroyed;
 	bool m_IsAtacked;
+
 	int m_Lifes;
-
-	const int m_MaxLifes;
-
 	int m_PassedFrames;
 	const int m_MaxFramesAmount;
+	const int m_MaxLifes;
 
 	std::vector<std::vector<Point2f>> m_Vertices;
 	

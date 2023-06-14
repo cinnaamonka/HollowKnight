@@ -6,14 +6,14 @@
 #include <Texture.h>
 
 HUD::HUD(const Point2f& topLeft, int totalLifesAmount, CoinManager* coinManager) :
-	m_BottomLeft{ topLeft }, m_TotalLifesAmount{ totalLifesAmount }, m_LeftLifes{ float(totalLifesAmount) }, m_CollectedCoins(0),
+	m_BottomLeft(topLeft ), m_TotalLifesAmount( totalLifesAmount ), m_LeftLifes( float(totalLifesAmount) ), m_CollectedCoins(0),
 	m_SavedCoins(0), m_PreviousLifes(totalLifesAmount), m_pCoinManager(coinManager)
 {
-	m_pHUDTexture = new Texture{ "HUD.png" };
-	m_pLifeTexture = new Texture{ "Lifes.png" };
-	m_pEmptyLifeTexture = new Texture{ "EmptyLife.png" };
+	m_pHUDTexture = new Texture( "HUD.png" );
+	m_pLifeTexture = new Texture( "Lifes.png" );
+	m_pEmptyLifeTexture = new Texture( "EmptyLife.png" );
 	m_CoinsNumberTexture = nullptr;
-	m_CoinTexture = new Texture{ "Coin.png" };
+	m_CoinTexture = new Texture( "Coin.png" );
 }
 
 HUD::~HUD()
@@ -92,10 +92,10 @@ void HUD::AddLife()
 	if (int(m_LeftLifes) - m_PreviousLifes)
 	{
 		const int coins = m_CollectedCoins - 6;
-		m_pCoinManager->setCoinsAmount(coins);
+		m_pCoinManager->SetCoinsAmount(coins);
 	}
 }
-bool HUD::CanAddLife()
+bool HUD::CanAddLife() const
 {
 	if (m_CollectedCoins < 6) return false;
 

@@ -6,7 +6,7 @@
 
 BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture, int framesNumber) :
 	BaseMovingObject(texture, framesNumber),
-	m_BoundariesBorder{ 0,0,0,0 }, m_CanSeeAvatar{ false }
+	m_BoundariesBorder{ 0,0,0,0 }, m_CanSeeAvatar( false )
 {
 	SetFramesNumber(framesNumber);
 
@@ -27,7 +27,7 @@ BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture, int fr
 	m_BoundariesBorder.left = shape.left;
 	m_BoundariesBorder.bottom = shape.bottom;
 
-	SetBoundaries(300.0f, shape.height); // default
+	SetBoundaries(300.0f, shape.height);
 	SetShape(shape);
 }
 BaseEnemy::~BaseEnemy()

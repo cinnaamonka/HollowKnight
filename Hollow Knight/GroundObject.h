@@ -14,7 +14,7 @@ public:
 
 	void Draw(const Point2f& pos) const;
 
-	const Rectf& GetShape()
+	const Rectf& GetShape() const
 	{
 		return m_Shape;
 	}
@@ -34,7 +34,8 @@ protected:
 
 	void SetShape(const Rectf& rect);
 
-	const Texture* GetTexture() const {
+	const Texture* GetTexture() const 
+	{
 		return m_pTexture;
 	}
 
