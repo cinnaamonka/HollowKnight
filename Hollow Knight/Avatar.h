@@ -43,6 +43,7 @@ public:
 	}
 
 	void SetSoundVolume(const int soundVolume);
+	void StopAllSounds();
 
 private:
 

@@ -2,6 +2,7 @@
 #include <chrono>
 #include <SoundStream.h>
 #include <SoundEffect.h>
+#include <Texture.h>
 
 #include "Level.h"
 #include "Game.h"
@@ -24,7 +25,7 @@
 
 
 Level::Level(const Rectf& viewPort) :
-	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f), m_MusicVolume(100)
+	m_ViewPort{ viewPort }, m_EndReached{ false }, m_ZoomLevel(1.0f), m_MusicVolume(100), m_FadingScreenColor(0,0,0,0)
 {
 	m_pAvatar = nullptr;
 	m_pEnemyManager = nullptr;
@@ -36,6 +37,7 @@ Level::Level(const Rectf& viewPort) :
 	m_pCoinSourceManager = nullptr;
 	m_pHUD = nullptr;
 	m_pBackgroundSound = nullptr;
+	m_EndText = nullptr;
 }
 
 Level::~Level()
@@ -76,6 +78,8 @@ void Level::Initialize()
 
 	m_pDoorManager = new DoorManager();
 
+	m_EndText = new Texture("EndText.png");
+
 	AddDoors();
 
 	PlaySound();
@@ -93,12 +97,20 @@ void Level::Cleanup()
 	delete m_pCoinSourceManager;
 	delete m_pHUD;
 	delete m_pBackgroundSound;
+	delete m_EndText;
 }
 
 void Level::Update(float elapsedSec)
 {
-	if (m_EndReached)
+	if (m_EndReached == true)
+	{
+		if (m_FadingScreenColor.a < 1)
+		{
+			m_FadingScreenColor.a += 0.001f;
+		}
+
 		return;
+	}
 
 	if (!m_pAvatar->isColliding())
 	{
@@ -124,9 +136,11 @@ void Level::Update(float elapsedSec)
 	m_pCoinSourceManager->Update(m_pAvatar);
 	m_pDoorManager->Update(elapsedSec, m_pAvatar);
 
-	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()))
+	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()) == true)
 	{
 		m_EndReached = true;
+		m_pAvatar->StopAllSounds();
+
 	}
 
 	CheckAvatarCollison();
@@ -137,6 +151,7 @@ void Level::Draw() const
 
 	ClearBackground();
 
+	
 	glPushMatrix();
 	{
 		glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.5f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 0.5f, 0.0f);
@@ -180,11 +195,14 @@ void Level::Draw() const
 	glPopMatrix();
 
 
-	if (m_EndReached)
+	if (m_EndReached == true)
 	{
-		utils::SetColor(Color4f(0.5f, 0.5f, 0.5f, 0.3f));
+		utils::SetColor(m_FadingScreenColor);
 		utils::FillRect(m_ViewPort.left, m_ViewPort.bottom, m_ViewPort.width, m_ViewPort.height);
+		m_EndText->Draw(Point2f(m_ViewPort.left + m_ViewPort.width/2 - m_EndText->GetWidth()/2, m_ViewPort.bottom + m_ViewPort.height / 2 - m_EndText->GetHeight()/2));
+		return;
 	}
+	
 	m_pHUD->Draw();
 }
 
@@ -238,6 +256,7 @@ void Level::AddEnemies()
 
 void Level::CheckAvatarCollison()
 {
+	if (m_EndReached)return;
 	const Rectf shapeRect = m_pAvatar->GetShape();
 
 	m_pEnemyManager->Atack(shapeRect, m_pAvatar->GetVelocity());
@@ -312,7 +331,7 @@ void Level::AddCoinSources()
 	m_pCoinSourceManager->AddItem(coinSource1);
 	m_pCoinSourceManager->AddItem(coinSource2);
 }
-void Level::PlaySound()
+void Level::PlaySound()const
 {
 	m_pBackgroundSound->Play(true);
 

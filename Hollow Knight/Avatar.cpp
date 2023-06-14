@@ -135,7 +135,13 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 	m_ActionState = ActionState::waiting;
 	m_pCollidesEnemy->Stop();
 }
-
+void Avatar::StopAllSounds()
+{
+	m_pCharacterWalkingSound->Stop();
+	m_pKnifeInAir->Stop();
+	m_pCollidesEnemy->Stop();
+	m_pDeathSound->Stop();
+}
 void Avatar::Draw()const
 {
 	//std::cout << GetShape().left << "," << GetShape().bottom << std::endl;

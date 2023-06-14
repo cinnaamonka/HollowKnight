@@ -18,7 +18,9 @@ Environment::Environment() :
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
 	m_pBaseBold = new GroundObject("BoldBase.png");
 	m_pBold = new GroundObject("Bold.png");
-	m_EndSignShape = Rectf(0.0f, 0.0f, 0.0f, 0.0f);
+	m_EndSignTexture = new Texture("EndSign.png");
+	m_EndSignShape = Rectf(9600.0f, 5324.0f, m_EndSignTexture->GetWidth(), m_EndSignTexture->GetHeight());
+	
 }
 Environment::~Environment()
 {
@@ -29,6 +31,7 @@ Environment::~Environment()
 	delete m_pStaticForeground;
 	delete m_pBaseBold;
 	delete m_pBold;
+	delete m_EndSignTexture;
 }
 
 void Environment::DrawBackground() const
@@ -48,7 +51,7 @@ void Environment::DrawMiddleground() const
 	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
 	m_pBaseBold->Draw(Point2f(6600.f, 3600.f));
 	m_pBold->Draw(Point2f(6670.f, 3600.f));
-
+	m_EndSignTexture->Draw(m_EndSignShape);
 	utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, m_BoldOpacity));
 	utils::FillEllipse(Point2f(6815.f, 3770.f), 100.f, 150);
 }
@@ -117,7 +120,16 @@ Rectf Environment::GetBoundaries() const
 
 bool Environment::HasReachedEnd(const Rectf& actorShape) const
 {
-	return false;
+	if (actorShape.left > m_EndSignShape.left &&
+		actorShape.bottom > m_EndSignShape.bottom &&
+		actorShape.left + actorShape.width < m_EndSignShape.left + m_EndSignShape.width &&
+		actorShape.bottom + actorShape.height < m_EndSignShape.bottom + m_EndSignShape.height)
+	{
+		std::cout << actorShape.left << std::endl;
+		std::cout << m_EndSignShape.left << std::endl;
+		return true;
+	}
+
 }
 
 bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)

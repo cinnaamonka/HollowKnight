@@ -17,6 +17,7 @@ class HUD;
 class SoundStream;
 class SoundEffect;
 class UI;
+class Texture;
 
 
 class Level final
@@ -50,7 +51,7 @@ public:
 	void AddCoinSources();
 	void CheckAvatarCollison();
 
-	void PlaySound();
+	void PlaySound() const;
 private:
 
 	Avatar* m_pAvatar;
@@ -64,6 +65,8 @@ private:
 	HUD* m_pHUD;
 	SoundStream* m_pBackgroundSound;
 
+	Texture* m_EndText;
+
 	bool m_EndReached;
 
 	Rectf m_ViewPort;
@@ -71,6 +74,8 @@ private:
 	float m_ZoomLevel;
 
 	int m_MusicVolume;
+
+	Color4f m_FadingScreenColor;
 };
 
 
