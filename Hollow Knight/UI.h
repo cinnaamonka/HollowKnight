@@ -53,6 +53,7 @@ private:
 	Texture* m_pMusicAdjustmentTexture;
 	Texture* m_pSoundAdjustmentTexture;
 	SoundEffect* m_pSelectSound;
+	SoundEffect* m_pChangeSound;
 	Texture* m_pBackTexture;
 	
 
