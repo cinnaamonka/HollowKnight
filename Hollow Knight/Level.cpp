@@ -79,6 +79,9 @@ void Level::Initialize()
 
 	m_EndText = new Texture("EndText.png");
 
+	m_EndSignShape = Point2f{ m_ViewPort.left + m_ViewPort.width / 2 - m_EndText->GetWidth() / 2,
+		m_ViewPort.bottom + m_ViewPort.height / 2 - m_EndText->GetHeight() / 2 };
+
 	AddDoors();
 
 	PlaySound();
@@ -150,7 +153,7 @@ void Level::Draw() const
 
 	ClearBackground();
 
-	
+
 	glPushMatrix();
 	{
 		glTranslatef(-m_Camera->GetPosition(m_pAvatar->GetShape()).x * 0.5f, -m_Camera->GetPosition(m_pAvatar->GetShape()).y * 0.5f, 0.0f);
@@ -198,10 +201,10 @@ void Level::Draw() const
 	{
 		utils::SetColor(m_FadingScreenColor);
 		utils::FillRect(m_ViewPort.left, m_ViewPort.bottom, m_ViewPort.width, m_ViewPort.height);
-		m_EndText->Draw(Point2f(m_ViewPort.left + m_ViewPort.width/2 - m_EndText->GetWidth()/2, m_ViewPort.bottom + m_ViewPort.height / 2 - m_EndText->GetHeight()/2));
+		m_EndText->Draw(m_EndSignShape);
 		return;
 	}
-	
+
 	m_pHUD->Draw();
 }
 
@@ -312,10 +315,10 @@ void Level::AddCoins()
 }
 void Level::AddDoors()
 {
-	Door* door1 = new Door(Point2f(3720.0f, 2294.0f));
-	Door* door2 = new Door(Point2f(4530.0f, 2294.0f));
-	Door* door3 = new Door(Point2f(5670.0f, 2294.0f));
-	Door* door4 = new Door(Point2f(6620.0f, 2294.0f));
+	Door* door1 = new Door(Point2f{ 3720.0f, 2294.0f });
+	Door* door2 = new Door(Point2f{ 4530.0f, 2294.0f });
+	Door* door3 = new Door(Point2f{ 5670.0f, 2294.0f });
+	Door* door4 = new Door(Point2f{ 6620.0f, 2294.0f });
 
 	m_pDoorManager->AddItem(door1);
 	m_pDoorManager->AddItem(door2);

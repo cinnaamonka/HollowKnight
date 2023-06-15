@@ -8,7 +8,15 @@ GroundObject::GroundObject(const std::string& texture)
 	m_pTexture = new Texture(texture);
 	texturefilename = texture;
 
-	SetShape(Rectf{ 0.0f, 0.0f, m_pTexture->GetWidth(), m_pTexture->GetHeight() });
+	const Rectf groundObjectShape
+	{
+		0.0f,
+		0.0f,
+		m_pTexture->GetWidth(),
+		m_pTexture->GetHeight()
+	};
+
+	SetShape(groundObjectShape);
 }
 GroundObject::~GroundObject()
 {

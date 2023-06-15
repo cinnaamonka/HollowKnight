@@ -88,6 +88,4 @@ private:
 	SoundEffect* m_pCollidesEnemy;
 	SoundEffect* m_pDeathSound;
 
-	bool isPlaying;
-
 };

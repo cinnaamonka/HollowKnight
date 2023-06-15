@@ -14,7 +14,7 @@ Avatar::Avatar() :
 	m_ActionState{ ActionState::begin }, m_AccuTransformSec( 0.0f ), m_MaxTransformSec(1.0f ),
 	m_IsMovingRight( true ), m_CanDoubleJump( false ),
 	m_HasDoubleJumped( false ), m_IsNovingAfterCollision( false ), m_IsKilling( false ), m_IsFocusing(false),
-	isPlaying(false), m_IsOnGround(true)
+	m_IsOnGround(true)
 
 {
 	Rectf sourceRect{ 0,0,0,0 };

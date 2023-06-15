@@ -82,8 +82,9 @@ void BaseEnemy::ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMovi
 bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
 {
 	float distance = float(sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2)));
+	const float maxDistance = 40.0f;
 
-	return distance <= 40.0f;
+	return distance <= maxDistance;
 }
 
 bool BaseEnemy::CanSeeAvatar(const Rectf& avatarRectf)const

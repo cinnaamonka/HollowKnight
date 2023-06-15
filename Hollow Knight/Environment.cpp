@@ -9,18 +9,18 @@
 Environment::Environment() :
 	m_pDarkRect{ 2782, 3000, 1080, 1300 }, m_BoldOpacity(1)
 {
-	m_pPlatform = new Platform( Point2f{8088.0f,2070.0f} );
-	m_pBackground = new Texture( "Background Variation3.png" );
-	m_pGround = new GroundObject( "HollowKnightLevel2.png" );
-	m_pForeground = new GroundObject("HollowKnight LevelForeground.png" );
-	m_pStaticForeground = new GroundObject( "StaticForeground.png" );
+	m_pPlatform = new Platform(Point2f{ 8088.0f,2070.0f });
+	m_pBackground = new Texture("Background Variation3.png");
+	m_pGround = new GroundObject("HollowKnightLevel2.png");
+	m_pForeground = new GroundObject("HollowKnight LevelForeground.png");
+	m_pStaticForeground = new GroundObject("StaticForeground.png");
 	m_Boundaries = Rectf(0, 0, m_pGround->GetShape().width, m_pGround->GetShape().height);
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
 	m_pBaseBold = new GroundObject("BoldBase.png");
 	m_pBold = new GroundObject("Bold.png");
 	m_EndSignTexture = new Texture("EndSign.png");
 	m_EndSignShape = Rectf{ 9600.0f, 5324.0f, m_EndSignTexture->GetWidth(), m_EndSignTexture->GetHeight() };
-	
+
 }
 Environment::~Environment()
 {
@@ -36,28 +36,28 @@ Environment::~Environment()
 
 void Environment::DrawBackground() const
 {
-	m_pBackground->Draw(Point2f(0.0f, 0.f));
+	m_pBackground->Draw(Point2f{ 0.0f, 0.f });
 }
 
 void Environment::DrawForeground() const
 {
 
-	m_pForeground->Draw(Point2f(0.0f, 0.f));
+	m_pForeground->Draw(Point2f{ 0.0f, 0.f });
 }
 
 void Environment::DrawMiddleground() const
 {
-	m_pGround->Draw(Point2f(0.0f, 0.f));
+	m_pGround->Draw(Point2f{ 0.0f, 0.f });
 	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
-	m_pBaseBold->Draw(Point2f(6600.f, 3600.f));
-	m_pBold->Draw(Point2f(6670.f, 3600.f));
+	m_pBaseBold->Draw(Point2f{ 6600.f, 3600.f });
+	m_pBold->Draw(Point2f{ 6670.f, 3600.f });
 	m_EndSignTexture->Draw(m_EndSignShape);
-	utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, m_BoldOpacity));
-	utils::FillEllipse(Point2f(6815.f, 3770.f), 100.f, 150);
+	utils::SetColor(Color4f{ 0.0f, 0.0f, 0.0f, m_BoldOpacity });
+	utils::FillEllipse(Point2f{ 6815.f, 3770.f }, 100.f, 150);
 }
 void Environment::DrawStaticForeground(const Rectf& shape) const
 {
-	m_pStaticForeground->Draw(Point2f(0.0f, 0.f));
+	m_pStaticForeground->Draw(Point2f{ 0.0f, 0.f });
 	BlackRectDisappear(shape);
 
 }
@@ -65,6 +65,7 @@ void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 {
 	m_pPlatform->HandleCollision(shape, velocity);
 	ChangeBoldCapacity(shape);
+
 	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape, false))
 		return;
 
@@ -125,8 +126,6 @@ bool Environment::HasReachedEnd(const Rectf& actorShape) const
 		actorShape.left + actorShape.width < m_EndSignShape.left + m_EndSignShape.width &&
 		actorShape.bottom + actorShape.height < m_EndSignShape.bottom + m_EndSignShape.height)
 	{
-		std::cout << actorShape.left << std::endl;
-		std::cout << m_EndSignShape.left << std::endl;
 		return true;
 	}
 
@@ -139,7 +138,7 @@ bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actor
 
 	return utils::Raycast(ver, ray1, ray2, hitInfo);
 }
-bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) 
+bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	float borderDist = 5.f;
 
@@ -208,6 +207,14 @@ void Environment::BlackRectDisappear(const Rectf& actorShape) const
 	const float borderPointX = 4040.f;
 	const float difference = borderPointX - actorShape.left;
 
+	const Rectf fadingRectShape
+	{
+		m_pDarkRect.left + m_pDarkRect.width / 2,
+		m_pDarkRect.bottom + m_pDarkRect.height / 2.1f,
+		m_pDarkRect.width / 1.5f,
+		m_pDarkRect.height
+	};
+
 	if ((actorShape.left > borderPointX))
 	{
 		utils::SetColor(Color4f(0.0f, 0.0f, 0.0f, 1.0f));
@@ -220,7 +227,7 @@ void Environment::BlackRectDisappear(const Rectf& actorShape) const
 
 	}
 	utils::FillRect(m_pDarkRect);
-	utils::FillRect(Rectf(m_pDarkRect.left + m_pDarkRect.width / 2, m_pDarkRect.bottom + m_pDarkRect.height / 2.1f, m_pDarkRect.width / 1.5f, m_pDarkRect.height));
+	utils::FillRect(fadingRectShape);
 }
 void Environment::ChangeBoldCapacity(const Rectf shapeActor)
 {
@@ -228,15 +235,17 @@ void Environment::ChangeBoldCapacity(const Rectf shapeActor)
 
 	const float distance = abs(shapeActor.left - boldPos.x);
 
-	
-	if (distance < 200.0f && m_BoldOpacity > 0)
+	const float maxDistanceFromBold = 200.0f;
+	const float opacityStep = 10000.0f;
+
+	if (distance < maxDistanceFromBold && m_BoldOpacity > 0)
 	{
-		m_BoldOpacity -= distance / 10000;
-	
+		m_BoldOpacity -= distance / opacityStep;
+
 	}
-	else if(distance > 200.f && m_BoldOpacity < 1)
+	else if (distance > maxDistanceFromBold && m_BoldOpacity < 1)
 	{
-		m_BoldOpacity += distance / 10000;
+		m_BoldOpacity += distance / opacityStep;
 	}
 
 

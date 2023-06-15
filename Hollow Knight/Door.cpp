@@ -46,7 +46,7 @@ void Door::Update(float elapsedSec, Avatar* actor, const int index)
 }
 void Door::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAtacked, const int index)
 {
-	float borderDist{ 5.f };
+	float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -69,10 +69,11 @@ void Door::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAt
 }
 void Door::ChangeTexture()
 {
-	if (m_State == State::broken)return;
+	if (m_State == State::broken) return;
 	m_SourceRect.left = m_AnimFrame * m_SourceRect.width;
 
 	const int breakingDoorTextureAmount = 8;
+	const int brokenDoorTexture = 9;
 	const int brokenDoorTextureAmount = 1;
 
 	if (m_State == State::breaking)
@@ -82,12 +83,11 @@ void Door::ChangeTexture()
 			m_State = State::broken;
 
 		}
-
 		m_pBreakingDoorSound->Play(0);
 	}
 	if (m_State == State::broken)
 	{
-		m_SourceRect.left = 9 * m_SourceRect.width;
+		m_SourceRect.left = brokenDoorTexture * m_SourceRect.width;
 		m_AnimFrame = 1;
 
 	}
@@ -103,7 +103,7 @@ void Door::Draw() const
 }
 bool Door::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const
 {
-	float borderDist{ 5.f };
+	float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left, actorShape.bottom + borderDist };
 	const Point2f ray2{ actorShape.left + actorShape.width, actorShape.bottom + borderDist };

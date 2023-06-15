@@ -72,7 +72,6 @@ void CoinSource::CheckIfDestroyed()
 			{
 				m_IsDestroyed = true;
 			}
-			//Shake();
 		}
 	}
 	else

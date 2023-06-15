@@ -88,16 +88,19 @@ void HUD::AddLife()
 	const float leftLifesOffset = 0.005f;
 	m_PreviousLifes = int(m_LeftLifes);
 	m_LeftLifes += leftLifesOffset;
+	const int savedCoins = 6;
 
 	if (int(m_LeftLifes) - m_PreviousLifes)
 	{
-		const int coins = m_CollectedCoins - 6;
+		const int coins = m_CollectedCoins - savedCoins;
 		m_pCoinManager->SetCoinsAmount(coins);
 	}
 }
 bool HUD::CanAddLife() const
 {
-	if (m_CollectedCoins < 6) return false;
+	const int savedCoins = 6;
+
+	if (m_CollectedCoins < savedCoins) return false;
 
 	if (m_LeftLifes >= m_TotalLifesAmount) return false;
 

@@ -70,6 +70,7 @@ private:
 	bool m_EndReached;
 
 	Rectf m_ViewPort;
+	Point2f m_EndSignShape;
 	Color4f m_FadingScreenColor;
 	
 	float m_ZoomLevel;

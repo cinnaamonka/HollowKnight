@@ -57,6 +57,19 @@ private:
 	
 
 	Rectf m_ViewPort;
+	Rectf m_StartGameTextShape;
+	Rectf m_OptionsTextShape;
+	Rectf m_QuitTextShape;
+	Rectf m_BackTextShape;
+	
+	Point2f m_BarAdjustementMusicRight;
+	Point2f m_BarAdjustementMusicLeft;
+	Point2f m_BarAdjustementSoundRight;
+	Point2f m_BarAdjustementSoundLeft;
+
+	Point2f m_pMusicAdjustmentPos;
+	Point2f m_pSoundAdjustmentPos;
+	Point2f m_LogoStartScreenPos;
 
 	Point2f m_CursorPos;
 
