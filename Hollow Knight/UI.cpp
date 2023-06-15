@@ -47,6 +47,8 @@ UI::UI(const Rectf& viewPort) :
 
 	m_SoundBar = new Texture("Bar.png");
 
+	m_pChangeSound = new SoundEffect("UIHover.wav");
+
 	const float verticalOffset = 50.0f;
 
 	m_StartGameTextShape = Rectf(m_ViewPort.left + m_ViewPort.width / 2 - m_StartGameTexture->GetWidth() / 2,
@@ -146,10 +148,14 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 		mousePos.y < m_StartGameTextShape.bottom + m_StartGameTextShape.height)
 	{
 		m_StartGameHovered = true;
+		
+		m_pChangeSound->Play(0);
+
 	}
 	else
 	{
 		m_StartGameHovered = false;
+		m_pChangeSound->Stop();
 	}
 
 	//Check is clicked Options
@@ -158,6 +164,7 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 		mousePos.y < m_OptionsTextShape.bottom + m_OptionsTextShape.height)
 	{
 		m_OptionsHovered = true;
+		m_pChangeSound->Play(0);
 	}
 	else
 	{
@@ -170,6 +177,8 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 		mousePos.y < m_QuitTextShape.bottom + m_QuitTextShape.height)
 	{
 		m_QuitGameHovered = true;
+
+		m_pChangeSound->Play(0);
 	}
 	else
 	{
@@ -182,6 +191,8 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 		mousePos.y < m_BackTextShape.bottom + m_BackTextShape.height)
 	{
 		m_BackHovered = true;
+
+		m_pChangeSound->Play(0);
 	}
 	else
 	{
@@ -202,32 +213,32 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 
 	Rectf rightArrowShapeMusic
 	(
-		m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
-		m_ViewPort.bottom + m_ViewPort.height / 2 + 1.4f * verticalOffset,
+		m_BarAdjustementMusicRight.x,
+		m_BarAdjustementMusicRight.y,
 		2 * m_pHoveredTextureRight->GetWidth(),
 		2 * m_pHoveredTextureRight->GetHeight()
 	);
 
 	Rectf leftArrowShapeMusic
 	(
-		m_ViewPort.left + m_ViewPort.width / 2 + 3 * m_pHoveredTextureLeft->GetWidth(),
-		m_ViewPort.bottom + m_ViewPort.height / 2 + 1.3f * verticalOffset,
+		m_BarAdjustementMusicLeft.x,
+		m_BarAdjustementMusicLeft.y,
 		2 * m_pHoveredTextureLeft->GetWidth(),
 		2 * m_pHoveredTextureLeft->GetHeight()
 	);
 
 	Rectf rightArrowShapeSound
 	(
-		m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
-		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset,
+		m_BarAdjustementSoundRight.x,
+		m_BarAdjustementSoundRight.y,
 		2 * m_pHoveredTextureRight->GetWidth(),
 		2 * m_pHoveredTextureRight->GetHeight()
 	);
 
 	Rectf leftArrowShapeSound
 	(
-		m_ViewPort.left + m_ViewPort.width / 2 + 3 * m_pHoveredTextureLeft->GetWidth(),
-		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset,
+		m_BarAdjustementSoundLeft.x,
+		m_BarAdjustementSoundLeft.y,
 		2 * m_pHoveredTextureLeft->GetWidth(),
 		2 * m_pHoveredTextureLeft->GetHeight()
 	);
@@ -237,17 +248,19 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		mousePos.y < m_BackTextShape.bottom + m_BackTextShape.height)
 	{
 		m_OptionsClicked = false;
-		m_pSelectSound->Stop();
-		m_pSelectSound->SetVolume(m_SoundVolume);
-		m_pSelectSound->Play(0);
+
+		m_pChangeSound->Stop();
+		m_pChangeSound->SetVolume(m_SoundVolume);
+		m_pChangeSound->Play(0);
 	}
 
 	if ((mousePos.x > rightArrowShapeMusic.left && mousePos.y > rightArrowShapeMusic.bottom &&
 		mousePos.x < rightArrowShapeMusic.left + rightArrowShapeMusic.width &&
 		mousePos.y < rightArrowShapeMusic.bottom + rightArrowShapeMusic.height) && m_MusicVolume <= maxMusicVolume)
 	{
-		m_pSelectSound->Stop();
-		m_pSelectSound->Play(0);
+		m_pChangeSound->Stop();
+		m_pChangeSound->Play(0);
+
 		m_MusicVolume += musicVolumeStep;
 	}
 
@@ -255,18 +268,18 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		mousePos.x < rightArrowShapeSound.left + rightArrowShapeSound.width &&
 		mousePos.y < rightArrowShapeSound.bottom + rightArrowShapeSound.height) && m_SoundVolume <= maxMusicVolume)
 	{
-		m_pSelectSound->Stop();
-		m_pSelectSound->Play(0);
+		m_pChangeSound->Stop();
+		m_pChangeSound->Play(0);
 		m_SoundVolume += musicVolumeStep;
-		m_pSelectSound->SetVolume(m_SoundVolume);
+		m_pChangeSound->SetVolume(m_SoundVolume);
 	}
 
 	if ((mousePos.x > leftArrowShapeMusic.left && mousePos.y > leftArrowShapeMusic.bottom &&
 		mousePos.x < leftArrowShapeMusic.left + leftArrowShapeMusic.width &&
 		mousePos.y < leftArrowShapeMusic.bottom + leftArrowShapeMusic.height) && m_MusicVolume > 0)
 	{
-		m_pSelectSound->Stop();
-		m_pSelectSound->Play(0);
+		m_pChangeSound->Stop();
+		m_pChangeSound->Play(0);
 		m_MusicVolume -= musicVolumeStep;
 	}
 
@@ -274,13 +287,13 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		mousePos.x < leftArrowShapeSound.left + leftArrowShapeSound.width &&
 		mousePos.y < leftArrowShapeSound.bottom + leftArrowShapeSound.height) && m_SoundVolume > 0)
 	{
-		m_pSelectSound->Stop();
-		m_pSelectSound->Play(0);
+		m_pChangeSound->Stop();
+		m_pChangeSound->Play(0);
 		m_SoundVolume -= musicVolumeStep;
-		m_pSelectSound->SetVolume(m_SoundVolume);
+		m_pChangeSound->SetVolume(m_SoundVolume);
 	}
 
-	if (m_OptionsClicked)return;
+	if (m_OptionsClicked) return;
 
 	//Check if startGame clicked
 	if (mousePos.x > m_StartGameTextShape.left && mousePos.y > m_StartGameTextShape.bottom &&
@@ -326,9 +339,10 @@ bool UI::IsGameQuit() const
 
 void UI::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
+	const int mouseClick = 27;
 	if (m_OptionsClicked)
 	{
-		if (e.keysym.sym == 27)
+		if (e.keysym.sym == mouseClick)
 		{
 			m_OptionsClicked = false;
 		}

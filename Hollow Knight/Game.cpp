@@ -67,6 +67,16 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 	}
 
 	m_pUI->ProcessKeyDownEvent(e);
+
+	if (e.keysym.sym == SDLK_i)
+	{
+		std::cout << "left - left arrow key" << std::endl;
+		std::cout << "right - right arrow key" << std::endl;
+		std::cout << "up - up arrow key" << std::endl;
+		std::cout << "attack - 'X' key" << std::endl;
+		std::cout << "Focus - 'A' key" << std::endl;
+	}
+
 }
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)

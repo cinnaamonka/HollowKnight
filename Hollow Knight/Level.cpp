@@ -175,7 +175,6 @@ void Level::Draw() const
 
 		if (m_pAvatar->isFocusing())
 		{
-
 			m_Camera->Scale(m_ZoomLevel, m_ZoomLevel, m_pAvatar->GetShape());
 		}
 
