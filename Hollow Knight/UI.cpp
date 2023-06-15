@@ -211,7 +211,7 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 	const float maxMusicVolume = 171.f;
 	const float musicVolumeStep = 19.f;
 
-	Rectf rightArrowShapeMusic
+	const Rectf rightArrowShapeMusic
 	(
 		m_BarAdjustementMusicRight.x,
 		m_BarAdjustementMusicRight.y,
@@ -219,7 +219,7 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		2 * m_pHoveredTextureRight->GetHeight()
 	);
 
-	Rectf leftArrowShapeMusic
+	const Rectf leftArrowShapeMusic
 	(
 		m_BarAdjustementMusicLeft.x,
 		m_BarAdjustementMusicLeft.y,
@@ -227,7 +227,7 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		2 * m_pHoveredTextureLeft->GetHeight()
 	);
 
-	Rectf rightArrowShapeSound
+	const Rectf rightArrowShapeSound
 	(
 		m_BarAdjustementSoundRight.x,
 		m_BarAdjustementSoundRight.y,
@@ -235,7 +235,7 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		2 * m_pHoveredTextureRight->GetHeight()
 	);
 
-	Rectf leftArrowShapeSound
+	const Rectf leftArrowShapeSound
 	(
 		m_BarAdjustementSoundLeft.x,
 		m_BarAdjustementSoundLeft.y,

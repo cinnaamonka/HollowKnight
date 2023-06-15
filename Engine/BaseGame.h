@@ -18,7 +18,7 @@ public:
 
 	virtual void Update(float elapsedSec)
 	{
-		
+
 	}
 	virtual void Draw() const
 	{

@@ -24,7 +24,7 @@ GroundObject::~GroundObject()
 	delete m_pTexture;
 }
 
-bool GroundObject::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
+bool GroundObject::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	float borderDist = 5.f;
 
@@ -36,7 +36,7 @@ bool GroundObject::isCollidingGround(const std::vector<Point2f>& ver, const Rect
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
 }
 
-bool GroundObject::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
+bool GroundObject::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	float borderDist = 5.f;
 
@@ -51,7 +51,7 @@ bool GroundObject::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& 
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo) || utils::Raycast(ver, ray5, ray6, hitInfo);
 }
 
-void GroundObject::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void GroundObject::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 
 	if (hitInfo.intersectPoint.x < actorShape.left + actorShape.width / 2)
@@ -62,10 +62,11 @@ void GroundObject::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actor
 	{
 		actorShape.left = hitInfo.intersectPoint.x - actorShape.width;
 	}
+
 	actorVelocity.x = 0.0f;
 }
 
-void GroundObject::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void GroundObject::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	const float verticalOffset = 2.0f;
 
@@ -76,7 +77,7 @@ void GroundObject::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorSh
 	actorVelocity.y = 0.0f;
 }
 
-void GroundObject::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void GroundObject::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	const float verticalOffset = 2.0f;
 

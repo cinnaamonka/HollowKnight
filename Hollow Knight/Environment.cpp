@@ -157,7 +157,7 @@ bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actor
 	return utils::Raycast(ver, ray1, ray2, hitInfo);
 }
 
-bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	float borderDist = 5.f;
 
@@ -169,7 +169,7 @@ bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo);
 }
 
-bool Environment::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
+bool Environment::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	float borderDist = 5.f;
 
@@ -184,7 +184,7 @@ bool Environment::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& a
 	return utils::Raycast(ver, ray1, ray2, hitInfo) || utils::Raycast(ver, ray3, ray4, hitInfo) || utils::Raycast(ver, ray5, ray6, hitInfo);
 }
 
-void Environment::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void Environment::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 
 	if (hitInfo.intersectPoint.x < actorShape.left + actorShape.width / 2)
@@ -199,7 +199,7 @@ void Environment::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorS
 	actorVelocity.x = 0.0f;
 }
 
-void Environment::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void Environment::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 
 	const float verticalOffset = 2.0f;
@@ -211,7 +211,7 @@ void Environment::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorSha
 	actorVelocity.y = 0.0f;
 }
 
-void Environment::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
+void Environment::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	const float verticalOffset = 2.0f;
 

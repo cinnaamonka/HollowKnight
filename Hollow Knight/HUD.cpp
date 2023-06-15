@@ -120,5 +120,4 @@ bool HUD::CanAddLife() const
 	if (m_LeftLifes >= m_TotalLifesAmount) return false;
 
 	return true;
-
 }
