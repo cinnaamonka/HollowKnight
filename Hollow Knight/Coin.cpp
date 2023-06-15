@@ -28,7 +28,7 @@ void Coin::Draw() const
 
 bool Coin::IsOverlapping(const Rectf& rect) const
 {
-	Rectf coinShape = GetShape();
+	const Rectf coinShape = GetShape();
 
 	const float actorRight = rect.left + 2 * rect.width / 3;
 	const float actorLeft = rect.left + rect.width / 3;

@@ -22,7 +22,7 @@ void EnemyCentipede::Update(float elapsedSec)
 	ChangeTexture(1, 4);
 
 	Rectf myShape = GetShape();
-	Rectf bounds = GetBoundaries();
+	const Rectf bounds = GetBoundaries();
 
 	if (myShape.left + myShape.width >= bounds.left + bounds.width || myShape.left < bounds.left)
 	{

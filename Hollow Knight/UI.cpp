@@ -209,7 +209,7 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 
 	const float verticalOffset = 50.0f;
 	const float maxMusicVolume = 171.f;
-	const float musicVolumeStep = 19.f;
+	const int musicVolumeStep = 19;
 
 	const Rectf rightArrowShapeMusic
 	(
@@ -426,7 +426,7 @@ void UI::DrawAudioScreen(const float verticalOffset, const float horizontalOffse
 
 		utils::FillRect(m_ViewPort.left + m_ViewPort.width / 2 + m_pMusicAdjustmentTexture->GetWidth() / 2,
 			m_ViewPort.bottom + m_ViewPort.height / 2 - m_pSoundAdjustmentTexture->GetHeight(),
-			m_SoundVolume,
+			float(m_SoundVolume),
 			m_SoundBar->GetHeight());
 
 		utils::FillRect(m_ViewPort.left + m_ViewPort.width / 2 + m_pMusicAdjustmentTexture->GetWidth() / 2,

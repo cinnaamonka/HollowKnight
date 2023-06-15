@@ -55,7 +55,7 @@ void Door::Update(float elapsedSec, Avatar* actor, const int index)
 
 void Door::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAtacked, const int index)
 {
-	float borderDist = 5.f;
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -120,7 +120,7 @@ void Door::Draw() const
 
 bool Door::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
-	float borderDist = 5.f;
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left, actorShape.bottom + borderDist };
 	const Point2f ray2{ actorShape.left + actorShape.width, actorShape.bottom + borderDist };

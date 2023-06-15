@@ -26,7 +26,7 @@ GroundObject::~GroundObject()
 
 bool GroundObject::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
-	float borderDist = 5.f;
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -38,7 +38,7 @@ bool GroundObject::isCollidingGround(const std::vector<Point2f>& ver, const Rect
 
 bool GroundObject::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
-	float borderDist = 5.f;
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom + actorShape.height / 2 };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };

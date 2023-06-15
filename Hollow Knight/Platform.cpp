@@ -35,7 +35,7 @@ Platform::~Platform()
 
 void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 {
-	float borderDist = 5.f;
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -48,7 +48,7 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 	m_isCharacterOnPlatform = false;
 	m_IsCollidingCharacter = false;
 
-	for (std::vector<Point2f>& ver : m_Vertices)
+	for (const std::vector<Point2f>& ver : m_Vertices)
 	{
 		if (isCollidingWalls(ver, actorShape, hitInfo))
 		{
@@ -85,7 +85,7 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 
 bool Platform::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const
 {
-	float borderDist = 5.f;
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left, actorShape.bottom + borderDist };
 	const Point2f ray2{ actorShape.left + actorShape.width, actorShape.bottom + borderDist };

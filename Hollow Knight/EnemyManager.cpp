@@ -22,7 +22,6 @@ void EnemyManager::Update(float elapsedSec, Environment* pLevel)
 		Enemy->Update(elapsedSec);
 
 		Rectf enemyShape = Rectf(Enemy->GetShape().left, Enemy->GetShape().bottom + Enemy->GetShape().width / 3, Enemy->GetShape().width, Enemy->GetShape().height);
-		Vector2f enemyVelocity = Enemy->GetVelocity();
 
 		if (!pLevel->IsOnGround(enemyShape, true) && Enemy->IsKilled())
 		{
@@ -35,7 +34,7 @@ bool EnemyManager::HitItem(const Rectf& rect)
 {
 	if (m_pItems.empty()) return false;
 
-	for (BaseEnemy* Enemy : m_pItems)
+	for (const BaseEnemy* Enemy : m_pItems)
 	{
 		if (Enemy->IsOverlapping(rect) && !Enemy->IsKilled())
 		{

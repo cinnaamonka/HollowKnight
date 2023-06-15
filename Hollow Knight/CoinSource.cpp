@@ -42,7 +42,7 @@ void CoinSource::Update(Avatar* actor)
 	Vector2f vector = actor->GetVelocity();
 	Rectf actorShape = actor->GetShape();
 
-	float borderDist{ 5.f };
+	const float borderDist{ 5.f };
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -54,7 +54,7 @@ void CoinSource::Update(Avatar* actor)
 
 	if (m_IsDestroyed) return;
 
-	for (std::vector<Point2f>& ver : m_Vertices)
+	for (const std::vector<Point2f>& ver : m_Vertices)
 	{
 		if (isCollidingWalls(ver, actorShape, hitInfo))
 		{
@@ -116,7 +116,7 @@ bool CoinSource::IsOverlapping(const Rectf& rect) const
 		m_ClipHeight
 	};
 
-	bool isColliding
+	const bool isColliding
 	{
 		rect.left < coinSourceRect.left + coinSourceRect.width &&
 		rect.left + rect.width > coinSourceRect.left &&
@@ -129,7 +129,7 @@ bool CoinSource::IsOverlapping(const Rectf& rect) const
 
 bool CoinSource::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
-	float borderDist{ 5.f };
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left, actorShape.bottom + borderDist };
 	const Point2f ray2{ actorShape.left + actorShape.width, actorShape.bottom + borderDist };

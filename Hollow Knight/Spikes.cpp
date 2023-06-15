@@ -14,7 +14,7 @@ Spikes::~Spikes()
 
 bool Spikes::IsOverlapping(const Rectf& rect) const
 {
-	bool isColliding
+	const bool isColliding
 	{
 		rect.left < m_Shape.left + m_Shape.width &&
 		(rect.left + rect.width > m_Shape.left) &&

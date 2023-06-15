@@ -27,7 +27,7 @@ void EnemyDragonfly::Update(float elapsedSec)
 	ChangeTexture(killingTexturesAmount, movingTexturesAmount, atackingTexturesAmount);
 
 	Rectf myShape = GetShape();
-	Rectf bounds = GetBoundaries();
+	const Rectf bounds = GetBoundaries();
 
 	if (IsKilled()) return;
 

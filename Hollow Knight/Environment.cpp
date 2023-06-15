@@ -87,10 +87,10 @@ void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape, false)) return;
 
 
-	Point2f ray1(shape.left + shape.width / 2, shape.bottom);
-	Point2f ray2(shape.left + shape.width / 2, shape.bottom + shape.height);
-	Point2f ray3(shape.left, shape.bottom + shape.height / 2);
-	Point2f ray4(shape.left + shape.width, shape.bottom + shape.height / 2);
+	const Point2f ray1(shape.left + shape.width / 2, shape.bottom);
+	const Point2f ray2(shape.left + shape.width / 2, shape.bottom + shape.height);
+	const Point2f ray3(shape.left, shape.bottom + shape.height / 2);
+	const Point2f ray4(shape.left + shape.width, shape.bottom + shape.height / 2);
 
 	utils::HitInfo hitInfo;
 
@@ -128,8 +128,8 @@ bool Environment::IsOnGround(Rectf& actorShape, bool isKilled) const
 
 	utils::HitInfo hitInfo{};
 
-	Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom - 1.0f);
-	Point2f ray2(actorShape.left + actorShape.width / 2, actorShape.bottom + actorShape.height);
+	const Point2f ray1(actorShape.left + actorShape.width / 2, actorShape.bottom - 1.0f);
+	const Point2f ray2(actorShape.left + actorShape.width / 2, actorShape.bottom + actorShape.height);
 
 	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[1], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[0], ray2, ray1, hitInfo);
 }
@@ -141,7 +141,7 @@ Rectf Environment::GetBoundaries() const
 
 bool Environment::HasReachedEnd(const Rectf& actorShape) const
 {
-	bool isEndReached = actorShape.left > m_EndSignShape.left &&
+	const bool isEndReached = actorShape.left > m_EndSignShape.left &&
 		actorShape.bottom > m_EndSignShape.bottom &&
 		actorShape.left + actorShape.width < m_EndSignShape.left + m_EndSignShape.width &&
 		actorShape.bottom + actorShape.height < m_EndSignShape.bottom + m_EndSignShape.height;
@@ -151,15 +151,15 @@ bool Environment::HasReachedEnd(const Rectf& actorShape) const
 
 bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
-	Point2f ray1(actorShape.left, actorShape.bottom + actorShape.height / 2);
-	Point2f ray2(actorShape.left + actorShape.width, actorShape.bottom + actorShape.height / 2);
+	const Point2f ray1(actorShape.left, actorShape.bottom + actorShape.height / 2);
+	const Point2f ray2(actorShape.left + actorShape.width, actorShape.bottom + actorShape.height / 2);
 
 	return utils::Raycast(ver, ray1, ray2, hitInfo);
 }
 
 bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
-	float borderDist = 5.f;
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };
@@ -171,7 +171,7 @@ bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf
 
 bool Environment::isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
-	float borderDist = 5.f;
+	const float borderDist = 5.f;
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom + actorShape.height / 2 };
 	const Point2f ray2{ actorShape.left + borderDist, actorShape.bottom + actorShape.height };

@@ -51,7 +51,7 @@ void CoinManager::SetPositions(const Rectf& rect) const
 
 	int offset = coinsStartingOffset;
 
-	for (int i = GetItems().size() - coinsPerKill; i < GetItems().size(); i++) {
+	for (int i = int(GetItems().size()) - coinsPerKill; i < GetItems().size(); i++) {
 		GetItems()[i]->SetPosition(Point2f(rect.left + offset, rect.bottom));
 
 		offset += offsetStep;
