@@ -19,7 +19,7 @@ void Camera::SetLevelBoundaries(const Rectf& levelBoundaries)
 	m_LevelBoundaries = levelBoundaries;
 }
 
-void Camera::Transform(const Rectf& target, bool isShortDistance)
+void Camera::Transform(const Rectf& target, bool isShortDistance) const
 {
 	Point2f posCenter = Track(target);
 
@@ -34,7 +34,7 @@ Point2f Camera::Track(const Rectf& target) const
 		target.bottom + target.height / 2 - m_Height / 2);
 }
 
-void Camera::Clamp(Point2f& bottomLeftPos)
+void Camera::Clamp(Point2f& bottomLeftPos) const
 {
 	bottomLeftPos.x = std::max(m_LevelBoundaries.left + 1.0f,
 		std::min(bottomLeftPos.x, m_LevelBoundaries.left + m_LevelBoundaries.width - m_Width));
@@ -44,7 +44,7 @@ void Camera::Clamp(Point2f& bottomLeftPos)
 }
 
 
-void Camera::Scale(const float scaleX, const float scaleY, const Rectf& target)
+void Camera::Scale(const float scaleX, const float scaleY, const Rectf& target) const
 {
 	glTranslatef(m_Width / 2.f, m_Height / 2.f, 0.f);
 

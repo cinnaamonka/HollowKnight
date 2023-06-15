@@ -27,7 +27,7 @@ void CoinManager::Draw() const
 
 void CoinManager::HandleCollection(const Rectf& rect)
 {
-	for (Coin* pCoin : GetItems())
+	for ( Coin* pCoin : GetItems())
 	{
 		if (pCoin->IsOverlapping(rect) && !pCoin->IsCollected())
 		{
@@ -70,7 +70,8 @@ void CoinManager::Update(float elapsedSec, Environment* pLevel)
 		}
 	}
 }
-void CoinManager::SetCoinsAmount(const int coins) {
+void CoinManager::SetCoinsAmount(const int coins) 
+{
 	m_CoinsCollectedAmount = coins;
 }
 

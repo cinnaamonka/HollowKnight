@@ -32,7 +32,7 @@ void EnemyDragonfly::Update(float elapsedSec)
 	if (IsKilled()) return;
 
 
-	bool isCollide
+	const bool isCollide
 	{
 		myShape.left < bounds.left + bounds.width &&
 		myShape.left + myShape.width > bounds.left &&

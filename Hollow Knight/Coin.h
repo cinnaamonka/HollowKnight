@@ -48,7 +48,7 @@ public:
 
 	void PlaySound() const;
 
-	void SetSoundVolume(const int soundVolume);
+	void SetSoundVolume(const int soundVolume) const;
 
 private:
 

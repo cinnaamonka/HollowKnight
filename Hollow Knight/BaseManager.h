@@ -51,7 +51,7 @@ public:
 		if (m_pItems.empty())
 			return false;
 
-		for (T* item : m_pItems)
+		for (const T* item : m_pItems)
 		{
 			if (item->IsOverlapping(rect) && !item->IsDestroyed())
 			{

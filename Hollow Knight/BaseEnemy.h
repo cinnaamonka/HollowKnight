@@ -64,7 +64,8 @@ protected:
 
 	void SetBoundaries(float width, float height);
 
-	Rectf GetBoundaries() const {
+	Rectf GetBoundaries() const 
+	{
 		return m_BoundariesBorder;
 	}
 

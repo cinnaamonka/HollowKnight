@@ -24,7 +24,7 @@ public:
 
 	bool IsEnemyKilled(const Rectf& actor) const;
 
-	void Atack(const Rectf& actor, const Vector2f& velocity)const;
+	void Attack(const Rectf& actor, const Vector2f& velocity)const;
 
 private:
 	SoundEffect* m_pDyingSound;

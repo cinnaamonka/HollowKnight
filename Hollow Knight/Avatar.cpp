@@ -43,9 +43,9 @@ Avatar::Avatar() :
 
 	SetFramesPerSec(10);
 
-	m_pParticleTexture = new Texture("ParticleEffect.png");
+	m_pFocusAnimationTexture = new Texture("ParticleEffect.png");
 
-	m_ParticlesShape = Rectf(0, 0, m_pParticleTexture->GetWidth(), m_pParticleTexture->GetHeight());
+	m_FocusAnimationShape = Rectf(0, 0, m_pFocusAnimationTexture->GetWidth(), m_pFocusAnimationTexture->GetHeight());
 
 	m_pCharacterWalkingSound = new SoundEffect("soundWalking.wav");
 
@@ -58,7 +58,7 @@ Avatar::Avatar() :
 
 Avatar::~Avatar()
 {
-	delete m_pParticleTexture;
+	delete m_pFocusAnimationTexture;
 	delete m_pCharacterWalkingSound;
 	delete m_pKnifeInAir;
 	delete m_pCollidesEnemy;
@@ -175,7 +175,7 @@ void Avatar::Draw()const
 
 	if (m_IsFocusing)
 	{
-		m_pParticleTexture->Draw(particleShape, m_ParticlesShape);
+		m_pFocusAnimationTexture->Draw(particleShape, m_FocusAnimationShape);
 	}
 
 	if (!m_IsMovingRight)
@@ -433,7 +433,7 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 			srcRect.left = 8 * m_ClipWidth;
 			srcRect.bottom = 5 * m_ClipHeight;
 
-			m_ParticlesShape.left = GetAnimationFrame() * m_ParticlesShape.width / 5;
+			m_FocusAnimationShape.left = GetAnimationFrame() * m_FocusAnimationShape.width / 5;
 		}
 
 		SetSourceRect(srcRect);

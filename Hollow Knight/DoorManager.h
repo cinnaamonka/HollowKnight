@@ -17,7 +17,7 @@ public:
 	DoorManager(DoorManager&&) = delete;
 	DoorManager& operator=(DoorManager&&) = delete;
 
-	void Update(float elapsedSec, Avatar* actor);
+	void Update(float elapsedSec, Avatar* actor) const;
 };
 
 

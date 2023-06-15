@@ -118,7 +118,7 @@ void Door::Draw() const
 	GetTexture()->Draw(m_Shape, m_SourceRect);
 }
 
-bool Door::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const
+bool Door::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	float borderDist = 5.f;
 
@@ -146,7 +146,7 @@ void Door::UpdateFrame(float elapsedSec, int numberFrames)
 	}
 }
 
-void Door::SetSoundVolume(const int soundVolume)
+void Door::SetSoundVolume(const int soundVolume) const
 {
 	m_pBreakingDoorSound->SetVolume(soundVolume);
 

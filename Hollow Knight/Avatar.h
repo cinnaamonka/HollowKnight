@@ -63,10 +63,10 @@ private:
 	Vector2f m_Acceleration;
 
 	Rectf m_ShapeBeforeDying;
-	Rectf m_ParticlesShape;
+	Rectf m_FocusAnimationShape;
 
 
-	Texture* m_pParticleTexture;
+	Texture* m_pFocusAnimationTexture;
 	
 
 	float m_HorSpeed;

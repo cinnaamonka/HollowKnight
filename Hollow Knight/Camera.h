@@ -13,19 +13,19 @@ public:
 	~Camera();
 
 	void SetLevelBoundaries(const Rectf& levelBoundaries);
-	void Transform(const Rectf& target, bool isShortDistance);
+	void Transform(const Rectf& target, bool isShortDistance) const;
 
 	Point2f GetPosition(const Rectf& target) const
 	{
 		return Track(target);
 	}
 
-	void Scale(const float scaleX, const float scaleY, const Rectf& target);
+	void Scale(const float scaleX, const float scaleY, const Rectf& target) const;
 
 private:
 
 	Point2f Track(const Rectf& target) const;
-	void Clamp(Point2f& bottomLeftPos);
+	void Clamp(Point2f& bottomLeftPos) const;
 
 private:
 

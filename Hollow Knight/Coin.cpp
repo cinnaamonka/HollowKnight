@@ -42,7 +42,7 @@ bool Coin::IsOverlapping(const Rectf& rect) const
 	const float coinTop = coinShape.bottom + coinShape.height;
 
 
-	bool isColliding
+	const bool isColliding
 	{
 		actorLeft < coinRight &&
 		actorRight > coinLeft &&
@@ -67,7 +67,7 @@ void Coin::PlaySound() const
 {
 	m_pCoinCollectedSound->Play(0);
 }
-void Coin::SetSoundVolume(const int soundVolume)
+void Coin::SetSoundVolume(const int soundVolume) const
 {
 	m_pCoinCollectedSound->SetVolume(soundVolume);
 }

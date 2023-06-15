@@ -11,7 +11,7 @@ BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture, int fr
 {
 	SetFramesNumber(framesNumber);
 
-	Rectf sourceRect{ 0,0,0,0 };
+    Rectf sourceRect{ 0,0,0,0 };
 
 	sourceRect.width = GetTexture()->GetWidth() / GetFramesNumber();
 	sourceRect.height = GetTexture()->GetHeight();
@@ -44,7 +44,7 @@ void BaseEnemy::SetBoundaries(float width, float height)
 
 bool BaseEnemy::IsOverlapping(const Rectf& rect) const
 {
-	bool isColliding
+	const bool isColliding
 	{
 		rect.left < GetShape().left + GetShape().width &&
 		(rect.left + rect.width > GetShape().left) &&
@@ -88,14 +88,14 @@ bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
 {
 	const float maxDistance = 40.0f;
 
-	float distance = float(sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2)));
+	const float distance = float(sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2)));
 
 	return distance <= maxDistance;
 }
 
 bool BaseEnemy::CanSeeAvatar(const Rectf& avatarRectf)const
 {
-	float distance = float(sqrt(pow(avatarRectf.left - GetShape().left, 2) + pow(avatarRectf.bottom - GetShape().bottom, 2)));
+	const float distance = float(sqrt(pow(avatarRectf.left - GetShape().left, 2) + pow(avatarRectf.bottom - GetShape().bottom, 2)));
 
 	const float maxDistanceWithAvatar = 400.0f;
 

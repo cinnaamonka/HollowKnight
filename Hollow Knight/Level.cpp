@@ -272,9 +272,10 @@ void Level::AddEnemies()
 void Level::CheckAvatarCollison()
 {
 	if (m_EndReached)return;
+
 	const Rectf shapeRect = m_pAvatar->GetShape();
 
-	m_pEnemyManager->Atack(shapeRect, m_pAvatar->GetVelocity());
+	m_pEnemyManager->Attack(shapeRect, m_pAvatar->GetVelocity());
 
 	if (m_pAvatar->IsAtacking())
 	{

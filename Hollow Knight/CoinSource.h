@@ -16,7 +16,7 @@ public:
 	CoinSource& operator=(CoinSource&& other) = delete;
 	~CoinSource();
 
-	void Draw()const;
+	void Draw() const;
 	void Update(Avatar* actor);
 	void CheckIfDestroyed();
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;

@@ -12,7 +12,7 @@ int SDL_main(int argv, char** args)
 
 	StartHeapControl();
 
-	Game* pGame{ new Game{ Window{ "Project name - Name, first name - 1DAEXX",846.0f, 600.0f } } };
+	Game* pGame{ new Game{ Window{ "Hollow Knight - Parniuk, Maryia - 1DAE12",846.0f, 600.0f } } };
 
 	pGame->Run();
 

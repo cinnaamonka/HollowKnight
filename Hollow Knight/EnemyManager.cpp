@@ -75,7 +75,7 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 	return false;
 }
 
-void EnemyManager::Atack(const Rectf& actor, const Vector2f& velocity)const
+void EnemyManager::Attack(const Rectf& actor, const Vector2f& velocity)const
 {
 
 	for (BaseEnemy* Enemy : GetItems())
