@@ -23,15 +23,15 @@ public:
 	void Scale(const float scaleX, const float scaleY, const Rectf& target);
 
 private:
-	
+
 	Point2f Track(const Rectf& target) const;
 	void Clamp(Point2f& bottomLeftPos);
-	
+
 private:
 
 	float m_Width;
 	float m_Height;
-	
+
 	Rectf m_LevelBoundaries;
 };
 

@@ -6,7 +6,7 @@ class BaseMovingObject
 {
 public:
 
-	BaseMovingObject(const std::string &path, int framesNumber);
+	BaseMovingObject(const std::string& path, int framesNumber);
 
 	BaseMovingObject(const BaseMovingObject& other) = delete;
 	BaseMovingObject& operator=(const BaseMovingObject& other) = delete;
@@ -15,7 +15,7 @@ public:
 
 	virtual ~BaseMovingObject();
 
-	const Texture* GetTexture() const 
+	const Texture* GetTexture() const
 	{
 		return m_pTexture;
 	}
@@ -26,14 +26,15 @@ public:
 	}
 
 	virtual void Draw() const = 0;
-	
+
 	void UpdateFrame(float elapsedSec, int numberFrames);
 
 	int GetLifesAmount() const
 	{
 		return m_LifesAmount;
 	}
-	void DecreaseLifesAmount() 
+
+	void DecreaseLifesAmount()
 	{
 		m_LifesAmount--;
 	}
@@ -47,6 +48,7 @@ public:
 	{
 		m_IsKilled = isKilled;
 	}
+
 	void SetShape(const Rectf& shape) {
 		m_Shape = shape;
 	}
@@ -65,7 +67,7 @@ protected:
 		return m_AnimTime;
 	}
 
-	void SetAnimationTime(const float &time) {
+	void SetAnimationTime(const float& time) {
 		m_AnimTime = time;
 	}
 	void SetFramesPerSec(const int time) {
@@ -80,10 +82,10 @@ protected:
 		return m_AnimFrame;
 	}
 
-	void SetAnimationFrame(const int &currentFrame) {
+	void SetAnimationFrame(const int& currentFrame) {
 		m_AnimFrame = currentFrame;
 	}
-	
+
 	void SetSourceRect(const Rectf& shape) {
 		m_SourceRect = shape;
 	}
@@ -92,7 +94,6 @@ protected:
 		return m_SourceRect;
 	}
 
-	
 private:
 
 	Texture* m_pTexture;

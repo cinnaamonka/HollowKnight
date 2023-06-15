@@ -27,14 +27,15 @@ public:
 	{
 		return m_Velocity;
 	}
+
 	bool isColliding() const;
 
 	bool isFocusing() const
 	{
 		return m_IsFocusing;
 	}
-	bool isMoving() const;
 
+	bool isMoving() const;
 	void SetSoundVolume(const int soundVolume) const;
 	void StopAllSounds()const;
 

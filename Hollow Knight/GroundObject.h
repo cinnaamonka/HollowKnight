@@ -19,7 +19,6 @@ public:
 		return m_Shape;
 	}
 
-
 protected:
 
 	std::vector<std::vector<Point2f>> m_Vertices;
@@ -34,7 +33,7 @@ protected:
 
 	void SetShape(const Rectf& rect);
 
-	const Texture* GetTexture() const 
+	const Texture* GetTexture() const
 	{
 		return m_pTexture;
 	}

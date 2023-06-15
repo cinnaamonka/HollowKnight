@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "Spikes.h"
 
-Spikes::Spikes(const Rectf& spikesRect):
-	m_Shape{spikesRect}
+Spikes::Spikes(const Rectf& spikesRect) :
+	m_Shape(spikesRect)
 {
 
 }
+
 Spikes::~Spikes()
 {
 

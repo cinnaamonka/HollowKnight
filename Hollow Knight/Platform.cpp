@@ -5,7 +5,9 @@
 #include <Texture.h>
 
 Platform::Platform(const Point2f& bottomLeft) :
-	GroundObject("platform.png"), m_isCharacterOnPlatform(false), m_IsCollidingCharacter(false)
+	GroundObject("platform.png"),
+	m_isCharacterOnPlatform(false),
+	m_IsCollidingCharacter(false)
 
 {
 	SVGParser::GetVerticesFromSvgFile("platform.svg", m_Vertices);
@@ -51,16 +53,19 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 		if (isCollidingWalls(ver, actorShape, hitInfo))
 		{
 			ResetHorizontalPosition(actorVelocity, actorShape, hitInfo);
+
 			m_IsCollidingCharacter = true;
 
-			if (isCollidingGround(ver, actorShape, hitInfo))
+			if (isCollidingGround(ver, actorShape, hitInfo)) {
 				ResetVerticalPosition(actorVelocity, actorShape, hitInfo);
+			}
 
 			break;
 		}
 		else if (isCollidingTop(ver, actorShape, hitInfo) && actorVelocity.y > 0)
 		{
 			ResetTopPosition(actorVelocity, actorShape, hitInfo);
+
 			m_IsCollidingCharacter = true;
 
 			break;
@@ -77,6 +82,7 @@ void Platform::HandleCollision(Rectf& actorShape, Vector2f& actorVelocity)
 		}
 	}
 }
+
 bool Platform::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const
 {
 	float borderDist = 5.f;

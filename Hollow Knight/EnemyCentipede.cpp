@@ -3,23 +3,23 @@
 
 #include <Texture.h>
 
-// EnemyCentipede
-
 EnemyCentipede::EnemyCentipede(const Point2f& position) :
-	BaseEnemy(position, "EnemyCentipede.png",5)
+	BaseEnemy(position, "EnemyCentipede.png", 5)
 {
-	SetVelocity(Vector2f(30.f, 0.0f));
-	SetBoundaries(600.0f, GetShape().height); 
+	SetVelocity(Vector2f{ 30.f, 0.0f });
+	SetBoundaries(600.0f, GetShape().height);
 }
+
 EnemyCentipede::~EnemyCentipede()
 {
 
 }
+
 void EnemyCentipede::Update(float elapsedSec)
 {
-	UpdateFrame(elapsedSec,GetFramesNumber());
+	UpdateFrame(elapsedSec, GetFramesNumber());
 
-	ChangeTexture(1,4);
+	ChangeTexture(1, 4);
 
 	Rectf myShape = GetShape();
 	Rectf bounds = GetBoundaries();
@@ -28,11 +28,12 @@ void EnemyCentipede::Update(float elapsedSec)
 	{
 		SetVelocity(GetVelocity() * (-1));
 	}
+
 	if (!IsKilled())
 	{
 		myShape.left += GetVelocity().x * elapsedSec;
 	}
-	
+
 	SetShape(myShape);
 }
 

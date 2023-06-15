@@ -23,8 +23,8 @@ void EnemyManager::Update(float elapsedSec, Environment* pLevel)
 
 		Rectf enemyShape = Rectf(Enemy->GetShape().left, Enemy->GetShape().bottom + Enemy->GetShape().width / 3, Enemy->GetShape().width, Enemy->GetShape().height);
 		Vector2f enemyVelocity = Enemy->GetVelocity();
-		
-		if (!pLevel->IsOnGround(enemyShape,true) && Enemy->IsKilled())
+
+		if (!pLevel->IsOnGround(enemyShape, true) && Enemy->IsKilled())
 		{
 			Enemy->Fall(elapsedSec);
 		}
@@ -33,14 +33,12 @@ void EnemyManager::Update(float elapsedSec, Environment* pLevel)
 
 bool EnemyManager::HitItem(const Rectf& rect)
 {
-	if (m_pItems.empty())
-		return false;
+	if (m_pItems.empty()) return false;
 
 	for (BaseEnemy* Enemy : m_pItems)
 	{
 		if (Enemy->IsOverlapping(rect) && !Enemy->IsKilled())
 		{
-			
 			return true;
 		}
 		else if (Enemy->IsKilled())
@@ -51,6 +49,7 @@ bool EnemyManager::HitItem(const Rectf& rect)
 
 	return false;
 }
+
 bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 {
 	for (BaseEnemy* Enemy : GetItems())
@@ -67,16 +66,18 @@ bool EnemyManager::IsEnemyKilled(const Rectf& actor) const
 			else
 			{
 				Enemy->SetKilled(true);
+
 				return true;
 			}
 		}
 	}
+
 	return false;
 }
 
 void EnemyManager::Atack(const Rectf& actor, const Vector2f& velocity)const
 {
-	
+
 	for (BaseEnemy* Enemy : GetItems())
 	{
 		if (Enemy->CanSeeAvatar(actor))

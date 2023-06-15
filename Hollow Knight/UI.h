@@ -1,4 +1,5 @@
 #pragma once
+
 class Texture;
 class SoundEffect;
 
@@ -22,18 +23,18 @@ public:
 	bool IsGameStarted() const;
 	bool IsGameQuit() const;
 
-	static const int GetMusicVolume() 
+	static const int GetMusicVolume()
 	{
 		return m_MusicVolume;
 	}
-	static const int GetSoundVolume() 
+
+	static const int GetSoundVolume()
 	{
 		return m_SoundVolume;
 	}
-	
 
 private:
-	void DrawSoundMusicBars(const float verticalOffset,const float horizontalOffset) const;
+	void DrawSoundMusicBars(const float verticalOffset, const float horizontalOffset) const;
 	void DrawFirstScreen(const float verticalOffset, const float horizontalOffset) const;
 	void DrawAudioScreen(const float verticalOffset, const float horizontalOffset) const;
 
@@ -54,14 +55,14 @@ private:
 	Texture* m_pSoundAdjustmentTexture;
 	SoundEffect* m_pSelectSound;
 	Texture* m_pBackTexture;
-	
+
 
 	Rectf m_ViewPort;
 	Rectf m_StartGameTextShape;
 	Rectf m_OptionsTextShape;
 	Rectf m_QuitTextShape;
 	Rectf m_BackTextShape;
-	
+
 	Point2f m_BarAdjustementMusicRight;
 	Point2f m_BarAdjustementMusicLeft;
 	Point2f m_BarAdjustementSoundRight;
@@ -83,6 +84,5 @@ private:
 
 	static int m_MusicVolume;
 	static int m_SoundVolume;
-
 };
 

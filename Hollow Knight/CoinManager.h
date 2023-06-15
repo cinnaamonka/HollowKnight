@@ -34,11 +34,10 @@ public:
 	}
 
 	void SetCoinsAmount(const int coins);
-	
+
 private:
 
 	int m_CoinsCollectedAmount;
-	
 };
 
 

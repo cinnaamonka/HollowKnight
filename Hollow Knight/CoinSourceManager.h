@@ -1,6 +1,8 @@
 #pragma once
+
 #include "CoinSource.h"
 #include "BaseManager.h"
+
 class Avatar;
 
 class CoinSourceManager final :public BaseManager<CoinSource>
@@ -16,7 +18,6 @@ public:
 
 	void Update(Avatar* pAvatar);
 	bool IsCoinSourceDestroyed(const Rectf& avatar) const;
-
 };
 
 

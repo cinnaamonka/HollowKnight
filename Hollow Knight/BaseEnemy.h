@@ -7,6 +7,7 @@ class BaseEnemy : public BaseMovingObject
 public:
 
 	explicit BaseEnemy(const Point2f& position, const std::string &texture, int framesNumber);
+
 	virtual ~BaseEnemy();
 
 	BaseEnemy(const BaseEnemy& other) = delete;
@@ -36,10 +37,12 @@ public:
 	{
 		return m_AvatarShape;
 	}
+
 	Vector2f GetAvatarVelocity() const
 	{
 		return m_AvatarVelocity;
 	}
+
 	void SetAvatarInfo(const Rectf& shape,const Vector2f& velocity)
 	{
 		m_AvatarShape = shape;
@@ -54,7 +57,6 @@ public:
 	}
 
 	void Fall(float elapsedSec);
-
 
 protected:
 

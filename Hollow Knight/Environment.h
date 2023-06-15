@@ -3,11 +3,9 @@
 #include <vector>
 #include <Vector2f.h>
 
-
 class Texture;
 class Platform;
 class GroundObject;
-
 
 class Environment final
 {
@@ -27,11 +25,12 @@ public:
 
 
 	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity);
-	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
 
-	bool IsOnGround(Rectf& actorShape,bool isKilled) const;
-	Rectf GetBoundaries() const;
+	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
+	bool IsOnGround(Rectf& actorShape, bool isKilled) const;
 	bool HasReachedEnd(const Rectf& actorShape) const;
+
+	Rectf GetBoundaries() const;
 
 	static bool isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
 	static bool isCollidingTop(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo);
@@ -41,7 +40,7 @@ public:
 	static void ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 	static void ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo);
 
-	void BlackRectDisappear (const Rectf& actorShape) const;
+	void BlackRectDisappear(const Rectf& actorShape) const;
 
 private:
 
@@ -53,8 +52,8 @@ private:
 
 	Texture* m_EndSignTexture;
 	Texture* m_pBackground;
-	
-	Rectf m_Boundaries ;
+
+	Rectf m_Boundaries;
 	Rectf m_EndSignShape;
 	Rectf m_pDarkRect;
 
@@ -67,6 +66,6 @@ private:
 	GroundObject* m_pBold;
 
 	float m_BoldOpacity;
-	
+
 };
 

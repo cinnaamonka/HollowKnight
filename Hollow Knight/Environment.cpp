@@ -7,19 +7,30 @@
 #include <SVGParser.h>
 
 Environment::Environment() :
-	m_pDarkRect{ 2782, 3000, 1080, 1300 }, m_BoldOpacity(1)
+	m_pDarkRect(2782, 3000, 1080, 1300),
+	m_BoldOpacity(1)
 {
 	m_pPlatform = new Platform(Point2f{ 8088.0f,2070.0f });
+
 	m_pBackground = new Texture("Background Variation3.png");
+
 	m_pGround = new GroundObject("HollowKnightLevel2.png");
+
 	m_pForeground = new GroundObject("HollowKnight LevelForeground.png");
+
 	m_pStaticForeground = new GroundObject("StaticForeground.png");
+
 	m_Boundaries = Rectf(0, 0, m_pGround->GetShape().width, m_pGround->GetShape().height);
+
 	SVGParser::GetVerticesFromSvgFile("level1.svg", m_Vertices);
+
 	m_pBaseBold = new GroundObject("BoldBase.png");
+
 	m_pBold = new GroundObject("Bold.png");
+
 	m_EndSignTexture = new Texture("EndSign.png");
-	m_EndSignShape = Rectf{ 9600.0f, 5324.0f, m_EndSignTexture->GetWidth(), m_EndSignTexture->GetHeight() };
+
+	m_EndSignShape = Rectf(9600.0f, 5324.0f, m_EndSignTexture->GetWidth(), m_EndSignTexture->GetHeight());
 
 }
 Environment::~Environment()
@@ -48,11 +59,17 @@ void Environment::DrawForeground() const
 void Environment::DrawMiddleground() const
 {
 	m_pGround->Draw(Point2f{ 0.0f, 0.f });
+
 	m_pPlatform->Platform::Draw(m_pPlatform->GetPosition());
+
 	m_pBaseBold->Draw(Point2f{ 6600.f, 3600.f });
+
 	m_pBold->Draw(Point2f{ 6670.f, 3600.f });
+
 	m_EndSignTexture->Draw(m_EndSignShape);
+
 	utils::SetColor(Color4f{ 0.0f, 0.0f, 0.0f, m_BoldOpacity });
+
 	utils::FillEllipse(Point2f{ 6815.f, 3770.f }, 100.f, 150);
 }
 void Environment::DrawStaticForeground(const Rectf& shape) const
@@ -64,10 +81,11 @@ void Environment::DrawStaticForeground(const Rectf& shape) const
 void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 {
 	m_pPlatform->HandleCollision(shape, velocity);
+
 	ChangeBoldCapacity(shape);
 
-	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape, false))
-		return;
+	if (m_pPlatform->isCollidingCharacter() && IsOnGround(shape, false)) return;
+
 
 	Point2f ray1(shape.left + shape.width / 2, shape.bottom);
 	Point2f ray2(shape.left + shape.width / 2, shape.bottom + shape.height);
@@ -81,8 +99,10 @@ void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 		if (isCollidingWalls(ver, shape, hitInfo))
 		{
 			ResetHorizontalPosition(velocity, shape, hitInfo);
-			if (isCollidingGround(ver, shape, hitInfo))
+
+			if (isCollidingGround(ver, shape, hitInfo)) {
 				ResetVerticalPosition(velocity, shape, hitInfo);
+			}
 
 			break;
 		}
@@ -104,8 +124,7 @@ void Environment::HandleCollision(Rectf& shape, Vector2f& velocity)
 
 bool Environment::IsOnGround(Rectf& actorShape, bool isKilled) const
 {
-	if (m_pPlatform->isCharacterOnPlatform() && !isKilled)
-		return true;
+	if (m_pPlatform->isCharacterOnPlatform() && !isKilled) return true;
 
 	utils::HitInfo hitInfo{};
 
@@ -114,6 +133,7 @@ bool Environment::IsOnGround(Rectf& actorShape, bool isKilled) const
 
 	return utils::Raycast(m_Vertices[3], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[2], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[1], ray2, ray1, hitInfo) || utils::Raycast(m_Vertices[0], ray2, ray1, hitInfo);
 }
+
 Rectf Environment::GetBoundaries() const
 {
 	return m_Boundaries;
@@ -121,14 +141,12 @@ Rectf Environment::GetBoundaries() const
 
 bool Environment::HasReachedEnd(const Rectf& actorShape) const
 {
-	if (actorShape.left > m_EndSignShape.left &&
+	bool isEndReached = actorShape.left > m_EndSignShape.left &&
 		actorShape.bottom > m_EndSignShape.bottom &&
 		actorShape.left + actorShape.width < m_EndSignShape.left + m_EndSignShape.width &&
-		actorShape.bottom + actorShape.height < m_EndSignShape.bottom + m_EndSignShape.height)
-	{
-		return true;
-	}
+		actorShape.bottom + actorShape.height < m_EndSignShape.bottom + m_EndSignShape.height;
 
+	return isEndReached;
 }
 
 bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
@@ -138,6 +156,7 @@ bool Environment::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actor
 
 	return utils::Raycast(ver, ray1, ray2, hitInfo);
 }
+
 bool Environment::isCollidingGround(const std::vector<Point2f>& ver, const Rectf& actorShape, utils::HitInfo& hitInfo)
 {
 	float borderDist = 5.f;
@@ -176,6 +195,7 @@ void Environment::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actorS
 	{
 		actorShape.left = hitInfo.intersectPoint.x - actorShape.width;
 	}
+
 	actorVelocity.x = 0.0f;
 }
 
@@ -184,10 +204,10 @@ void Environment::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorSha
 
 	const float verticalOffset = 2.0f;
 
-	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset)
-		return;
+	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset) return;
 
 	actorShape.bottom = hitInfo.intersectPoint.y - verticalOffset;
+
 	actorVelocity.y = 0.0f;
 }
 
@@ -195,13 +215,13 @@ void Environment::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, u
 {
 	const float verticalOffset = 2.0f;
 
-	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height + verticalOffset)
-		return;
+	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height + verticalOffset) return;
 
 	actorShape.bottom = hitInfo.intersectPoint.y - actorShape.height - verticalOffset;
 	actorVelocity.y = 0.0f;
 	actorVelocity.x = 0.0f;
 }
+
 void Environment::BlackRectDisappear(const Rectf& actorShape) const
 {
 	const float borderPointX = 4040.f;
@@ -226,9 +246,11 @@ void Environment::BlackRectDisappear(const Rectf& actorShape) const
 		}
 
 	}
+
 	utils::FillRect(m_pDarkRect);
 	utils::FillRect(fadingRectShape);
 }
+
 void Environment::ChangeBoldCapacity(const Rectf shapeActor)
 {
 	const Point2f boldPos{ 6670.f, 3600.f };

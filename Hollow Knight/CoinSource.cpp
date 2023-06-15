@@ -6,31 +6,42 @@
 #include <SVGParser.h>
 
 CoinSource::CoinSource(const Point2f& position, const int index) :
-	GroundObject( "stone.png" ),
-	m_Position(position), m_IsDestroyed(false), m_Lifes(0), m_MaxLifes(5), m_SourceRect{ 0,0,0,0 },
-	m_IsAtacked( false ), m_PassedFrames( 0 ), m_MaxFramesAmount(70)
+	GroundObject("stone.png"),
+	m_Position(position),
+	m_IsDestroyed(false),
+	m_Lifes(0),
+	m_MaxLifes(5),
+	m_SourceRect(0, 0, 0, 0),
+	m_IsAtacked(false),
+	m_PassedFrames(0),
+	m_MaxFramesAmount(70)
 {
 	std::vector<std::vector<Point2f>> m_TemporaryVertices;
-	
+
 	SVGParser::GetVerticesFromSvgFile("coinSource.svg", m_TemporaryVertices);
+
 	m_Vertices.push_back(m_TemporaryVertices[index]);
 
 	m_ClipWidth = GetTexture()->GetWidth() / 2;
 	m_ClipHeight = GetTexture()->GetHeight();
 }
+
 CoinSource::~CoinSource()
 {
 }
+
 void CoinSource::Draw()const
 {
 	GetTexture()->Draw(Rectf(m_Position.x, m_Position.y, m_ClipWidth, m_ClipHeight), m_SourceRect);
 }
+
 void CoinSource::Update(Avatar* actor)
 {
 	ChangeTexture();
 
-	Rectf actorShape = actor->GetShape();
 	Vector2f vector = actor->GetVelocity();
+	Rectf actorShape = actor->GetShape();
+
 	float borderDist{ 5.f };
 
 	const Point2f ray1{ actorShape.left + borderDist, actorShape.bottom };
@@ -40,23 +51,21 @@ void CoinSource::Update(Avatar* actor)
 	const Point2f ray4{ actorShape.left + actorShape.width - borderDist, actorShape.bottom + actorShape.height };
 
 	utils::HitInfo hitInfo{};
-	if (m_IsDestroyed)
-	{
-		return;
-	}
+
+	if (m_IsDestroyed) return;
 
 	for (std::vector<Point2f>& ver : m_Vertices)
 	{
 		if (isCollidingWalls(ver, actorShape, hitInfo))
 		{
 			ResetHorizontalPosition(vector, actorShape, hitInfo);
+
 			break;
 		}
 
 	}
+
 	actor->SetShape(actorShape);
-	
-	
 }
 
 void CoinSource::CheckIfDestroyed()
@@ -64,10 +73,13 @@ void CoinSource::CheckIfDestroyed()
 	if (m_PassedFrames < m_MaxFramesAmount)
 	{
 		m_PassedFrames++;
+
 		if (!m_IsAtacked)
 		{
 			m_Lifes++;
+
 			m_IsAtacked = true;
+
 			if (m_Lifes > m_MaxLifes)
 			{
 				m_IsDestroyed = true;
@@ -77,9 +89,11 @@ void CoinSource::CheckIfDestroyed()
 	else
 	{
 		m_PassedFrames = 0;
+
 		m_IsAtacked = false;
 	}
 }
+
 void CoinSource::ChangeTexture()
 {
 	if (m_IsDestroyed)
@@ -91,6 +105,7 @@ void CoinSource::ChangeTexture()
 		m_SourceRect = Rectf(0.0f, m_ClipHeight, m_ClipWidth, m_ClipHeight);
 	}
 }
+
 bool CoinSource::IsOverlapping(const Rectf& rect) const
 {
 	const Rectf coinSourceRect
@@ -108,9 +123,10 @@ bool CoinSource::IsOverlapping(const Rectf& rect) const
 		rect.bottom < coinSourceRect.bottom + coinSourceRect.height &&
 		rect.bottom + rect.height > coinSourceRect.bottom
 	};
-	
+
 	return isColliding;
 }
+
 bool CoinSource::isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const
 {
 	float borderDist{ 5.f };

@@ -4,70 +4,93 @@
 
 #include "UI.h"
 
-int UI::m_MusicVolume{ 95 };
-int UI::m_SoundVolume{ 95 };
+int UI::m_MusicVolume(95);
+int UI::m_SoundVolume(95);
 
 UI::UI(const Rectf& viewPort) :
-	m_ViewPort{ viewPort }, m_GameIsStarted(false), m_StartGameHovered(false), m_OptionsHovered(false), m_QuitGameHovered(false),
-	m_OptionsClicked(false), m_GameIsQuit(false), m_BackHovered(false)
+	m_ViewPort(viewPort),
+	m_GameIsStarted(false),
+	m_StartGameHovered(false),
+	m_OptionsHovered(false),
+	m_QuitGameHovered(false),
+	m_OptionsClicked(false),
+	m_GameIsQuit(false),
+	m_BackHovered(false)
 {
 	m_pBackgroundTexture = new Texture("BackgroundMenu.png");
+
 	m_pCursorTexture = new Texture("Cursor.png");
+
 	m_StartGameTexture = new Texture("Start Game", "Supernatural_Knight.ttf", 32, Color4f(1.0f, 1.0f, 1.0f, 1.0f));
+
 	m_OptionsTexture = new Texture("Options", "Supernatural_Knight.ttf", 32, Color4f(1.0f, 1.0f, 1.0f, 1.0f));
+
 	m_QuitGameTexture = new Texture("Quit Game", "Supernatural_Knight.ttf", 32, Color4f(1.0f, 1.0f, 1.0f, 1.0f));
+
 	m_LogoTexture = new Texture("Logo.png");
+
 	m_pHoveredTextureLeft = new Texture("HoveredLeft.png");
+
 	m_pHoveredTextureRight = new Texture("HoveredRight.png");
+
 	m_pAudioTexture = new Texture("Audio", "Supernatural_Knight.ttf", 40, Color4f(1.0f, 1.0f, 1.0f, 1.0f));
+
 	m_pDecorationTexture = new Texture("DecorationUI.png");
+
 	m_pMusicAdjustmentTexture = new Texture("Music Volume", "Supernatural_Knight.ttf", 32, Color4f(1.0f, 1.0f, 1.0f, 1.0f));
+
 	m_pSoundAdjustmentTexture = new Texture("Sound Volume", "Supernatural_Knight.ttf", 32, Color4f(1.0f, 1.0f, 1.0f, 1.0f));
+
 	m_pSelectSound = new SoundEffect("UIOptionSelected.wav");
+
 	m_pBackTexture = new Texture("Back", "Supernatural_Knight.ttf", 32, Color4f(1.0f, 1.0f, 1.0f, 1.0f));
+
 	m_SoundBar = new Texture("Bar.png");
 
 	const float verticalOffset = 50.0f;
 
-	m_StartGameTextShape = Rectf{ m_ViewPort.left + m_ViewPort.width / 2 - m_StartGameTexture->GetWidth() / 2,
-								  m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset,
-								  m_StartGameTexture->GetWidth(),
-								  m_StartGameTexture->GetHeight() };
+	m_StartGameTextShape = Rectf(m_ViewPort.left + m_ViewPort.width / 2 - m_StartGameTexture->GetWidth() / 2,
+		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset,
+		m_StartGameTexture->GetWidth(),
+		m_StartGameTexture->GetHeight());
 
-	m_OptionsTextShape = Rectf{ m_ViewPort.left + m_ViewPort.width / 2 - m_OptionsTexture->GetWidth() / 2,
-								m_ViewPort.bottom + m_ViewPort.height / 2 - 1.5f * m_OptionsTexture->GetHeight() - verticalOffset,
-								m_OptionsTexture->GetWidth(),
-								m_OptionsTexture->GetHeight() };
+	m_OptionsTextShape = Rectf(m_ViewPort.left + m_ViewPort.width / 2 - m_OptionsTexture->GetWidth() / 2,
+		m_ViewPort.bottom + m_ViewPort.height / 2 - 1.5f * m_OptionsTexture->GetHeight() - verticalOffset,
+		m_OptionsTexture->GetWidth(),
+		m_OptionsTexture->GetHeight());
 
-	m_QuitTextShape = Rectf{ m_ViewPort.left + m_ViewPort.width / 2 - m_QuitGameTexture->GetWidth() / 2,
-							 m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset,
-							 m_QuitGameTexture->GetWidth(),
-		m_QuitGameTexture->GetHeight() };
+	m_QuitTextShape = Rectf(m_ViewPort.left + m_ViewPort.width / 2 - m_QuitGameTexture->GetWidth() / 2,
+		m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset,
+		m_QuitGameTexture->GetWidth(),
+		m_QuitGameTexture->GetHeight());
 
-	m_BackTextShape = Rectf{ m_ViewPort.left + m_ViewPort.width / 2 - m_pBackTexture->GetWidth() / 2,
-							 m_ViewPort.bottom + m_ViewPort.height / 2 - 4 * verticalOffset,
-							 m_pBackTexture->GetWidth(),
-							 m_pBackTexture->GetHeight() };
+	m_BackTextShape = Rectf(m_ViewPort.left + m_ViewPort.width / 2 - m_pBackTexture->GetWidth() / 2,
+		m_ViewPort.bottom + m_ViewPort.height / 2 - 4 * verticalOffset,
+		m_pBackTexture->GetWidth(),
+		m_pBackTexture->GetHeight());
 
-	m_BarAdjustementMusicRight = Point2f{ m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
-		m_ViewPort.bottom + m_ViewPort.height / 2 + 1.4f * verticalOffset };
-	m_BarAdjustementMusicLeft = Point2f{ m_ViewPort.left + m_ViewPort.width / 2 + 3 * m_pHoveredTextureLeft->GetWidth(),
-		m_ViewPort.bottom + m_ViewPort.height / 2 + 1.3f * verticalOffset };
-	m_BarAdjustementSoundRight = Point2f{ m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
-		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset };
-	m_BarAdjustementSoundLeft = Point2f{ m_ViewPort.left + m_ViewPort.width / 2 + 3 * m_pHoveredTextureLeft->GetWidth(),
-		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset };
+	m_BarAdjustementMusicRight = Point2f(m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
+		m_ViewPort.bottom + m_ViewPort.height / 2 + 1.4f * verticalOffset);
 
-	m_pMusicAdjustmentPos = Point2f{ m_ViewPort.left + m_ViewPort.width / 2 - 1.5f * m_pMusicAdjustmentTexture->GetWidth(),
-		m_ViewPort.bottom + m_ViewPort.height / 2 + m_pDecorationTexture->GetHeight() };
-	m_pSoundAdjustmentPos = Point2f{ m_ViewPort.left + m_ViewPort.width / 2 - 1.5f * m_pMusicAdjustmentTexture->GetWidth(),
-		m_ViewPort.bottom + m_ViewPort.height / 2 - m_pSoundAdjustmentTexture->GetHeight() };
+	m_BarAdjustementMusicLeft = Point2f(m_ViewPort.left + m_ViewPort.width / 2 + 3 * m_pHoveredTextureLeft->GetWidth(),
+		m_ViewPort.bottom + m_ViewPort.height / 2 + 1.3f * verticalOffset);
 
-	m_LogoStartScreenPos = Point2f{ m_ViewPort.left + m_ViewPort.width / 2 - m_LogoTexture->GetWidth() / 2,
-		m_ViewPort.bottom + m_ViewPort.height / 2 + m_LogoTexture->GetHeight() / 5 - verticalOffset };
+	m_BarAdjustementSoundRight = Point2f(m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
+		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset);
 
+	m_BarAdjustementSoundLeft = Point2f(m_ViewPort.left + m_ViewPort.width / 2 + 3 * m_pHoveredTextureLeft->GetWidth(),
+		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset);
 
+	m_pMusicAdjustmentPos = Point2f(m_ViewPort.left + m_ViewPort.width / 2 - 1.5f * m_pMusicAdjustmentTexture->GetWidth(),
+		m_ViewPort.bottom + m_ViewPort.height / 2 + m_pDecorationTexture->GetHeight());
+
+	m_pSoundAdjustmentPos = Point2f(m_ViewPort.left + m_ViewPort.width / 2 - 1.5f * m_pMusicAdjustmentTexture->GetWidth(),
+		m_ViewPort.bottom + m_ViewPort.height / 2 - m_pSoundAdjustmentTexture->GetHeight());
+
+	m_LogoStartScreenPos = Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_LogoTexture->GetWidth() / 2,
+		m_ViewPort.bottom + m_ViewPort.height / 2 + m_LogoTexture->GetHeight() / 5 - verticalOffset);
 }
+
 UI::~UI()
 {
 	delete m_pBackgroundTexture;
@@ -86,12 +109,14 @@ UI::~UI()
 	delete m_SoundBar;
 	delete m_pSelectSound;
 }
+
 void UI::Draw() const
 {
 	const float verticalOffset = 50.0f;
 	const float horizontalOffsetHoveredText = 30.0f;
 
 	m_pBackgroundTexture->Draw();
+
 	DrawAudioScreen(verticalOffset, horizontalOffsetHoveredText);
 
 	const Point2f cursorPos
@@ -102,11 +127,11 @@ void UI::Draw() const
 
 	m_pCursorTexture->Draw(cursorPos);
 
-	if (m_OptionsClicked)return;
+	if (m_OptionsClicked) return;
 
 	DrawFirstScreen(verticalOffset, horizontalOffsetHoveredText);
-
 }
+
 void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 {
 
@@ -126,6 +151,7 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 	{
 		m_StartGameHovered = false;
 	}
+
 	//Check is clicked Options
 	if (mousePos.x > m_OptionsTextShape.left && mousePos.y > m_OptionsTextShape.bottom &&
 		mousePos.x < m_OptionsTextShape.left + m_OptionsTextShape.width &&
@@ -137,6 +163,7 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 	{
 		m_OptionsHovered = false;
 	}
+
 	//Check is clicked QuitGame
 	if (mousePos.x > m_QuitTextShape.left && mousePos.y > m_QuitTextShape.bottom &&
 		mousePos.x < m_QuitTextShape.left + m_QuitTextShape.width &&
@@ -148,6 +175,7 @@ void UI::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 	{
 		m_QuitGameHovered = false;
 	}
+
 	//Check is clicked back
 	if (mousePos.x > m_BackTextShape.left && mousePos.y > m_BackTextShape.bottom &&
 		mousePos.x < m_BackTextShape.left + m_BackTextShape.width &&
@@ -171,35 +199,38 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 	const float verticalOffset = 50.0f;
 	const float maxMusicVolume = 171.f;
 	const float musicVolumeStep = 19.f;
-	
+
 	Rectf rightArrowShapeMusic
-	{
+	(
 		m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
 		m_ViewPort.bottom + m_ViewPort.height / 2 + 1.4f * verticalOffset,
 		2 * m_pHoveredTextureRight->GetWidth(),
 		2 * m_pHoveredTextureRight->GetHeight()
-	};
+	);
+
 	Rectf leftArrowShapeMusic
-	{
+	(
 		m_ViewPort.left + m_ViewPort.width / 2 + 3 * m_pHoveredTextureLeft->GetWidth(),
 		m_ViewPort.bottom + m_ViewPort.height / 2 + 1.3f * verticalOffset,
 		2 * m_pHoveredTextureLeft->GetWidth(),
 		2 * m_pHoveredTextureLeft->GetHeight()
-	};
+	);
+
 	Rectf rightArrowShapeSound
-	{
+	(
 		m_ViewPort.left + m_ViewPort.width / 2 + 2 * m_pMusicAdjustmentTexture->GetWidth() / 1.4f,
 		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset,
 		2 * m_pHoveredTextureRight->GetWidth(),
 		2 * m_pHoveredTextureRight->GetHeight()
-	};
+	);
+
 	Rectf leftArrowShapeSound
-	{
+	(
 		m_ViewPort.left + m_ViewPort.width / 2 + 3 * m_pHoveredTextureLeft->GetWidth(),
 		m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset,
 		2 * m_pHoveredTextureLeft->GetWidth(),
 		2 * m_pHoveredTextureLeft->GetHeight()
-	};
+	);
 
 	if (mousePos.x > m_BackTextShape.left && mousePos.y > m_BackTextShape.bottom &&
 		mousePos.x < m_BackTextShape.left + m_BackTextShape.width &&
@@ -219,6 +250,7 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		m_pSelectSound->Play(0);
 		m_MusicVolume += musicVolumeStep;
 	}
+
 	if ((mousePos.x > rightArrowShapeSound.left && mousePos.y > rightArrowShapeSound.bottom &&
 		mousePos.x < rightArrowShapeSound.left + rightArrowShapeSound.width &&
 		mousePos.y < rightArrowShapeSound.bottom + rightArrowShapeSound.height) && m_SoundVolume <= maxMusicVolume)
@@ -228,6 +260,7 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		m_SoundVolume += musicVolumeStep;
 		m_pSelectSound->SetVolume(m_SoundVolume);
 	}
+
 	if ((mousePos.x > leftArrowShapeMusic.left && mousePos.y > leftArrowShapeMusic.bottom &&
 		mousePos.x < leftArrowShapeMusic.left + leftArrowShapeMusic.width &&
 		mousePos.y < leftArrowShapeMusic.bottom + leftArrowShapeMusic.height) && m_MusicVolume > 0)
@@ -236,6 +269,7 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		m_pSelectSound->Play(0);
 		m_MusicVolume -= musicVolumeStep;
 	}
+
 	if ((mousePos.x > leftArrowShapeSound.left && mousePos.y > leftArrowShapeSound.bottom &&
 		mousePos.x < leftArrowShapeSound.left + leftArrowShapeSound.width &&
 		mousePos.y < leftArrowShapeSound.bottom + leftArrowShapeSound.height) && m_SoundVolume > 0)
@@ -245,7 +279,6 @@ void UI::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 		m_SoundVolume -= musicVolumeStep;
 		m_pSelectSound->SetVolume(m_SoundVolume);
 	}
-
 
 	if (m_OptionsClicked)return;
 
@@ -324,20 +357,25 @@ void UI::DrawFirstScreen(const float verticalOffset, const float horizontalOffse
 	{
 		m_pHoveredTextureLeft->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_StartGameTexture->GetWidth() / 2 - horizontalOffset,
 			m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset));
+
 		m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_StartGameTexture->GetWidth() / 2 + horizontalOffset / 5,
 			m_ViewPort.bottom + m_ViewPort.height / 2 - verticalOffset));
 	}
+
 	if (m_OptionsHovered)
 	{
 		m_pHoveredTextureLeft->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_OptionsTexture->GetWidth() + horizontalOffset,
 			m_ViewPort.bottom + m_ViewPort.height / 2 - 1.5f * m_OptionsTexture->GetHeight() - verticalOffset));
+
 		m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_OptionsTexture->GetWidth() / 2 + horizontalOffset / 6,
 			m_ViewPort.bottom + m_ViewPort.height / 2 - 1.5f * m_OptionsTexture->GetHeight() - verticalOffset));
 	}
+
 	if (m_QuitGameHovered)
 	{
 		m_pHoveredTextureLeft->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_QuitGameTexture->GetWidth() / 2 - verticalOffset / 1.5f,
 			m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset));
+
 		m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_QuitGameTexture->GetWidth() / 2 + verticalOffset / 6,
 			m_ViewPort.bottom + m_ViewPort.height / 2 - 3 * m_OptionsTexture->GetHeight() - verticalOffset));
 	}
@@ -348,6 +386,7 @@ void UI::DrawAudioScreen(const float verticalOffset, const float horizontalOffse
 	{
 		m_pAudioTexture->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_pAudioTexture->GetWidth() / 2,
 			m_ViewPort.bottom + m_ViewPort.height / 2 + 4 * verticalOffset));
+
 		m_pDecorationTexture->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_pDecorationTexture->GetWidth() / 2,
 			m_ViewPort.bottom + m_ViewPort.height / 2 + 2.2f * m_pDecorationTexture->GetHeight()));
 
@@ -360,12 +399,14 @@ void UI::DrawAudioScreen(const float verticalOffset, const float horizontalOffse
 		{
 			m_pHoveredTextureLeft->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 - m_pBackTexture->GetWidth() / 2 - horizontalOffset,
 				m_ViewPort.bottom + m_ViewPort.height / 2 - 4 * verticalOffset));
+
 			m_pHoveredTextureRight->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_pBackTexture->GetWidth() / 2,
 				m_ViewPort.bottom + m_ViewPort.height / 2 - 4 * verticalOffset));
 		}
 
 		m_SoundBar->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_pMusicAdjustmentTexture->GetWidth() / 2,
 			m_ViewPort.bottom + m_ViewPort.height / 2 - m_pSoundAdjustmentTexture->GetHeight()));
+
 		m_SoundBar->Draw(Point2f(m_ViewPort.left + m_ViewPort.width / 2 + m_pMusicAdjustmentTexture->GetWidth() / 2,
 			m_ViewPort.bottom + m_ViewPort.height / 2 + 2 * m_pSoundAdjustmentTexture->GetHeight()));
 
@@ -373,6 +414,7 @@ void UI::DrawAudioScreen(const float verticalOffset, const float horizontalOffse
 			m_ViewPort.bottom + m_ViewPort.height / 2 - m_pSoundAdjustmentTexture->GetHeight(),
 			m_SoundVolume,
 			m_SoundBar->GetHeight());
+
 		utils::FillRect(m_ViewPort.left + m_ViewPort.width / 2 + m_pMusicAdjustmentTexture->GetWidth() / 2,
 			m_ViewPort.bottom + m_ViewPort.height / 2 + 2 * m_pSoundAdjustmentTexture->GetHeight(),
 			m_MusicVolume + 6.2f,

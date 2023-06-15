@@ -5,20 +5,22 @@
 #include <SoundEffect.h>
 
 Coin::Coin() :
-	m_IsCollected( false )
+	m_IsCollected(false)
 {
-	m_pCoinTexture = new Texture( "Coin.png" );
+	m_pCoinTexture = new Texture("Coin.png");
 
 	m_Shape.width = m_pCoinTexture->GetWidth();
 	m_Shape.height = m_pCoinTexture->GetHeight();
 
 	m_pCoinCollectedSound = new SoundEffect("CoinCollect.wav");
 }
+
 Coin::~Coin()
 {
 	delete m_pCoinTexture;
 	delete m_pCoinCollectedSound;
 }
+
 void Coin::Draw() const
 {
 	m_pCoinTexture->Draw(m_Shape);
@@ -53,6 +55,7 @@ bool Coin::IsOverlapping(const Rectf& rect) const
 void Coin::Fall(float elapsedSec)
 {
 	Rectf shape = GetShape();
+
 	const float fallingAfterDyingSpeed = -900.0f;
 
 	shape.bottom += fallingAfterDyingSpeed * elapsedSec;

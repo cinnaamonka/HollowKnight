@@ -6,7 +6,8 @@
 
 BaseEnemy::BaseEnemy(const Point2f& position, const std::string& texture, int framesNumber) :
 	BaseMovingObject(texture, framesNumber),
-	m_BoundariesBorder{ 0,0,0,0 }, m_CanSeeAvatar( false )
+	m_BoundariesBorder(0, 0, 0, 0),
+	m_CanSeeAvatar(false)
 {
 	SetFramesNumber(framesNumber);
 
@@ -67,13 +68,17 @@ void BaseEnemy::ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMovi
 	if (IsKilled())
 	{
 		SetFramesNumber(amountOfFramesIfKilled);
+
 		srcRect.left = (amountOfFramesMoving + amountOFFramesAtacking) * srcRect.width;
+
 		SetSourceRect(srcRect);
 	}
 	else
 	{
 		SetFramesNumber(amountOfFramesMoving);
+
 		srcRect.left = amountOFFramesAtacking * srcRect.width + GetAnimationFrame() * srcRect.width;
+
 		SetSourceRect(srcRect);
 	}
 
@@ -81,8 +86,9 @@ void BaseEnemy::ChangeTexture(int amountOfFramesIfKilled, int amountOfFramesMovi
 }
 bool BaseEnemy::IsOnCloseDistance(const Rectf& rect) const
 {
-	float distance = float(sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2)));
 	const float maxDistance = 40.0f;
+
+	float distance = float(sqrt(pow(rect.left - GetShape().left, 2) + pow(rect.bottom - GetShape().bottom, 2)));
 
 	return distance <= maxDistance;
 }
@@ -93,9 +99,7 @@ bool BaseEnemy::CanSeeAvatar(const Rectf& avatarRectf)const
 
 	const float maxDistanceWithAvatar = 400.0f;
 
-	if (distance < maxDistanceWithAvatar) return true;
-
-	return false;
+	return distance < maxDistanceWithAvatar;
 }
 
 void BaseEnemy::Draw() const
@@ -105,8 +109,10 @@ void BaseEnemy::Draw() const
 		glPushMatrix();
 
 		glTranslatef(GetShape().left, GetShape().bottom, 0);
+
 		glRotatef(0, 0, 0, 1);
 		glScalef(-1, 1, 1);
+
 		glTranslatef(-GetShape().width, 0, 0);
 
 		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
@@ -117,11 +123,12 @@ void BaseEnemy::Draw() const
 	{
 		GetTexture()->Draw(GetShape(), GetSourceRect());
 	}
-	
+
 }
 void BaseEnemy::Fall(float elapsedSec)
 {
 	Rectf shape = GetShape();
+
 	const float fallingAfterDyingSpeed = -65.0f;
 
 	shape.bottom += fallingAfterDyingSpeed * elapsedSec;

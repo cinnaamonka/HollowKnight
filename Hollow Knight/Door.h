@@ -1,10 +1,12 @@
 #pragma once
 
+#include "GroundObject.h"
+
 class Texture;
 class Avatar;
 class SoundEffect;
 
-#include "GroundObject.h"
+
 
 class Door final : public GroundObject
 {
@@ -18,14 +20,14 @@ public:
 	~Door();
 
 	void Draw() const;
-	void Update(float elapsedSec, Avatar* actor,const int index);
+	void Update(float elapsedSec, Avatar* actor, const int index);
 	void ChangeTexture();
-	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAtacked,const int index);
+	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity, bool isAtacked, const int index);
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
-
 	void SetSoundVolume(const int soundVolume);
 
 private:
+
 	void UpdateFrame(float elapsedSec, int numberFrames);
 
 private:

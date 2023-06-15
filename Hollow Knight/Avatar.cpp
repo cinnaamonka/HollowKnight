@@ -9,11 +9,21 @@
 
 Avatar::Avatar() :
 	BaseMovingObject("Knight.png", 12),
-	m_ClipHeight(0), m_ClipWidth(0), m_HorSpeed(500.0f),
-	m_JumpSpeed(500.0f), m_Velocity{ 0.0f, 0.0f }, m_Acceleration{ 0, -981.0f },
-	m_ActionState{ ActionState::begin }, m_AccuTransformSec( 0.0f ), m_MaxTransformSec(1.0f ),
-	m_IsMovingRight( true ), m_CanDoubleJump( false ),
-	m_HasDoubleJumped( false ), m_IsNovingAfterCollision( false ), m_IsKilling( false ), m_IsFocusing(false),
+	m_ClipHeight(0),
+	m_ClipWidth(0),
+	m_HorSpeed(500.0f),
+	m_JumpSpeed(500.0f),
+	m_Velocity{ 0.0f, 0.0f },
+	m_Acceleration{ 0, -981.0f },
+	m_ActionState{ ActionState::begin },
+	m_AccuTransformSec(0.0f),
+	m_MaxTransformSec(1.0f),
+	m_IsMovingRight(true),
+	m_CanDoubleJump(false),
+	m_HasDoubleJumped(false),
+	m_IsNovingAfterCollision(false),
+	m_IsKilling(false),
+	m_IsFocusing(false),
 	m_IsOnGround(true)
 
 {
@@ -33,11 +43,12 @@ Avatar::Avatar() :
 
 	SetFramesPerSec(10);
 
-	m_pParticleTexture = new Texture( "ParticleEffect.png" );
+	m_pParticleTexture = new Texture("ParticleEffect.png");
 
 	m_ParticlesShape = Rectf(0, 0, m_pParticleTexture->GetWidth(), m_pParticleTexture->GetHeight());
 
 	m_pCharacterWalkingSound = new SoundEffect("soundWalking.wav");
+
 	m_pKnifeInAir = new SoundEffect("KnightInAir.wav");
 
 	m_pCollidesEnemy = new SoundEffect("EnemyDamage.wav");
@@ -53,14 +64,12 @@ Avatar::~Avatar()
 	delete m_pCollidesEnemy;
 	delete m_pDeathSound;
 }
+
 bool Avatar::isColliding() const
 {
-	if (m_ActionState == ActionState::collidingEnemy)
-	{
-		return true;
-	}
-	return false;
+	return m_ActionState == ActionState::collidingEnemy;
 }
+
 void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 {
 	if (m_ActionState == ActionState::dying)
@@ -70,10 +79,13 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 
 		return;
 	}
+
 	Rectf currentShape = GetShape();
 
 	pLevel->HandleCollision(currentShape, m_Velocity);
+
 	SetShape(currentShape);
+
 	CheckState(pLevel, isFocusing);
 
 	const int movementFrames = 9;
@@ -94,7 +106,9 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 	if (!pLevel->IsOnGround(currentShape, false))
 	{
 		MoveAvatar(elapsedSec);
+
 		m_IsOnGround = false;
+
 		return;
 	}
 	else
@@ -119,7 +133,9 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 		m_Velocity.y = m_JumpSpeed;
 
 		m_IsNovingAfterCollision = true;
+
 		MoveAvatar(elapsedSec);
+
 		return;
 	}
 
@@ -132,9 +148,12 @@ void Avatar::Update(float elapsedSec, Environment* pLevel, bool isFocusing)
 	{
 		m_IsNovingAfterCollision = false;
 	}
+
 	m_ActionState = ActionState::waiting;
+
 	m_pCollidesEnemy->Stop();
 }
+
 void Avatar::StopAllSounds() const
 {
 	m_pCharacterWalkingSound->Stop();
@@ -142,6 +161,7 @@ void Avatar::StopAllSounds() const
 	m_pCollidesEnemy->Stop();
 	m_pDeathSound->Stop();
 }
+
 void Avatar::Draw()const
 {
 	const Rectf particleShape
@@ -152,20 +172,26 @@ void Avatar::Draw()const
 		GetShape().height * 2
 
 	};
+
 	if (m_IsFocusing)
 	{
 		m_pParticleTexture->Draw(particleShape, m_ParticlesShape);
 	}
-	
+
 	if (!m_IsMovingRight)
 	{
 		glPushMatrix();
 
 		glTranslatef(GetShape().left, GetShape().bottom, 0);
+
 		glRotatef(0, 0, 0, 1);
+
 		glScalef(-1, 1, 1);
+
 		glTranslatef(-GetShape().width, 0, 0);
+
 		GetTexture()->Draw(Point2f(0, 0), GetSourceRect());
+
 		glPopMatrix();
 	}
 	else
@@ -181,24 +207,28 @@ void Avatar::EnemyHit()
 	m_pCollidesEnemy->Play(0);
 
 }
+
 void Avatar::Die()
 {
 	m_ActionState = ActionState::dying;
+
 	if (m_ShapeBeforeDying.left == 0)
 	{
 		m_ShapeBeforeDying = GetShape();
 	}
-	
+
 	m_pCollidesEnemy->Stop();
 	m_pCharacterWalkingSound->Stop();
 
 	m_pDeathSound->Play(0);
-	
+
 }
+
 bool Avatar::IsAtacking()const
 {
 	return m_IsKilling;
 }
+
 void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 {
 	Rectf currentShape = GetShape();
@@ -206,14 +236,14 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
 
 
-	if (m_ActionState == ActionState::begin || m_ActionState == ActionState::dying)
-		return;
-
+	if (m_ActionState == ActionState::begin || m_ActionState == ActionState::dying) return;
 
 	if (pStates[SDL_SCANCODE_RIGHT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
+
 		m_IsMovingRight = true;
+
 		m_Velocity.x = m_HorSpeed;
 
 		m_pCharacterWalkingSound->Play(-1);
@@ -223,7 +253,9 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 	if (pStates[SDL_SCANCODE_LEFT] && m_ActionState != ActionState::collidingEnemy && !m_IsNovingAfterCollision)
 	{
 		m_ActionState = ActionState::moving;
+
 		m_IsMovingRight = false;
+
 		m_Velocity.x = -m_HorSpeed;
 
 		m_pCharacterWalkingSound->Play(-1);
@@ -270,6 +302,7 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 	else if (pStates[SDL_SCANCODE_UP] && m_CanDoubleJump && !m_HasDoubleJumped)
 	{
 		m_ActionState = ActionState::jumping;
+
 		m_Velocity.y = m_JumpSpeed;
 
 		m_HasDoubleJumped = true;
@@ -281,16 +314,21 @@ void Avatar::CheckState(const Environment* pLevel, bool isFocusing)
 void Avatar::MoveAvatar(float elapsedSec)
 {
 	Rectf currentShape = GetShape();
+
 	const float maxGround_Offset = 50.0f;
 	const float groundOffset = 15.0f;
+
 	if (m_ActionState == ActionState::dying)
 	{
 		float test = currentShape.bottom - m_ShapeBeforeDying.bottom;
+
 		if (currentShape.bottom - m_ShapeBeforeDying.bottom < maxGround_Offset)
 		{
 			currentShape.bottom += groundOffset * elapsedSec;
 		}
+
 		SetShape(currentShape);
+
 		return;
 	}
 
@@ -316,6 +354,7 @@ void Avatar::MoveAvatar(float elapsedSec)
 void Avatar::ChangeTexture(const Environment* pLevel)
 {
 	Rectf srcRect{ 0.0f, m_ClipHeight, m_ClipWidth, m_ClipHeight };
+
 	Rectf currentShape = GetShape();
 
 	const int dyingTextureHorizontalOffset = 3;
@@ -339,15 +378,19 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 		}
 
 		SetSourceRect(srcRect);
+
 		return;
 	}
 
 	if (m_ActionState == ActionState::dying)
 	{
 		SetAnimationFrame(dyingTextureAmount);
+
 		srcRect.left = dyingTextureHorizontalOffset * m_ClipWidth;
 		srcRect.bottom = dyingTextureVerticalOffset * m_ClipHeight;
+
 		SetSourceRect(srcRect);
+
 		return;
 	}
 	if (!pLevel->IsOnGround(currentShape, false))
@@ -355,18 +398,20 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 		if (m_ActionState == ActionState::collidingEnemy)
 		{
 			srcRect.bottom = collidingEnemyTextureVerticalOffset * m_ClipHeight;
+
 			SetSourceRect(srcRect);
 		}
 		else
 		{
 			srcRect.bottom = (collidingEnemyTextureVerticalOffset - 1) * m_ClipHeight;
+
 			SetSourceRect(srcRect);
 		}
 
 	}
 	else
 	{
-		
+
 
 		if (m_ActionState == ActionState::waiting)
 		{
@@ -387,6 +432,7 @@ void Avatar::ChangeTexture(const Environment* pLevel)
 		{
 			srcRect.left = 8 * m_ClipWidth;
 			srcRect.bottom = 5 * m_ClipHeight;
+
 			m_ParticlesShape.left = GetAnimationFrame() * m_ParticlesShape.width / 5;
 		}
 
@@ -401,9 +447,5 @@ void Avatar::SetSoundVolume(const int soundVolume)const
 }
 bool Avatar::isMoving() const
 {
-	if (m_ActionState == ActionState::moving)
-	{
-		return true;
-	}
-	return false;
+	return m_ActionState == ActionState::moving;
 }

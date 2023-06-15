@@ -19,20 +19,22 @@ public:
 	{
 		return int(m_LeftLifes);
 	}
+
 	void SetLeftLifesAmount(const int amount)
 	{
 		m_LeftLifes = float(amount);
 	}
+
 	void SetCollectedCoinsAmount(const int coinsAmount)
 	{
 		m_CollectedCoins = coinsAmount;
 	}
 
-	
 	void AddLife();
 	bool CanAddLife() const;
 
 private:
+
 	CoinManager* m_pCoinManager;
 
 	Point2f m_BottomLeft;

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "BaseEnemy.h"
-	
-class EnemyDragonfly final: public BaseEnemy
+
+class EnemyDragonfly final : public BaseEnemy
 {
 public:
 	explicit EnemyDragonfly(const Point2f& position);
@@ -18,6 +18,5 @@ public:
 private:
 
 	bool m_CanSeeAvatar;
-
 };
 

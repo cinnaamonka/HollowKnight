@@ -9,15 +9,16 @@ GroundObject::GroundObject(const std::string& texture)
 	texturefilename = texture;
 
 	const Rectf groundObjectShape
-	{
+	(
 		0.0f,
 		0.0f,
 		m_pTexture->GetWidth(),
 		m_pTexture->GetHeight()
-	};
+	);
 
 	SetShape(groundObjectShape);
 }
+
 GroundObject::~GroundObject()
 {
 	delete m_pTexture;
@@ -66,13 +67,12 @@ void GroundObject::ResetHorizontalPosition(Vector2f& actorVelocity, Rectf& actor
 
 void GroundObject::ResetVerticalPosition(Vector2f& actorVelocity, Rectf& actorShape, utils::HitInfo& hitInfo)
 {
-
 	const float verticalOffset = 2.0f;
 
-	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset)
-		return;
+	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height - verticalOffset) return;
 
 	actorShape.bottom = hitInfo.intersectPoint.y - verticalOffset;
+
 	actorVelocity.y = 0.0f;
 }
 
@@ -80,20 +80,23 @@ void GroundObject::ResetTopPosition(Vector2f& actorVelocity, Rectf& actorShape, 
 {
 	const float verticalOffset = 2.0f;
 
-	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height + verticalOffset)
-		return;
+	if (hitInfo.intersectPoint.y - actorShape.bottom > actorShape.height + verticalOffset) return;
 
 	actorShape.bottom = hitInfo.intersectPoint.y - actorShape.height - verticalOffset;
+
 	actorVelocity.y = 0.0f;
 	actorVelocity.x = 0.0f;
 }
+
 void GroundObject::Draw(const Point2f& pos)const
 {
 	m_pTexture->Draw(pos);
 }
+
 void GroundObject::SetShape(const Rectf& rect)
 {
 	m_Shape = rect;
+
 	m_Shape.width = m_pTexture->GetWidth();
 	m_Shape.height = m_pTexture->GetHeight();
 

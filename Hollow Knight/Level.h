@@ -2,7 +2,6 @@
 
 #include <BaseGame.h>
 
-
 class Camera;
 class Avatar;
 class EnemyManager;
@@ -19,10 +18,9 @@ class SoundEffect;
 class UI;
 class Texture;
 
-
 class Level final
 {
-	
+
 public:
 
 	explicit Level(const Rectf& viewPort);
@@ -50,8 +48,8 @@ public:
 	void AddDoors();
 	void AddCoinSources();
 	void CheckAvatarCollison();
-
 	void PlaySound() const;
+
 private:
 
 	Avatar* m_pAvatar;
@@ -72,7 +70,7 @@ private:
 	Rectf m_ViewPort;
 	Point2f m_EndSignShape;
 	Color4f m_FadingScreenColor;
-	
+
 	float m_ZoomLevel;
 
 	int m_MusicVolume;

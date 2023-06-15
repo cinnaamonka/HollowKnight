@@ -19,17 +19,17 @@ void Game::Initialize()
 {
 	m_plevel = new Level(GetViewPort());
 	m_pUI = new UI(GetViewPort());
-	
-	m_plevel->Initialize();
 
+	m_plevel->Initialize();
 }
 
 void Game::Cleanup()
 {
 	delete m_pUI;
-	m_plevel->Cleanup();
-	delete m_plevel;
 
+	m_plevel->Cleanup();
+
+	delete m_plevel;
 }
 void Game::Update(float elapsedSec)
 {
@@ -37,26 +37,26 @@ void Game::Update(float elapsedSec)
 	{
 		m_plevel->Update(elapsedSec);
 	}
-	if (m_pUI->IsGameQuit() ==  true)
+
+	if (m_pUI->IsGameQuit() == true)
 	{
 		BaseGame::SetQuit(true);
 	}
-	
 }
 
 void Game::Draw() const
 {
 	ClearBackground();
+
 	if (m_pUI->IsGameStarted() != true)
 	{
 		m_pUI->Draw();
 	}
-	
+
 	if (m_pUI->IsGameStarted() == true)
 	{
 		m_plevel->Draw();
 	}
-
 }
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
@@ -65,8 +65,8 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 	{
 		m_plevel->ProcessKeyDownEvent(e);
 	}
-	m_pUI->ProcessKeyDownEvent(e);
 
+	m_pUI->ProcessKeyDownEvent(e);
 }
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
@@ -95,7 +95,3 @@ void Game::ClearBackground() const
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
-
-
-
-

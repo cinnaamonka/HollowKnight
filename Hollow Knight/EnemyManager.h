@@ -1,5 +1,7 @@
 #pragma once
+
 #include "BaseManager.h"
+
 class BaseEnemy;
 class Environment;
 class SoundEffect;
@@ -7,8 +9,8 @@ class SoundEffect;
 class EnemyManager final :public BaseManager<BaseEnemy>
 {
 public:
-	EnemyManager( );
-	~EnemyManager( );
+	EnemyManager();
+	~EnemyManager();
 
 	EnemyManager(const EnemyManager&) = delete;
 	EnemyManager& operator=(const EnemyManager&) = delete;
@@ -16,9 +18,9 @@ public:
 	EnemyManager& operator=(EnemyManager&&) = delete;
 
 
-	void Update( float elapsedSec, Environment* pLevel);
+	void Update(float elapsedSec, Environment* pLevel);
 
-	bool HitItem( const Rectf& rect );
+	bool HitItem(const Rectf& rect);
 
 	bool IsEnemyKilled(const Rectf& actor) const;
 

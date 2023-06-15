@@ -2,10 +2,13 @@
 #include "Camera.h"
 
 Camera::Camera(float width, float height) :
-	m_Width(width), m_Height(height), m_LevelBoundaries{ 0.0f, 0.0f, width, height }
+	m_Width(width),
+	m_Height(height),
+	m_LevelBoundaries(0.0f, 0.0f, width, height)
 {
 
 }
+
 Camera::~Camera()
 {
 
@@ -19,7 +22,9 @@ void Camera::SetLevelBoundaries(const Rectf& levelBoundaries)
 void Camera::Transform(const Rectf& target, bool isShortDistance)
 {
 	Point2f posCenter = Track(target);
+
 	Clamp(posCenter);
+
 	glTranslatef(-posCenter.x, -posCenter.y, 0);
 }
 

@@ -1,8 +1,11 @@
 #pragma once
+
+#include "GroundObject.h"
+
 class Texture;
 class Avatar;
-#include "GroundObject.h"
-class CoinSource final: public GroundObject
+
+class CoinSource final : public GroundObject
 {
 public:
 
@@ -17,13 +20,14 @@ public:
 	void Update(Avatar* actor);
 	void CheckIfDestroyed();
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo)const;
-	
+
 	bool IsOverlapping(const Rectf& rect) const;
 
 	bool IsDestroyed() const
 	{
 		return m_IsDestroyed;
 	}
+
 private:
 
 	void ChangeTexture();
@@ -44,6 +48,5 @@ private:
 	const int m_MaxLifes;
 
 	std::vector<std::vector<Point2f>> m_Vertices;
-	
 };
 

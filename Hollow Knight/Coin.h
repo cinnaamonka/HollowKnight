@@ -7,55 +7,56 @@ class Coin final
 {
 public:
 
-    Coin();
-    Coin(const Coin& other) = delete;
-    Coin& operator=(const Coin& other) = delete;
-    Coin(Coin&& other) = delete;
-    Coin& operator=(Coin&& other) = delete;
-    ~Coin();
+	Coin();
+	Coin(const Coin& other) = delete;
+	Coin& operator=(const Coin& other) = delete;
+	Coin(Coin&& other) = delete;
+	Coin& operator=(Coin&& other) = delete;
+	~Coin();
 
-    void Draw() const;
+	void Draw() const;
 
-    Rectf GetShape() const
-    {
-        return m_Shape;
-    }
-    void SetShape(const Rectf& rect)
-    {
-        m_Shape = rect;
-    }
+	Rectf GetShape() const
+	{
+		return m_Shape;
+	}
 
-    void SetPosition(const Point2f& pos)
-    {
-        m_Shape.left = pos.x;
-        m_Shape.bottom = pos.y;
-    }
+	void SetShape(const Rectf& rect)
+	{
+		m_Shape = rect;
+	}
 
-    bool IsOverlapping(const Rectf& rect) const;
+	void SetPosition(const Point2f& pos)
+	{
+		m_Shape.left = pos.x;
+		m_Shape.bottom = pos.y;
+	}
 
-    bool IsCollected() const 
-    {
-        return m_IsCollected;
-    }
+	bool IsOverlapping(const Rectf& rect) const;
 
-    void SetIsCollected(const bool isCollected)
-    {
-        m_IsCollected = isCollected;
-    }
+	bool IsCollected() const
+	{
+		return m_IsCollected;
+	}
 
-    void Fall(float elapsedSec);
+	void SetIsCollected(const bool isCollected)
+	{
+		m_IsCollected = isCollected;
+	}
 
-    void PlaySound() const;
+	void Fall(float elapsedSec);
 
-    void SetSoundVolume(const int soundVolume);
+	void PlaySound() const;
+
+	void SetSoundVolume(const int soundVolume);
 
 private:
 
-    Rectf m_Shape;
+	Rectf m_Shape;
 
-    Texture* m_pCoinTexture;
+	Texture* m_pCoinTexture;
 
-    bool m_IsCollected;
-    
-    SoundEffect* m_pCoinCollectedSound;
+	bool m_IsCollected;
+
+	SoundEffect* m_pCoinCollectedSound;
 };

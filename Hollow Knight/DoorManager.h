@@ -1,7 +1,10 @@
 #pragma once
+
+#include "BaseManager.h"
+
 class Avatar;
 class Door;
-#include "BaseManager.h"
+
 class DoorManager final : public BaseManager<Door>
 {
 
@@ -15,8 +18,6 @@ public:
 	DoorManager& operator=(DoorManager&&) = delete;
 
 	void Update(float elapsedSec, Avatar* actor);
-
-
 };
 
 

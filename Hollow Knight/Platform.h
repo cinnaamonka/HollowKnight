@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GroundObject.h"
 
 #include <Vector2f.h>
@@ -16,10 +17,10 @@ public:
 	Platform& operator=(Platform&& other) = delete;
 	~Platform();
 
-	void HandleCollision(Rectf& actorShape,Vector2f& actorVelocity);
+	void HandleCollision(Rectf& actorShape, Vector2f& actorVelocity);
 	bool isCollidingWalls(const std::vector<Point2f>& ver, Rectf& actorShape, utils::HitInfo& hitInfo) const;
 
-	bool isCollidingCharacter() const 
+	bool isCollidingCharacter() const
 	{
 		return m_IsCollidingCharacter;
 	}
@@ -38,8 +39,9 @@ public:
 	{
 		m_Position = pos;
 	}
+
 private:
-	
+
 	bool m_isCharacterOnPlatform;
 	bool m_IsCollidingCharacter;
 

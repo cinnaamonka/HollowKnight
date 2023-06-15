@@ -7,13 +7,14 @@ class BaseManager
 {
 
 public:
-	BaseManager():m_SoundVolume(1)
+	BaseManager() :m_SoundVolume(1)
 	{
 	};
 	BaseManager(const BaseManager&) = delete;
 	BaseManager& operator=(const BaseManager&) = delete;
 	BaseManager(BaseManager&&) = delete;
 	BaseManager& operator=(BaseManager&&) = delete;
+
 	virtual ~BaseManager()
 	{
 		for (const T* item : m_pItems)
@@ -44,6 +45,7 @@ public:
 	{
 		return m_pItems.size();
 	};
+
 	bool HitItem(const Rectf& rect)
 	{
 		if (m_pItems.empty())
@@ -66,6 +68,7 @@ public:
 	{
 		return m_pItems;
 	}
+
 	void SetSoundVolume(const int soundVolume)
 	{
 		m_SoundVolume = soundVolume;
@@ -74,8 +77,6 @@ protected:
 
 	std::vector<T*> m_pItems;
 	int m_SoundVolume;
-	
-
 };
 
 

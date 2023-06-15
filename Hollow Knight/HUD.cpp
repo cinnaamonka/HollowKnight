@@ -6,14 +6,23 @@
 #include <Texture.h>
 
 HUD::HUD(const Point2f& topLeft, int totalLifesAmount, CoinManager* coinManager) :
-	m_BottomLeft(topLeft ), m_TotalLifesAmount( totalLifesAmount ), m_LeftLifes( float(totalLifesAmount) ), m_CollectedCoins(0),
-	m_SavedCoins(0), m_PreviousLifes(totalLifesAmount), m_pCoinManager(coinManager)
+	m_BottomLeft(topLeft),
+	m_TotalLifesAmount(totalLifesAmount),
+	m_LeftLifes(float(totalLifesAmount)),
+	m_CollectedCoins(0),
+	m_SavedCoins(0),
+	m_PreviousLifes(totalLifesAmount),
+	m_pCoinManager(coinManager)
 {
-	m_pHUDTexture = new Texture( "HUD.png" );
-	m_pLifeTexture = new Texture( "Lifes.png" );
-	m_pEmptyLifeTexture = new Texture( "EmptyLife.png" );
+	m_pHUDTexture = new Texture("HUD.png");
+
+	m_pLifeTexture = new Texture("Lifes.png");
+
+	m_pEmptyLifeTexture = new Texture("EmptyLife.png");
+
 	m_CoinsNumberTexture = nullptr;
-	m_CoinTexture = new Texture( "Coin.png" );
+
+	m_CoinTexture = new Texture("Coin.png");
 }
 
 HUD::~HUD()
@@ -34,12 +43,12 @@ void HUD::Draw()
 	for (int i = 0; i < m_TotalLifesAmount; ++i)
 	{
 		const Rectf destRect
-		{
+		(
 			2 * offset + m_BottomLeft.x + i * offset,
 			m_BottomLeft.y + offset,
 			m_pLifeTexture->GetWidth(),
 			m_pLifeTexture->GetHeight()
-		};
+		);
 
 		m_pEmptyLifeTexture->Draw(destRect);
 	}
@@ -56,6 +65,7 @@ void HUD::Draw()
 
 		m_pLifeTexture->Draw(destRect);
 	}
+
 	if (m_CoinsNumberTexture)
 	{
 		delete m_CoinsNumberTexture;
@@ -66,11 +76,13 @@ void HUD::Draw()
 		m_BottomLeft.x + 100.0f,
 		m_BottomLeft.y + 20.0f
 	};
+
 	const Point2f coinTexturePosition
 	{
 		m_BottomLeft.x + 130.0f,
 		m_BottomLeft.y + 10.0f
 	};
+
 	m_CoinsNumberTexture = new Texture(std::to_string(m_CollectedCoins), "Supernatural_Knight.ttf", 20, Color4f{ 1.0f,1.0f,1.0f,1.0f });
 	m_CoinsNumberTexture->Draw(coinsAmountTexturePosition);
 
@@ -86,16 +98,19 @@ void HUD::PowerUpHit()
 void HUD::AddLife()
 {
 	const float leftLifesOffset = 0.005f;
+	const int savedCoins = 6;
+
 	m_PreviousLifes = int(m_LeftLifes);
 	m_LeftLifes += leftLifesOffset;
-	const int savedCoins = 6;
 
 	if (int(m_LeftLifes) - m_PreviousLifes)
 	{
 		const int coins = m_CollectedCoins - savedCoins;
+
 		m_pCoinManager->SetCoinsAmount(coins);
 	}
 }
+
 bool HUD::CanAddLife() const
 {
 	const int savedCoins = 6;

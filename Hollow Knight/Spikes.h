@@ -1,4 +1,5 @@
 #pragma once
+
 class Spikes final
 {
 public:
@@ -14,7 +15,5 @@ public:
 private:
 
 	Rectf m_Shape;
-
-	
 };
 

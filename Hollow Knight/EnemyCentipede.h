@@ -14,6 +14,5 @@ public:
 	~EnemyCentipede();
 
 	virtual void Update(float elapsedSec)override;
-
 };
 

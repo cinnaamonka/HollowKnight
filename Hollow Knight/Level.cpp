@@ -24,7 +24,11 @@
 
 
 Level::Level(const Rectf& viewPort) :
-	m_ViewPort(viewPort), m_EndReached(false), m_ZoomLevel(1.0f), m_MusicVolume(100), m_FadingScreenColor{ 0,0,0,0 }
+	m_ViewPort(viewPort),
+	m_EndReached(false),
+	m_ZoomLevel(1.0f),
+	m_MusicVolume(100),
+	m_FadingScreenColor(0, 0, 0, 0)
 {
 	m_pAvatar = nullptr;
 	m_pEnemyManager = nullptr;
@@ -121,7 +125,6 @@ void Level::Update(float elapsedSec)
 			m_ZoomLevel += 0.001f;
 			m_pHUD->AddLife();
 		}
-
 		else
 		{
 			m_ZoomLevel = 1.0f;
@@ -129,18 +132,23 @@ void Level::Update(float elapsedSec)
 	}
 
 	m_pCoinManager->HandleCollection(m_pAvatar->GetShape());
+
 	m_pHUD->SetCollectedCoinsAmount(m_pCoinManager->GetCoinsCollectedAmount());
+
 	m_pCoinManager->Update(elapsedSec, m_pEnvironment);
 
 	m_pAvatar->Update(elapsedSec, m_pEnvironment, m_pHUD->CanAddLife());
+
 	m_pEnemyManager->Update(elapsedSec, m_pEnvironment);
 
 	m_pCoinSourceManager->Update(m_pAvatar);
+
 	m_pDoorManager->Update(elapsedSec, m_pAvatar);
 
 	if (m_pEnvironment->HasReachedEnd(m_pAvatar->GetShape()) == true)
 	{
 		m_EndReached = true;
+
 		m_pAvatar->StopAllSounds();
 
 	}
@@ -150,9 +158,7 @@ void Level::Update(float elapsedSec)
 
 void Level::Draw() const
 {
-
 	ClearBackground();
-
 
 	glPushMatrix();
 	{
@@ -160,6 +166,7 @@ void Level::Draw() const
 
 		m_pEnvironment->DrawBackground();
 	}
+
 	glPopMatrix();
 
 
@@ -171,21 +178,24 @@ void Level::Draw() const
 
 			m_Camera->Scale(m_ZoomLevel, m_ZoomLevel, m_pAvatar->GetShape());
 		}
-		m_Camera->Transform(m_pAvatar->GetShape(), true);
 
+		m_Camera->Transform(m_pAvatar->GetShape(), true);
 
 		m_pEnvironment->DrawMiddleground();
 
 		m_pDoorManager->Draw();
+
 		m_pAvatar->Draw();
+
 		m_pCoinSourceManager->Draw();
+
 		m_pEnemyManager->Draw();
+
 		m_pCoinManager->Draw();
 
 		m_pEnvironment->DrawStaticForeground(m_pAvatar->GetShape());
 	}
 	glPopMatrix();
-
 
 	glPushMatrix();
 	{
@@ -194,14 +204,18 @@ void Level::Draw() const
 		m_pEnvironment->DrawForeground();
 
 	}
+
 	glPopMatrix();
 
 
 	if (m_EndReached == true)
 	{
 		utils::SetColor(m_FadingScreenColor);
+
 		utils::FillRect(m_ViewPort.left, m_ViewPort.bottom, m_ViewPort.width, m_ViewPort.height);
+
 		m_EndText->Draw(m_EndSignShape);
+
 		return;
 	}
 
@@ -268,6 +282,7 @@ void Level::CheckAvatarCollison()
 		if (m_pEnemyManager->IsEnemyKilled(shapeRect))
 		{
 			AddCoins();
+
 			m_pCoinManager->SetPositions(shapeRect);
 
 			return;
@@ -275,6 +290,7 @@ void Level::CheckAvatarCollison()
 		if (m_pCoinSourceManager->IsCoinSourceDestroyed(shapeRect))
 		{
 			AddCoins();
+
 			m_pCoinManager->SetPositions(shapeRect);
 
 			return;
@@ -288,6 +304,7 @@ void Level::CheckAvatarCollison()
 			{
 				m_pHUD->PowerUpHit();
 			}
+
 			m_pAvatar->EnemyHit();
 		}
 	}
@@ -302,6 +319,7 @@ void Level::CheckAvatarCollison()
 
 	}
 }
+
 void Level::AddCoins()
 {
 	Coin* coin1 = new Coin();
@@ -313,6 +331,7 @@ void Level::AddCoins()
 	m_pCoinManager->AddItem(coin2);
 	m_pCoinManager->AddItem(coin3);
 }
+
 void Level::AddDoors()
 {
 	Door* door1 = new Door(Point2f{ 3720.0f, 2294.0f });
@@ -325,6 +344,7 @@ void Level::AddDoors()
 	m_pDoorManager->AddItem(door3);
 	m_pDoorManager->AddItem(door4);
 }
+
 void Level::AddCoinSources()
 {
 	CoinSource* coinSource1 = new CoinSource(Point2f{ 9698,2500 }, 0);
@@ -333,10 +353,10 @@ void Level::AddCoinSources()
 	m_pCoinSourceManager->AddItem(coinSource1);
 	m_pCoinSourceManager->AddItem(coinSource2);
 }
+
 void Level::PlaySound()const
 {
 	m_pBackgroundSound->Play(true);
-
 }
 
 
