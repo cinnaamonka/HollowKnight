@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 Camera::Camera(float width, float height) :
-	m_Width( width ), m_Height( height ), m_LevelBoundaries{ 0.0f, 0.0f, width, height }
+	m_Width(width), m_Height(height), m_LevelBoundaries{ 0.0f, 0.0f, width, height }
 {
 
 }
@@ -16,7 +16,7 @@ void Camera::SetLevelBoundaries(const Rectf& levelBoundaries)
 	m_LevelBoundaries = levelBoundaries;
 }
 
-void Camera::Transform(const Rectf& target,bool isShortDistance)
+void Camera::Transform(const Rectf& target, bool isShortDistance)
 {
 	Point2f posCenter = Track(target);
 	Clamp(posCenter);
@@ -31,16 +31,19 @@ Point2f Camera::Track(const Rectf& target) const
 
 void Camera::Clamp(Point2f& bottomLeftPos)
 {
-	bottomLeftPos.x = std::max(m_LevelBoundaries.left + 1.0f, 
+	bottomLeftPos.x = std::max(m_LevelBoundaries.left + 1.0f,
 		std::min(bottomLeftPos.x, m_LevelBoundaries.left + m_LevelBoundaries.width - m_Width));
 
-	bottomLeftPos.y = std::max(m_LevelBoundaries.bottom, 
+	bottomLeftPos.y = std::max(m_LevelBoundaries.bottom,
 		std::min(bottomLeftPos.y, m_LevelBoundaries.bottom + m_LevelBoundaries.height - m_Height));
 }
 
 
 void Camera::Scale(const float scaleX, const float scaleY, const Rectf& target)
 {
-	glScalef(scaleX, scaleY,0 );
-}
+	glTranslatef(m_Width / 2.f, m_Height / 2.f, 0.f);
 
+	glScalef(scaleX, scaleY, 0);
+
+	glTranslatef(-m_Width / 2.f, -m_Height / 2.f, 0.f);
+}
